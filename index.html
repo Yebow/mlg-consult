@@ -814,6 +814,8 @@
     /* Squad — ratio portrait identique pour tous les avatars (même visuel que Kamel) */
     .squad-cards { grid-template-columns: 1fr 1fr; gap: .75rem; }
     .squad-photo-header { height: auto; aspect-ratio: 3 / 4; }
+    /* Avatars en couleur sur mobile (pas de hover disponible) */
+    .squad-card-photo { filter: grayscale(0) brightness(0.85) !important; }
 
     /* ── Mobile menu : header must sit ABOVE the fullscreen overlay ──
        Tailwind z-50 = 50, #mobile-menu z-200 → le toggle est masqué.
