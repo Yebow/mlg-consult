@@ -689,30 +689,37 @@
     #parallax-header { padding: 1.5rem 1.25rem 0 !important; }
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
-    /* ── MOBILE PORTFOLIO GRID ── */
-    /* No parallax: flat 2-col grid so users can browse the work */
+    /* ── MOBILE PORTFOLIO — horizontal scroll strip ── */
     #parallax-grid {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
-      gap: .625rem !important;
-      padding: 1.5rem 1.25rem 2.5rem !important;
+      display: flex !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      overflow-y: visible !important;
+      gap: .75rem !important;
+      padding: 1.5rem 1.25rem 2rem !important;
       margin-top: 0 !important;
       transform: none !important;
       opacity: 1 !important;
+      scroll-snap-type: x mandatory !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
     }
-    /* Rows become invisible wrappers — children flow into the parent grid */
+    #parallax-grid::-webkit-scrollbar { display: none !important; }
+    /* Rows become invisible wrappers — children flow into the parent flex */
     .p-row {
       display: contents !important;
       overflow: visible !important;
     }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fill grid cell */
+    /* Cards: fixed width for horizontal scrolling with snap */
     .p-card {
-      width: 100% !important;
-      height: 9.5rem !important;
-      flex-shrink: unset !important;
+      width: 72vw !important;
+      max-width: 280px !important;
+      height: 11rem !important;
+      flex-shrink: 0 !important;
       border-radius: 10px !important;
+      scroll-snap-align: start !important;
     }
     /* Images: colored on mobile (no hover available) */
     .p-card img { filter: grayscale(0) brightness(0.68) !important; transition: none !important; }
@@ -882,9 +889,8 @@
      RESPONSIVE — Small phones (≤ 480px)
   ───────────────────────────────────────── */
   @media (max-width: 480px) {
-    /* Keep 2-col grid on small phones */
-    #parallax-grid { grid-template-columns: 1fr 1fr !important; }
-    .p-card { width: 100% !important; height: 8.5rem !important; }
+    /* Smaller cards on small phones — keep horizontal scroll */
+    .p-card { width: 80vw !important; max-width: 240px !important; height: 10rem !important; }
 
     /* Squad 1 col */
     .squad-cards { grid-template-columns: 1fr; }
