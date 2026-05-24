@@ -722,19 +722,39 @@
       scroll-snap-type: x mandatory !important;
       -webkit-overflow-scrolling: touch !important;
       touch-action: pan-x !important;
+      overscroll-behavior-x: contain !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
     }
     #parallax-grid::-webkit-scrollbar { display: none !important; }
     /*
-     * CAUSE RACINE du swipe cassé :
-     * [data-glow] { touch-action: pan-y } bloque le swipe horizontal.
-     * L'intersection (pan-y) ∩ (pan-x du conteneur) = rien → pas de scroll.
-     * Override : toutes les cartes et leurs enfants passent à pan-x.
+     * FIX 1 — touch-action:
+     * [data-glow] { touch-action: pan-y } bloquait le swipe horizontal.
+     * Override : cartes et tous leurs enfants passent à pan-x.
      */
     #parallax-grid .p-card,
     #parallax-grid .p-card * {
       touch-action: pan-x !important;
+    }
+    /*
+     * FIX 2 — background-attachment:fixed (bloqueur iOS Safari) :
+     * WebKit ne composite pas les éléments fixed-bg dans un scroll layer,
+     * ce qui empêche physiquement le swipe de fonctionner.
+     * Fix : forcer scroll + supprimer l'image (déjà fait par hover:none,
+     * mais on le rend explicite ici pour garantir l'ordre de cascade).
+     */
+    #parallax-grid [data-glow] {
+      background-attachment: scroll !important;
+      background-image: none !important;
+    }
+    /*
+     * FIX 3 — will-change:filter + filter:blur sur [data-glow-inner] :
+     * Crée un stacking context/layer de composition parasite dans chaque
+     * carte qui peut interférer avec le scroll container mobile.
+     */
+    #parallax-grid [data-glow-inner] {
+      will-change: auto !important;
+      filter: none !important;
     }
     /* Rows disparaissent visuellement → leurs cartes deviennent
        des flex-items directs de #parallax-grid (une seule ligne) */
