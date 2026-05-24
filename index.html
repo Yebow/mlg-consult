@@ -1,0 +1,1876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MLG — Think. Build. Optimize.</title>
+<meta name="description" content="MLG is a Brussels-based end-to-end digital squad. Strategy, design, development, and growth — one team, zero friction." />
+<meta property="og:title" content="MLG — Think. Build. Optimize." />
+<meta property="og:description" content="One squad. Strategy to delivery. No slides, no handoffs, no theatre." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mlg-consult.com" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050806'/><circle cx='16' cy='16' r='10' fill='%23DEFF9A'/></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;800;900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#050806', surface: '#0D100D', neutral: '#1A1D1A',
+          line: '#232623', lime: '#DEFF9A', dim: '#7A7A7A',
+        },
+        fontFamily: {
+          display: ['Urbanist', 'system-ui', 'sans-serif'],
+          sans:    ['Outfit', 'system-ui', 'sans-serif'],
+          mono:    ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #050806; color: #fff; font-family: 'Outfit', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* Progress bar */
+  #progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 200; }
+  #progress i { display: block; height: 100%; background: #DEFF9A; width: 0; transition: width .1s linear; }
+
+  /* ─────────────────────────────────────────
+     HERO PARALLAX
+  ───────────────────────────────────────── */
+  #hero-parallax {
+    height: 220vh;
+    overflow: hidden;
+    position: relative;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    background: #050806;
+    padding-top: 10rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  #parallax-header {
+    max-width: 1400px; margin: 0 auto;
+    padding: 2rem 2.5rem 5rem;
+    /* JS makes this sticky via translateY — see updateHeader() */
+    position: relative; z-index: 10;
+    will-change: transform;
+  }
+  #parallax-header .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6875rem; letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(255,255,255,.32); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  #parallax-header h1 {
+    font-family: 'Urbanist', sans-serif; font-weight: 900;
+    font-size: clamp(2.5rem,7vw,7rem);
+    line-height: .93; letter-spacing: -.04em;
+    color: #fff; margin-bottom: 1.5rem;
+  }
+  /* subtitle font set inline on the element */
+  @keyframes pulse { 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
+  .pulse-dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: #DEFF9A;
+    animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0;
+  }
+  #parallax-grid { will-change: transform, opacity; }
+  .p-row { display: flex; gap: 1.25rem; margin-bottom: 1.25rem; will-change: transform; }
+  .p-row-reverse { flex-direction: row-reverse; }
+  .p-card {
+    height: 22rem; width: 28rem; flex-shrink: 0;
+    position: relative; cursor: pointer;
+    /* overflow:visible so [data-glow] ::before/::after can bleed outside */
+    transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s ease;
+    border-radius: 14px;
+  }
+  /* hover handled by glow border + image colour — no jump */
+
+  /* Inner wrapper clips the image to the card shape */
+  .p-card-img-wrap {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    border-radius: 12px; /* 1px smaller than card so glow border shows */
+  }
+  /* Default: black & white. Hover: colour returns alongside the lime glow border */
+  .p-card img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+    filter: grayscale(1) brightness(0.7);
+    transition: filter .55s ease;
+  }
+  .p-card:hover img { filter: grayscale(0) brightness(1); }
+  /* No jump, no dark overlay */
+  .p-card .p-overlay { display: none; }
+  .p-card .p-title { position: absolute; bottom: 1rem; left: 1rem; font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; opacity: 0; transition: opacity .3s ease; z-index: 2; text-shadow: 0 1px 8px rgba(0,0,0,.95), 0 2px 24px rgba(0,0,0,.8); }
+  .p-card:hover .p-title { opacity: 1; }
+  .p-card .p-tag { position: absolute; top: .875rem; left: .875rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: #DEFF9A; background: rgba(5,8,6,.7); padding: .25rem .6rem; opacity: 0; transition: opacity .3s ease; z-index: 2; }
+  .p-card:hover .p-tag { opacity: 1; }
+  #hero-scroll-cta { position: absolute; bottom: 0; left: 0; right: 0; z-index: 20; pointer-events: none; padding: 3rem 2.5rem; background: linear-gradient(to top, #050806 0%, transparent 100%); display: flex; justify-content: flex-end; align-items: flex-end; }
+  .scroll-pill { pointer-events: auto; display: inline-flex; align-items: center; gap: .5rem; padding: .625rem 1.25rem; border: 1px solid rgba(222,255,154,.35); color: #DEFF9A; font-family: 'JetBrains Mono', monospace; font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; transition: background .25s, border-color .25s; }
+  .scroll-pill:hover { background: rgba(222,255,154,.08); border-color: rgba(222,255,154,.7); }
+  @keyframes bounce { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(3px); } }
+  .scroll-arrow { display: inline-block; animation: bounce .9s ease-in-out infinite; }
+
+  /* ─────────────────────────────────────────
+     SCROLL REVEAL
+  ───────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.in  { opacity: 1; transform: none; }
+  .reveal.d1  { transition-delay: .1s; }
+  .reveal.d2  { transition-delay: .2s; }
+  .reveal.d3  { transition-delay: .32s; }
+
+  .nav-link { position: relative; text-decoration: none; color: rgba(255,255,255,.5); font-size: .8125rem; transition: color .2s; }
+  .nav-link::after { content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 1px; background: #DEFF9A; transition: width .28s; }
+  .nav-link:hover { color: #fff; }
+  .nav-link:hover::after { width: 100%; }
+
+  /* ─────────────────────────────────────────
+     PRICING CARDS — SERVICES
+  ───────────────────────────────────────── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  /* Outer card shell */
+  .pc-card {
+    border-radius: 14px;
+    padding: .375rem;  /* p-1.5 */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Inner card header */
+  .pc-header {
+    position: relative;
+    border-radius: 10px;
+    background: rgba(20,24,20,.85);
+    border: 1px solid rgba(255,255,255,.07);
+    padding: 1.25rem 1.25rem 1.5rem;
+    margin-bottom: .5rem;
+    overflow: hidden;
+  }
+  /* Glass gradient */
+  .pc-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.03) 40%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+  .pc-header > * { position: relative; z-index: 1; }
+
+  /* Featured card header — lime tint */
+  .pc-card-featured .pc-header {
+    background: rgba(18,26,18,.95);
+    border-color: rgba(222,255,154,.15);
+  }
+  .pc-card-featured .pc-header::before {
+    background: linear-gradient(180deg, rgba(222,255,154,.06) 0%, rgba(222,255,154,.02) 40%, transparent 100%);
+  }
+
+  .pc-plan { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .pc-plan-name {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+  }
+  .pc-plan-icon { width: 1rem; height: 1rem; flex-shrink: 0; }
+  .pc-badge {
+    border: 1px solid rgba(255,255,255,.18);
+    color: rgba(255,255,255,.6);
+    border-radius: 999px; padding: .15rem .65rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .pc-badge-lime { border-color: rgba(222,255,154,.4); color: #DEFF9A; }
+
+  .pc-title {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 900;
+    font-size: 2.75rem;
+    line-height: .92; letter-spacing: -.035em;
+    margin-bottom: .625rem;
+  }
+  .pc-title-lime { color: #DEFF9A; }
+
+  .pc-desc {
+    font-size: .8125rem; color: rgba(255,255,255,.38);
+    margin-bottom: 1.25rem; line-height: 1.5;
+  }
+
+  /* CTA button */
+  .pc-btn {
+    display: block; width: 100%;
+    padding: .7rem 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700; font-size: .875rem;
+    text-align: center; text-decoration: none;
+    border-radius: 6px; cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .pc-btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.14);
+    color: rgba(255,255,255,.6);
+  }
+  .pc-btn-outline:hover {
+    background: rgba(255,255,255,.05);
+    border-color: rgba(255,255,255,.3);
+    color: #fff;
+  }
+  .pc-btn-filled {
+    background: #DEFF9A; border: none; color: #050806;
+  }
+  .pc-btn-filled:hover { background: #cdf06a; }
+
+  /* Card body */
+  .pc-body { padding: .5rem .375rem 1rem; flex: 1; }
+
+  /* Feature list */
+  .pc-list { list-style: none; display: flex; flex-direction: column; gap: .625rem; margin-bottom: 1.25rem; }
+  .pc-item { display: flex; align-items: flex-start; gap: .625rem; font-size: .875rem; color: rgba(255,255,255,.5); line-height: 1.45; }
+  .pc-check { flex-shrink: 0; margin-top: 1px; }
+  .pc-check-lime { color: #DEFF9A; }
+
+  /* Separator */
+  .pc-sep {
+    display: flex; align-items: center; gap: .625rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.28); margin-bottom: 1.25rem;
+  }
+  .pc-sep-line { height: 1px; flex: 1; background: rgba(255,255,255,.08); }
+
+  /* ─────────────────────────────────────────
+     GLOW SPOTLIGHT CARDS
+  ───────────────────────────────────────── */
+  [data-glow] {
+    --base: 76; --spread: 35; --radius: 14; --border: 1.5;
+    --backdrop: rgba(13,16,13,0.85);
+    --backup-border: rgba(222,255,154,0.07);
+    --size: 320; --outer: 1;
+    --border-size: calc(var(--border, 1.5) * 1px);
+    --spotlight-size: calc(var(--size, 320) * 1px);
+    --hue: calc(var(--base, 76) + (var(--xp, 0.5) * var(--spread, 35)));
+    background-image: radial-gradient(
+      var(--spotlight-size) var(--spotlight-size) at
+      calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+      hsl(var(--hue) 90% 72% / 0.09), transparent
+    );
+    background-color: var(--backdrop);
+    background-size: calc(100% + 2 * var(--border-size)) calc(100% + 2 * var(--border-size));
+    background-position: 50% 50%;
+    background-attachment: fixed;
+    border: var(--border-size) solid var(--backup-border);
+    border-radius: calc(var(--radius) * 1px);
+    position: relative; touch-action: none;
+    transition: border-color .3s ease;
+  }
+  [data-glow]:hover { --backup-border: rgba(222,255,154,0.14); }
+  [data-glow]::before, [data-glow]::after {
+    pointer-events: none; content: "";
+    position: absolute; inset: calc(var(--border-size) * -1);
+    border: var(--border-size) solid transparent;
+    border-radius: calc(var(--radius) * 1px);
+    background-attachment: fixed;
+    background-size: calc(100% + 2 * var(--border-size)) calc(100% + 2 * var(--border-size));
+    background-repeat: no-repeat; background-position: 50% 50%;
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask-clip: padding-box, border-box; mask-composite: intersect;
+    -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box; -webkit-mask-composite: destination-in;
+  }
+  [data-glow]::before {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+      calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+      hsl(var(--hue) 90% 72% / 1), transparent 100%
+    );
+    filter: brightness(2);
+  }
+  [data-glow]::after {
+    background-image: radial-gradient(
+      calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+      calc(var(--x, -9999) * 1px) calc(var(--y, -9999) * 1px),
+      hsl(0 100% 100% / 0.7), transparent 100%
+    );
+  }
+  [data-glow] > [data-glow-inner] {
+    position: absolute; inset: 0; will-change: filter; opacity: var(--outer, 1);
+    border-radius: calc(var(--radius) * 1px);
+    filter: blur(calc(var(--border-size) * 10));
+    background: none; pointer-events: none; border: none;
+  }
+
+  /* ─────────────────────────────────────────
+     TEAM SHOWCASE — card grid
+  ───────────────────────────────────────── */
+  .squad-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 3rem;
+    align-items: start;
+    user-select: none;
+  }
+
+  /* Photo inside pc-header */
+  .squad-photo-header {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 220px;
+    margin-bottom: .5rem;
+    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(20,24,20,.85);
+  }
+  /* Glass gradient over photo */
+  .squad-photo-header::before {
+    content: '';
+    position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,.06) 0%,
+      transparent 45%,
+      rgba(5,8,6,.45) 100%);
+    z-index: 1; pointer-events: none;
+  }
+  .squad-card-photo {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+    filter: grayscale(1) brightness(0.7);
+    transition: filter .45s ease;
+  }
+
+  /* Card states */
+  .squad-card-v2 { transition: opacity .3s ease; cursor: pointer; }
+  .squad-card-v2.ts-dimmed { opacity: .45; }
+  .squad-card-v2.ts-active .squad-card-photo { filter: grayscale(0) brightness(1); }
+
+  /* Name / indicator row */
+  .squad-member-top {
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .375rem;
+  }
+  .squad-indicator {
+    width: 14px; height: 9px; border-radius: 4px;
+    background: rgba(255,255,255,.2);
+    flex-shrink: 0;
+    transition: background .3s, width .3s;
+  }
+  .squad-card-v2.ts-active .squad-indicator {
+    background: #DEFF9A; width: 18px;
+  }
+  .squad-member-name {
+    font-weight: 700; font-size: .9375rem;
+    letter-spacing: -.01em;
+    color: rgba(255,255,255,.7);
+    transition: color .3s; line-height: 1;
+  }
+  .squad-card-v2.ts-active .squad-member-name { color: #fff; }
+
+  /* LinkedIn — slides in on hover */
+  .squad-social {
+    display: flex; align-items: center; gap: 3px;
+    margin-left: 2px;
+    opacity: 0; transform: translateX(-6px);
+    transition: opacity .2s, transform .2s;
+    pointer-events: none;
+  }
+  .squad-card-v2.ts-active .squad-social {
+    opacity: 1; transform: translateX(0); pointer-events: auto;
+  }
+  .squad-social a {
+    display: grid; place-items: center;
+    width: 20px; height: 20px; border-radius: 4px;
+    color: rgba(255,255,255,.45);
+    text-decoration: none;
+    transition: color .15s, background .15s;
+  }
+  .squad-social a:hover { color: #fff; background: rgba(255,255,255,.1); }
+
+  .squad-member-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .58rem; letter-spacing: .16em; text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    padding-left: 26px;
+  }
+
+  /* Marquee */
+  .mq-wrap  { overflow: hidden; }
+  .mq-inner { display: flex; width: max-content; animation: mq 24s linear infinite; }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─────────────────────────────────────────
+     TESTIMONIALS — 3-col auto-scroll
+  ───────────────────────────────────────── */
+  .tm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-height: 660px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+  }
+  .tm-col { display: flex; flex-direction: column; }
+  .tm-col-inner {
+    display: flex; flex-direction: column; gap: .875rem;
+    animation: tm-scroll var(--duration, 20s) linear infinite;
+  }
+  .tm-col:hover .tm-col-inner { animation-play-state: paused; }
+  @keyframes tm-scroll {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+  .tm-card {
+    border-radius: 14px;
+    padding: 1.25rem 1.375rem;
+    background: rgba(13,16,13,.85);
+    border: 1px solid rgba(255,255,255,.07);
+    flex-shrink: 0;
+  }
+  .tm-avatar {
+    width: 2.25rem; height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(222,255,154,.1);
+    border: 1px solid rgba(222,255,154,.22);
+    display: grid; place-items: center;
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 900; font-size: .7rem; letter-spacing: .04em;
+    color: #DEFF9A;
+    margin-bottom: .875rem;
+  }
+  .tm-quote {
+    font-size: .875rem; line-height: 1.65;
+    color: rgba(255,255,255,.68);
+    margin-bottom: .875rem;
+  }
+  .tm-name {
+    font-weight: 700; font-size: .875rem;
+    color: rgba(255,255,255,.88);
+    margin-bottom: .1875rem;
+  }
+  .tm-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.28);
+  }
+
+  /* ─────────────────────────────────────────
+     LOGO STRIP
+  ───────────────────────────────────────── */
+  .logo-track-wrap {
+    position: relative; overflow: hidden;
+    padding: 2rem 0;
+  }
+  /* Fade edges — gradient over solid bg */
+  .logo-track-wrap::before, .logo-track-wrap::after {
+    content: ''; position: absolute; top: 0; bottom: 0;
+    width: 220px; z-index: 2; pointer-events: none;
+  }
+  .logo-track-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #050806 0%, rgba(5,8,6,0) 100%);
+  }
+  .logo-track-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #050806 0%, rgba(5,8,6,0) 100%);
+  }
+  /* The scrolling row — all logos + duplicate set for seamless loop */
+  .logo-track {
+    display: flex; align-items: center; gap: 3.75rem;
+    width: max-content; padding: 0 1.75rem;
+    animation: logo-scroll 32s linear infinite;
+  }
+  .logo-track-wrap:hover .logo-track { animation-play-state: paused; }
+  @keyframes logo-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .logo-img {
+    height: 24px; width: auto; display: block; flex-shrink: 0;
+    filter: brightness(0) invert(1);
+    opacity: .28;
+    transition: opacity .3s ease;
+  }
+  .logo-img:hover { opacity: .72; }
+
+  /* ─────────────────────────────────────────
+     TEXT REVEAL — word by word on scroll
+  ───────────────────────────────────────── */
+  #manifesto {
+    height: 200vh;
+    position: relative;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  #manifesto-sticky {
+    position: sticky; top: 0; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 2.5rem;
+  }
+  #manifesto-text {
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.75rem, 3.5vw, 3.75rem);
+    line-height: 1.28; letter-spacing: -.03em;
+    color: #fff; max-width: 860px; text-align: center;
+  }
+  .wr-word { opacity: .13; }
+  .wr-lime { color: #DEFF9A; }
+
+  /* ─────────────────────────────────────────
+     FOOTER V2 — hover footer
+  ───────────────────────────────────────── */
+  .footer-v2 {
+    position: relative;
+    background: rgba(13,16,13,.55);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 2.5rem 1.5rem 1.5rem;
+    border: 1px solid rgba(255,255,255,.07);
+  }
+  .footer-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(140% 120% at 50% 0%,
+      rgba(5,8,6,.5) 55%,
+      rgba(222,255,154,.055) 100%);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 3.5rem;
+  }
+  .ft-link {
+    font-size: .875rem; color: rgba(255,255,255,.4);
+    text-decoration: none; transition: color .2s;
+  }
+  .ft-link:hover { color: #DEFF9A; }
+  .ft-icon-link {
+    color: rgba(255,255,255,.28); text-decoration: none; transition: color .2s;
+    display: inline-flex; align-items: center;
+  }
+  .ft-icon-link:hover { color: #DEFF9A; }
+  /* big SVG wrap — overlaps content above via negative margin-top */
+  .footer-svg-wrap {
+    height: 18rem;
+    margin-top: -9.5rem;
+    margin-bottom: -5.5rem;
+    position: relative; z-index: 1; overflow: visible;
+  }
+  @keyframes ft-draw {
+    from { stroke-dashoffset: 3000; }
+    to   { stroke-dashoffset: 0;    }
+  }
+  #ft-draw-text {
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: ft-draw 5s ease-in-out forwards;
+    animation-delay: 1s;
+  }
+
+  /* ─────────────────────────────────────────
+     MOBILE NAV — hamburger + fullscreen menu
+  ───────────────────────────────────────── */
+  #nav-toggle {
+    display: none; background: none; border: none;
+    padding: .5rem; cursor: pointer; color: #fff;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    position: relative; z-index: 51;
+  }
+  #nav-toggle .bar {
+    display: block; width: 22px; height: 1.5px;
+    background: currentColor; border-radius: 2px;
+    transition: transform .35s ease, opacity .25s ease, transform .35s ease;
+  }
+  #nav-toggle.open .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  #nav-toggle.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  #nav-toggle.open .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  #mobile-menu {
+    position: fixed; inset: 0; z-index: 48;
+    background: rgba(5,8,6,.97); backdrop-filter: blur(20px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #mobile-menu.open { opacity: 1; pointer-events: auto; }
+  .m-nav-link {
+    font-family: 'Urbanist', sans-serif; font-weight: 900;
+    font-size: clamp(2.5rem, 12vw, 3.75rem);
+    letter-spacing: -.04em; line-height: 1.15;
+    color: rgba(255,255,255,.45); text-decoration: none;
+    padding: .5rem 0; transition: color .2s;
+  }
+  .m-nav-link:hover { color: #fff; }
+  .m-nav-cta {
+    margin-top: 2.75rem;
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: #DEFF9A; color: #050806;
+    padding: .875rem 2rem; font-weight: 700; font-size: .9375rem;
+    text-decoration: none;
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — Desktop limit
+  ───────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .pricing-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — Tablet (≤ 900px)
+  ───────────────────────────────────────── */
+  @media (max-width: 900px) {
+    /* Hero: disable parallax, keep cards scrollable */
+    #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; }
+    #parallax-grid { transform: none !important; opacity: 1 !important; will-change: auto; }
+    .p-row {
+      gap: .75rem; margin-bottom: .75rem;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding-bottom: .75rem; scrollbar-width: none;
+    }
+    .p-row::-webkit-scrollbar { display: none; }
+    .p-card { width: 16rem; height: 12.5rem; flex-shrink: 0; }
+
+    /* Squad */
+    .squad-cards { grid-template-columns: 1fr 1fr; }
+
+    /* Testimonials */
+    .tm-grid { grid-template-columns: 1fr 1fr; }
+    .tm-grid .tm-col:nth-child(3) { display: none; }
+
+    /* Footer */
+    .footer-v2 { margin: 1.5rem 1rem 1rem; border-radius: 14px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-svg-wrap { height: 12rem; margin-top: -6rem; margin-bottom: -3.5rem; }
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — Mobile (≤ 768px)
+  ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Show hamburger, hide desktop CTA */
+    #nav-toggle { display: flex; }
+
+    /* Hero text padding */
+    #parallax-header { padding: 1.5rem 1.25rem 0 !important; }
+    #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
+
+    /* ── MOBILE PORTFOLIO GRID ── */
+    /* No parallax: flat 2-col grid so users can browse the work */
+    #parallax-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: .625rem !important;
+      padding: 1.5rem 1.25rem 2.5rem !important;
+      margin-top: 0 !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+    /* Rows become invisible wrappers — children flow into the parent grid */
+    .p-row {
+      display: contents !important;
+      overflow: visible !important;
+    }
+    /* Hide filler/Coming Soon cards on mobile */
+    .p-card[data-filler] { display: none !important; }
+    /* Cards: fill grid cell */
+    .p-card {
+      width: 100% !important;
+      height: 9.5rem !important;
+      flex-shrink: unset !important;
+      border-radius: 10px !important;
+    }
+    /* Images: colored on mobile (no hover available) */
+    .p-card img { filter: grayscale(0) brightness(0.68) !important; transition: none !important; }
+    /* Bottom gradient so title is always legible */
+    .p-card-img-wrap::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(5,8,6,.88) 0%, transparent 100%);
+      pointer-events: none; z-index: 1;
+    }
+    /* Title & tag: always visible on mobile */
+    .p-card .p-title {
+      opacity: 1 !important;
+      font-size: .75rem !important;
+      bottom: .625rem !important;
+      left: .625rem !important;
+      z-index: 3;
+    }
+    .p-card .p-tag {
+      opacity: 1 !important;
+      top: .625rem !important;
+      left: .625rem !important;
+      z-index: 3;
+    }
+    /* Hide the "scroll down" CTA — not needed without parallax */
+    #hero-scroll-cta { display: none !important; }
+
+    /* All sections: reduce padding (override inline) */
+    #services { padding: 3rem 1.25rem 4.5rem !important; }
+    #squad    { padding: 4rem 1.25rem !important; }
+    #proof    { padding: 4rem 1.25rem !important; }
+
+    /* Services cards */
+    .pricing-grid { max-width: 100%; }
+    .pc-title { font-size: 2.25rem; }
+
+    /* Squad */
+    .squad-cards { grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .squad-photo-header { height: 180px; }
+
+    /* Manifesto: faster reveal on mobile */
+    #manifesto { height: 150vh; }
+    #manifesto-sticky { padding: 0 1.25rem; }
+
+    /* Footer */
+    .ft-content { padding: 2rem 1.5rem 0 !important; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .footer-svg-wrap { height: 9rem; margin-top: -4.5rem; margin-bottom: -2.5rem; }
+  }
+
+  /* ─────────────────────────────────────────
+     CASE MODALS — Think portfolio detail
+  ───────────────────────────────────────── */
+  .case-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(5,8,6,.88);
+    backdrop-filter: blur(14px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity .32s ease;
+  }
+  .case-overlay.open { opacity: 1; pointer-events: auto; }
+  .case-modal {
+    background: #0D100D;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 18px;
+    max-width: 740px; width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(222,255,154,.18) transparent;
+    padding: 2.5rem;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform .32s cubic-bezier(.25,.46,.45,.94);
+  }
+  .case-overlay.open .case-modal { transform: translateY(0); }
+  .case-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%; background: none;
+    color: rgba(255,255,255,.45); cursor: pointer;
+    transition: color .2s, border-color .2s, background .2s;
+  }
+  .case-close:hover { color: #fff; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.05); }
+  .case-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem; letter-spacing: .18em; text-transform: uppercase;
+    color: #DEFF9A; margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .case-eyebrow-dot { width: 5px; height: 5px; border-radius: 50%; background: #DEFF9A; flex-shrink: 0; }
+  .case-title {
+    font-family: 'Urbanist', sans-serif; font-weight: 900;
+    font-size: clamp(1.6rem,3vw,2.25rem);
+    line-height: 1.05; letter-spacing: -.035em;
+    color: #fff; margin-bottom: .875rem;
+  }
+  .case-sub {
+    font-size: .9375rem; line-height: 1.72;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 2rem; max-width: 540px;
+  }
+  .case-stats {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    border-top: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    margin-bottom: 2rem;
+  }
+  .case-stat { padding: 1.125rem 1rem; border-right: 1px solid rgba(255,255,255,.08); }
+  .case-stat:last-child { border-right: none; }
+  .case-stat-num {
+    font-family: 'Urbanist', sans-serif; font-weight: 900;
+    font-size: 1.875rem; letter-spacing: -.04em; line-height: 1;
+    color: #DEFF9A; margin-bottom: .35rem;
+  }
+  .case-stat-label { font-size: .72rem; line-height: 1.5; color: rgba(255,255,255,.38); }
+  .case-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(255,255,255,.28); margin-bottom: .875rem;
+  }
+  .case-moves { display: flex; flex-direction: column; gap: 0; margin-bottom: 2rem; }
+  .case-move {
+    padding: .875rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: flex; gap: .875rem; align-items: flex-start;
+  }
+  .case-move:last-child { border-bottom: none; }
+  .case-move-bullet {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #DEFF9A; flex-shrink: 0; margin-top: .55rem;
+  }
+  .case-move-text { font-size: .875rem; line-height: 1.68; color: rgba(255,255,255,.62); }
+  .case-outcome {
+    padding: 1.125rem 1.375rem;
+    background: rgba(222,255,154,.035);
+    border: 1px solid rgba(222,255,154,.1);
+    border-radius: 10px; margin-bottom: 1.75rem;
+  }
+  .case-outcome-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .58rem; letter-spacing: .14em; text-transform: uppercase;
+    color: #DEFF9A; margin-bottom: .5rem;
+  }
+  .case-outcome-text { font-size: .875rem; line-height: 1.68; color: rgba(255,255,255,.6); }
+  .case-cta {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: #DEFF9A; color: #050806;
+    font-family: 'Urbanist', sans-serif; font-weight: 700; font-size: .875rem;
+    padding: .75rem 1.5rem; border-radius: 8px;
+    text-decoration: none; transition: opacity .2s;
+  }
+  .case-cta:hover { opacity: .85; }
+  @media (max-width: 600px) {
+    .case-modal { padding: 1.5rem 1.125rem; border-radius: 14px; }
+    .case-stats { grid-template-columns: 1fr; }
+    .case-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .case-stat:last-child { border-bottom: none; }
+  }
+
+  /* ─────────────────────────────────────────
+     RESPONSIVE — Small phones (≤ 480px)
+  ───────────────────────────────────────── */
+  @media (max-width: 480px) {
+    /* Keep 2-col grid on small phones */
+    #parallax-grid { grid-template-columns: 1fr 1fr !important; }
+    .p-card { width: 100% !important; height: 8.5rem !important; }
+
+    /* Squad 1 col */
+    .squad-cards { grid-template-columns: 1fr; }
+
+    /* Testimonials 1 col */
+    .tm-grid { grid-template-columns: 1fr; max-height: 480px; }
+    .tm-grid .tm-col:nth-child(2),
+    .tm-grid .tm-col:nth-child(3) { display: none; }
+
+    /* Footer 1 col */
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-svg-wrap { height: 6.5rem; margin-top: -3rem; margin-bottom: -1.5rem; }
+  }
+
+  /* ─────────────────────────────────────────
+     TOUCH DEVICES — neutralise les hover collants
+     (hover: none) cible tablettes et mobiles
+     indépendamment de la taille d'écran
+  ───────────────────────────────────────── */
+  @media (hover: none) {
+    /* Glow spotlight : aucun curseur, on coupe tout */
+    [data-glow] { background-image: none !important; }
+    [data-glow]::before, [data-glow]::after { display: none !important; }
+    /* Empêche le border-color de changer au tap */
+    [data-glow]:hover { --backup-border: rgba(222,255,154,0.07) !important; }
+
+    /* Portfolio cards : pas de changement image au tap */
+    .p-card:hover img { filter: grayscale(0) brightness(0.68) !important; }
+    /* Titre & tag : déjà forcés à opacity:1 via le bloc 768px, on consolide */
+    .p-card:hover .p-title { opacity: 1 !important; }
+    .p-card:hover .p-tag  { opacity: 1 !important; }
+
+    /* Nav links : pas d'underline qui colle */
+    .nav-link::after { display: none !important; }
+    .nav-link:hover  { color: rgba(255,255,255,.5) !important; }
+
+    /* Squad cards : hover JS désactivé côté CSS aussi */
+    .squad-card-v2.ts-active .squad-card-photo { filter: grayscale(1) brightness(0.7) !important; }
+    .squad-card-v2.ts-dimmed { opacity: 1 !important; }
+
+    /* Testimonials & logo strip : auto-scroll ne se met pas en pause au tap */
+    .tm-col:hover .tm-col-inner { animation-play-state: running !important; }
+    .logo-track-wrap:hover .logo-track { animation-play-state: running !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"><i></i></div>
+
+<!-- ── NAV ── -->
+<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4" style="backdrop-filter:blur(14px);background:rgba(5,8,6,.75);border-bottom:1px solid rgba(255,255,255,.04);">
+  <a href="#" style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:1.375rem;color:#fff;text-decoration:none;letter-spacing:-.025em;">MLG<span style="color:#DEFF9A;">.</span></a>
+  <nav class="hidden md:flex items-center gap-8">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#squad"    class="nav-link">Squad</a>
+    <a href="#proof"    class="nav-link">Clients</a>
+  </nav>
+  <a href="mailto:mlg.consult.be@gmail.com" class="hidden md:flex items-center gap-1.5" style="font-size:.8125rem;font-weight:700;color:#DEFF9A;text-decoration:none;">
+    Let's talk
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <!-- Hamburger — mobile only -->
+  <button id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</header>
+
+<!-- Mobile fullscreen menu -->
+<div id="mobile-menu" role="dialog" aria-label="Navigation" aria-modal="true">
+  <a href="#services" class="m-nav-link">Services</a>
+  <a href="#squad"    class="m-nav-link">Squad</a>
+  <a href="#proof"    class="m-nav-link">Clients</a>
+  <a href="mailto:mlg.consult.be@gmail.com" class="m-nav-cta">
+    Let's talk
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</div>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- HERO PARALLAX                               -->
+<!-- ──────────────────────────────────────────── -->
+<section id="hero-parallax">
+  <div id="parallax-header">
+    <div class="eyebrow"><span class="pulse-dot"></span>Available now &nbsp;·&nbsp; Brussels &nbsp;·&nbsp; Remote</div>
+    <h1>The squad<br/>that <span style="color:#DEFF9A;">ships.</span></h1>
+    <p style="font-size:clamp(1.25rem,2.2vw,1.75rem);line-height:1.55;color:rgba(255,255,255,.6);max-width:720px;">We deliver strategy, design, code &amp; growth. Each pillar owned end-to-end. Your project treated like ours.</p>
+  </div>
+
+  <div id="parallax-grid">
+    <div id="row1" class="p-row p-row-reverse">
+      <!-- pos 1 — filler Unsplash, part hors écran en premier à droite -->
+      <div class="p-card" data-glow data-filler="true"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=700&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="p-overlay"></div><span class="p-title">Coming Soon</span><span class="p-tag">Build</span></div></div>
+      <!-- pos 2 — Build2 : Fragrance brand (Riahi Rania) -->
+      <div class="p-card" data-glow><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Build2.png" alt="Fragrance Brand" loading="lazy"><div class="p-overlay"></div><span class="p-title">Fragrance Brand</span><span class="p-tag">Build</span></div></div>
+      <!-- pos 3 — Think2 : €100k Feature Kill -->
+      <div class="p-card" data-glow style="cursor:pointer" onclick="openCase('think2')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Think2.png" alt="€100k Feature Kill" loading="lazy"><div class="p-overlay"></div><span class="p-title">€100k Feature Kill</span><span class="p-tag">Think</span></div></div>
+      <!-- pos 4 — Think1 : Strategic Fog → Product -->
+      <div class="p-card" data-glow style="cursor:pointer" onclick="openCase('think1')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Think1.png" alt="Strategic Fog" loading="lazy"><div class="p-overlay"></div><span class="p-title">Strategic Fog → Product</span><span class="p-tag">Think</span></div></div>
+      <!-- pos 5 — Build1 : Angelina Luicci (luxury website) -->
+      <div class="p-card" data-glow style="cursor:pointer" onclick="window.open('https://angelina-luicci.netlify.app/','_blank')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Build1.png" alt="Angelina Luicci" loading="lazy"><div class="p-overlay"></div><span class="p-title">Angelina Luicci</span><span class="p-tag">Build</span></div></div>
+    </div>
+    <div id="row2" class="p-row">
+      <!-- pos 1 — filler Unsplash, part hors écran en premier à gauche -->
+      <div class="p-card" data-glow data-filler="true"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1741332966416-414d8a5b8887?w=700&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="p-overlay"></div><span class="p-title">Coming Soon</span><span class="p-tag">Think</span></div></div>
+      <!-- pos 2 — filler Unsplash -->
+      <div class="p-card" data-glow data-filler="true"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=700&q=65&auto=format&fit=crop" alt="" loading="lazy"><div class="p-overlay"></div><span class="p-title">Coming Soon</span><span class="p-tag">Build</span></div></div>
+      <!-- pos 3 — Optimize1 : €50k e-commerce -->
+      <div class="p-card" data-glow><div data-glow-inner></div><div class="p-card-img-wrap"><img src="Optimize1.png" alt="€50k E-commerce" loading="lazy"><div class="p-overlay"></div><span class="p-title">€50k in One Week</span><span class="p-tag">Optimize</span></div></div>
+      <!-- pos 4 — Optimize2 : UX Research -->
+      <div class="p-card" data-glow><div data-glow-inner></div><div class="p-card-img-wrap"><img src="Optimize2.png" alt="UX Research Sprint" loading="lazy"><div class="p-overlay"></div><span class="p-title">UX Research Sprint</span><span class="p-tag">Optimize</span></div></div>
+      <!-- pos 5 — Build3 : Syrra -->
+      <div class="p-card" data-glow style="cursor:pointer" onclick="window.open('https://www.syrra.be/','_blank')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Build3.png" alt="Syrra" loading="lazy"><div class="p-overlay"></div><span class="p-title">Syrra</span><span class="p-tag">Build</span></div></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- SERVICES — 3 pricing cards                  -->
+<!-- ──────────────────────────────────────────── -->
+<section id="services" style="padding:3rem 2.5rem 7rem;border-top:1px solid rgba(255,255,255,.06);">
+  <div style="max-width:1400px;margin:0 auto;">
+
+    <!-- Section header -->
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:.6875rem;letter-spacing:.14em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:.875rem;">What we do</div>
+    <h2 class="reveal d1" style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:clamp(2.5rem,7vw,6rem);line-height:.93;letter-spacing:-.04em;margin-bottom:1rem;">
+      Three modes.<br/><span style="color:#DEFF9A;">One squad.</span>
+    </h2>
+    <p class="reveal d2" style="font-size:1rem;color:rgba(255,255,255,.45);max-width:500px;line-height:1.72;margin-bottom:3.5rem;">
+      Strategy informs the build. The build feeds the data. The data sharpens the next move. No handoff, no information loss.
+    </p>
+
+    <!-- Cards -->
+    <div class="pricing-grid reveal d3">
+
+      <!-- ── THINK ── -->
+      <div class="pc-card" data-glow>
+        <div data-glow-inner></div>
+        <div class="pc-header">
+          <div class="pc-plan">
+            <div class="pc-plan-name">
+              <!-- Icon: target/compass -->
+              <svg class="pc-plan-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              Strategy
+            </div>
+            <span class="pc-badge">Think</span>
+          </div>
+          <div class="pc-title">Think<span style="color:rgba(255,255,255,.18);">.</span></div>
+          <div class="pc-desc">Before you build the wrong thing.</div>
+          <a href="mailto:mlg.consult.be@gmail.com" class="pc-btn pc-btn-outline">Start a Think sprint</a>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-list">
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Positioning &amp; Market Fit</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>UX Research &amp; User Interviews</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Product Vision Sprint</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Competitive Landscape Analysis</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Offer Architecture</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Brand Strategy</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Go-to-Market Roadmap</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI Process Integration &amp; Automation</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── BUILD ── (featured) -->
+      <div class="pc-card pc-card-featured" data-glow style="--backup-border: rgba(222,255,154,0.18);">
+        <div data-glow-inner></div>
+        <div class="pc-header">
+          <div class="pc-plan">
+            <div class="pc-plan-name" style="color:rgba(222,255,154,.7);">
+              <!-- Icon: wrench/code -->
+              <svg class="pc-plan-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Execution
+            </div>
+            <span class="pc-badge pc-badge-lime">Build</span>
+          </div>
+          <div class="pc-title pc-title-lime">Build<span style="color:rgba(222,255,154,.25);">.</span></div>
+          <div class="pc-desc">From brief to live. We stay until it ships.</div>
+          <a href="devis.html" class="pc-btn pc-btn-filled">Get a quote</a>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-list">
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Website Design &amp; Development</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>E-commerce (Shopify, WooCommerce, custom)</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mobile Apps &amp; MVPs</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Landing Pages &amp; Funnels</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Design Systems &amp; Component Libraries</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>UI/UX Design</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CMS Integration (Sanity, Strapi, WordPress)</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Tech Architecture &amp; Infra</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Meta &amp; Google Ads</li>
+            <li class="pc-item"><svg class="pc-check pc-check-lime" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>AI-powered features &amp; integrations</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── OPTIMIZE ── -->
+      <div class="pc-card" data-glow>
+        <div data-glow-inner></div>
+        <div class="pc-header">
+          <div class="pc-plan">
+            <div class="pc-plan-name">
+              <!-- Icon: chart/growth -->
+              <svg class="pc-plan-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Performance
+            </div>
+            <span class="pc-badge">Optimize</span>
+          </div>
+          <div class="pc-title">Optimize<span style="color:rgba(255,255,255,.18);">.</span></div>
+          <div class="pc-desc">Grow what already exists.</div>
+          <a href="https://sonarmind.eu" target="_blank" class="pc-btn pc-btn-outline" style="display:flex;align-items:center;gap:.5rem;">Free automated audit <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <p style="margin-top:.6rem;font-size:.75rem;color:rgba(255,255,255,.3);line-height:1.5;">Powered by <a href="https://sonarmind.eu" target="_blank" style="color:rgba(255,255,255,.45);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.2);">Sonar</a> — AI-powered UX audit in 60 seconds. Free.</p>
+        </div>
+        <div class="pc-body">
+          <ul class="pc-list">
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>UX Audits &amp; Heuristic Reviews</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Accessibility Audits &amp; WCAG Compliance</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Conversion Rate Optimization</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analytics Dashboards</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>User Testing &amp; Heatmaps</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Process Design &amp; Operational Clarity</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>A/B Testing &amp; Experiments</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SEO &amp; Technical Audit</li>
+            <li class="pc-item"><svg class="pc-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Performance Monitoring &amp; Reporting</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /pricing-grid -->
+
+    <!-- ── Bundle CTA ── -->
+    <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;margin-top:1rem;padding:2rem 2rem;border:1px solid rgba(222,255,154,.18);border-radius:14px;background:rgba(222,255,154,.03);">
+      <div>
+        <div style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:clamp(1.1rem,2vw,1.4rem);letter-spacing:-.02em;color:#fff;">Need all three? That's where we work best.</div>
+        <p style="margin-top:.4rem;font-size:.875rem;color:rgba(255,255,255,.45);max-width:480px;line-height:1.6;">Think + Build + Optimize. One squad, full scope, zero handoff. Tell us about your project and we'll scope it in 48h.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem 2rem;margin-top:.875rem;">
+          <span style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:rgba(255,255,255,.5);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Scoping doc in 48h</span>
+          <span style="display:flex;align-items:center;gap:.4rem;font-size:.75rem;color:rgba(255,255,255,.5);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>We handle the stakeholdering</span>
+        </div>
+      </div>
+      <a href="mailto:mlg.consult.be@gmail.com" style="flex-shrink:0;display:inline-flex;align-items:center;gap:.5rem;background:#DEFF9A;color:#050806;font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;padding:.875rem 2rem;border-radius:8px;text-decoration:none;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Let's talk <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- SQUAD — team showcase                        -->
+<!-- ──────────────────────────────────────────── -->
+<section id="squad" style="padding:7rem 2.5rem;border-top:1px solid rgba(255,255,255,.06);">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:.6875rem;letter-spacing:.14em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:.875rem;">The squad</div>
+    <h2 class="reveal d1" style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:clamp(2.5rem,7vw,7.5rem);line-height:.93;letter-spacing:-.04em;margin-bottom:1.25rem;">
+      4 seniors.<br/><span style="color:#DEFF9A;">Each owns their pillar.</span>
+    </h2>
+    <p class="reveal d2" style="font-size:1rem;color:rgba(255,255,255,.5);max-width:400px;line-height:1.72;">
+      We start with a clear brief. Then we own your project, end to end.
+    </p>
+
+    <!-- 4 pc-card style cards, aligned grid -->
+    <div class="squad-cards reveal d3">
+
+      <!-- ── Marwan ── -->
+      <div class="pc-card squad-card-v2" data-glow data-squad-id="marwan">
+        <div data-glow-inner></div>
+        <div class="squad-photo-header">
+          <img class="squad-card-photo" src="images/Team%20pic/Marwan.png" alt="Marwan" style="object-position: center 25%;">
+        </div>
+        <div class="pc-body" style="padding:.75rem .375rem .875rem;">
+          <div class="squad-member-top">
+            <span class="squad-indicator"></span>
+            <span class="squad-member-name">Marwan</span>
+          </div>
+          <div class="squad-member-role">Strategic Designer<br/>· Head of Think</div>
+        </div>
+      </div>
+
+      <!-- ── Kamel ── -->
+      <div class="pc-card squad-card-v2" data-glow data-squad-id="kamel">
+        <div data-glow-inner></div>
+        <div class="squad-photo-header">
+          <img class="squad-card-photo" src="images/Team%20pic/Kamel.png" alt="Kamel" style="transform:scale(1.3);transform-origin:center top;">
+        </div>
+        <div class="pc-body" style="padding:.75rem .375rem .875rem;">
+          <div class="squad-member-top">
+            <span class="squad-indicator"></span>
+            <span class="squad-member-name">Kamel</span>
+          </div>
+          <div class="squad-member-role">Business Dev<br/>Talent acquisition</div>
+        </div>
+      </div>
+
+      <!-- ── Yassin ── -->
+      <div class="pc-card squad-card-v2" data-glow data-squad-id="yassin">
+        <div data-glow-inner></div>
+        <div class="squad-photo-header">
+          <img class="squad-card-photo" src="images/Team%20pic/Yassin.png" alt="Yassin" style="transform:scale(1.15);transform-origin:center top;">
+        </div>
+        <div class="pc-body" style="padding:.75rem .375rem .875rem;">
+          <div class="squad-member-top">
+            <span class="squad-indicator"></span>
+            <span class="squad-member-name">Yassin</span>
+          </div>
+          <div class="squad-member-role">Full-Stack Engineer<br/>· Head of Build</div>
+        </div>
+      </div>
+
+      <!-- ── Joel ── -->
+      <div class="pc-card squad-card-v2" data-glow data-squad-id="joel">
+        <div data-glow-inner></div>
+        <div class="squad-photo-header">
+          <img class="squad-card-photo" src="images/Team%20pic/Joel.png" alt="Joel" style="object-position: center 25%;">
+        </div>
+        <div class="pc-body" style="padding:.75rem .375rem .875rem;">
+          <div class="squad-member-top">
+            <span class="squad-indicator"></span>
+            <span class="squad-member-name">Joel</span>
+          </div>
+          <div class="squad-member-role">Business Analyst<br/>· Head of Optimize</div>
+        </div>
+      </div>
+
+    </div><!-- /squad-cards -->
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- MANIFESTO — text reveal on scroll            -->
+<!-- ──────────────────────────────────────────── -->
+<section id="manifesto">
+  <div id="manifesto-sticky">
+    <p id="manifesto-text"></p>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- PROOF — Testimonials                         -->
+<!-- ──────────────────────────────────────────── -->
+<section id="proof" style="padding:7rem 2.5rem;border-top:1px solid rgba(255,255,255,.06);overflow:hidden;">
+  <div style="max-width:1400px;margin:0 auto;">
+
+    <!-- Section header -->
+    <div class="reveal" style="font-family:'JetBrains Mono',monospace;font-size:.6875rem;letter-spacing:.14em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:.875rem;">Selected clients</div>
+    <h2 class="reveal d1" style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:clamp(2.5rem,7vw,6rem);line-height:.93;letter-spacing:-.04em;margin-bottom:1rem;">
+      What they say.<br/><span style="color:#DEFF9A;">Every time.</span>
+    </h2>
+    <p class="reveal d2" style="font-size:1rem;color:rgba(255,255,255,.45);max-width:460px;line-height:1.72;margin-bottom:3.5rem;">
+      Clients who wanted speed, clarity, and results. Not a vendor. A team.
+    </p>
+
+    <!-- 3-col scrolling grid -->
+    <div class="tm-grid reveal d3">
+
+      <!-- ── Column 1 · 15s ── -->
+      <div class="tm-col">
+        <div class="tm-col-inner" style="--duration:15s;">
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">TA</div>
+            <p class="tm-quote">"My operations were siloed and I couldn't see it anymore. MLG helped me untangle the chaos and streamline how we worked — and when I decided to sell, <span style="color:#DEFF9A;">everything was in order. They made a clean exit possible.</span>"</p>
+            <div class="tm-name">Tarik Ahmatovic</div>
+            <div class="tm-role">Former CEO · Maki Maki</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">MV</div>
+            <p class="tm-quote">"I've worked with four agencies before. MLG is the first team that pushed back on my brief — and they were right."</p>
+            <div class="tm-name">Marc V.</div>
+            <div class="tm-role">Directeur Commercial · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">CB</div>
+            <p class="tm-quote">"Post-launch, our conversion rate went up 34%. The Optimize phase alone covered the full engagement cost."</p>
+            <div class="tm-name">Camille B.</div>
+            <div class="tm-role">Head of Growth · [undisclosed]</div>
+          </div>
+          <!-- set 2 — seamless loop -->
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">TA</div>
+            <p class="tm-quote">"My operations were siloed and I couldn't see it anymore. MLG helped me untangle the chaos and streamline how we worked — and when I decided to sell, <span style="color:#DEFF9A;">everything was in order. They made a clean exit possible.</span>"</p>
+            <div class="tm-name">Tarik Ahmatovic</div>
+            <div class="tm-role">Former CEO · Maki Maki</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">MV</div>
+            <p class="tm-quote">"I've worked with four agencies before. MLG is the first team that pushed back on my brief — and they were right."</p>
+            <div class="tm-name">Marc V.</div>
+            <div class="tm-role">Directeur Commercial · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">CB</div>
+            <p class="tm-quote">"Post-launch, our conversion rate went up 34%. The Optimize phase alone covered the full engagement cost."</p>
+            <div class="tm-name">Camille B.</div>
+            <div class="tm-role">Head of Growth · [undisclosed]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Column 2 · 19s ── -->
+      <div class="tm-col">
+        <div class="tm-col-inner" style="--duration:19s;">
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">AL</div>
+            <p class="tm-quote">"I didn't think a website could feel this personal. From the first call to launch, the attention to detail was on another level. <span style="color:#DEFF9A;">Already planning the app with them.</span>"</p>
+            <div class="tm-name">Angelina Luicci</div>
+            <div class="tm-role">Fashion Designer · Angelina Luicci</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">LK</div>
+            <p class="tm-quote">"They took our backlog chaos and turned it into a roadmap we could actually execute. Opinionated, fast, no fluff."</p>
+            <div class="tm-name">Laura K.</div>
+            <div class="tm-role">Head of Product · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">NP</div>
+            <p class="tm-quote">"Kickoff to launch in 6 weeks. They hold themselves accountable the same way they hold you accountable. Rare quality."</p>
+            <div class="tm-name">Nathan P.</div>
+            <div class="tm-role">CEO · [undisclosed]</div>
+          </div>
+          <!-- set 2 -->
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">AL</div>
+            <p class="tm-quote">"I didn't think a website could feel this personal. From the first call to launch, the attention to detail was on another level. <span style="color:#DEFF9A;">Already planning the app with them.</span>"</p>
+            <div class="tm-name">Angelina Luicci</div>
+            <div class="tm-role">Fashion Designer · Angelina Luicci</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">LK</div>
+            <p class="tm-quote">"They took our backlog chaos and turned it into a roadmap we could actually execute. Opinionated, fast, no fluff."</p>
+            <div class="tm-name">Laura K.</div>
+            <div class="tm-role">Head of Product · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">NP</div>
+            <p class="tm-quote">"Kickoff to launch in 6 weeks. They hold themselves accountable the same way they hold you accountable. Rare quality."</p>
+            <div class="tm-name">Nathan P.</div>
+            <div class="tm-role">CEO · [undisclosed]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Column 3 · 17s ── -->
+      <div class="tm-col">
+        <div class="tm-col-inner" style="--duration:17s;">
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">RR</div>
+            <p class="tm-quote">"The rebrand wasn't just visual. It gave our product a real identity and a clear way to speak to the market. <span style="color:#DEFF9A;">We went from 'nice perfume' to a brand with something to say.</span>"</p>
+            <div class="tm-name">Riahi Rania</div>
+            <div class="tm-role">Founder · Fragrance Brand</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">JR</div>
+            <p class="tm-quote">"Our redesign was 18 months overdue. MLG shipped it in 8 weeks including dev handoff. One of the best decisions we made."</p>
+            <div class="tm-name">Julien R.</div>
+            <div class="tm-role">Founder · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow><div data-glow-inner></div>
+            <div class="tm-avatar">AM</div>
+            <p class="tm-quote">"I didn't expect a design partner to care about my infrastructure. They did. The integration was completely seamless."</p>
+            <div class="tm-name">Alex M.</div>
+            <div class="tm-role">CTO · [undisclosed]</div>
+          </div>
+          <!-- set 2 -->
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">RR</div>
+            <p class="tm-quote">"The rebrand wasn't just visual. It gave our product a real identity and a clear way to speak to the market. <span style="color:#DEFF9A;">We went from 'nice perfume' to a brand with something to say.</span>"</p>
+            <div class="tm-name">Riahi Rania</div>
+            <div class="tm-role">Founder · Fragrance Brand</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">JR</div>
+            <p class="tm-quote">"Our redesign was 18 months overdue. MLG shipped it in 8 weeks including dev handoff. One of the best decisions we made."</p>
+            <div class="tm-name">Julien R.</div>
+            <div class="tm-role">Founder · [undisclosed]</div>
+          </div>
+          <div class="tm-card" data-glow aria-hidden="true"><div data-glow-inner></div>
+            <div class="tm-avatar">AM</div>
+            <p class="tm-quote">"I didn't expect a design partner to care about my infrastructure. They did. The integration was completely seamless."</p>
+            <div class="tm-name">Alex M.</div>
+            <div class="tm-role">CTO · [undisclosed]</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tm-grid -->
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- FOOTER V2 — hover footer                    -->
+<!-- ──────────────────────────────────────────── -->
+<footer class="footer-v2" id="cta">
+  <!-- Radial bg gradient -->
+  <div class="footer-bg"></div>
+
+  <!-- ── Content ── -->
+  <div class="ft-content" style="position:relative;z-index:10;padding:3.5rem 3.5rem 0;">
+
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div>
+        <div style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:2.25rem;letter-spacing:-.035em;color:#fff;margin-bottom:.4rem;line-height:1;">
+          MLG<span style="color:#DEFF9A;">.</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#DEFF9A;opacity:.65;margin-bottom:1.25rem;">
+          Management &amp; Lean Guidance
+        </div>
+        <p style="font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.7;max-width:210px;">
+          End-to-end digital squad based in Brussels. Strategy, design, development and growth — one team, zero friction.
+        </p>
+      </div>
+
+      <!-- About Us -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">About us</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.75rem;">
+          <li><a href="#squad"    class="ft-link">The squad</a></li>
+          <li><a href="#services" class="ft-link">Services</a></li>
+          <li><a href="#proof"    class="ft-link">Clients</a></li>
+        </ul>
+      </div>
+
+      <!-- Get a quote -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">Get a quote</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.75rem;">
+          <li style="position:relative;display:inline-block;">
+            <a href="devis.html" class="ft-link">Fill a brief</a>
+            <span style="position:absolute;top:3px;right:-10px;width:5px;height:5px;border-radius:50%;background:#DEFF9A;animation:pulse 2.2s ease-in-out infinite;"></span>
+          </li>
+          <li><a href="mailto:mlg.consult.be@gmail.com" class="ft-link">Let's talk</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">Contact</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:1rem;">
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:mlg.consult.be@gmail.com" class="ft-link" style="font-size:.8125rem;">mlg.consult.be<br/>@gmail.com</a>
+          </li>
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+32470102832" class="ft-link" style="font-size:.8125rem;">0470 10 28 32</a>
+          </li>
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="font-size:.8125rem;color:rgba(255,255,255,.4);">Brussels, Belgium</span>
+          </li>
+        </ul>
+      </div>
+
+    </div><!-- /footer-grid -->
+
+    <!-- Divider -->
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,.07);margin:2.75rem 0 2rem;" />
+
+    <!-- Bottom bar -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:2.75rem;gap:1rem;flex-wrap:wrap;">
+      <!-- Socials -->
+      <div style="display:flex;gap:1.25rem;align-items:center;">
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram" class="ft-icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="#" aria-label="YouTube" class="ft-icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+      <!-- Copyright -->
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:rgba(255,255,255,.2);text-transform:uppercase;">Brussels · Remote · © 2026 MLG</p>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- ── Big SVG text — hover gradient reveal ── -->
+  <div class="footer-svg-wrap" aria-hidden="true">
+    <svg id="footer-svg" width="100%" height="100%" viewBox="0 0 300 100"
+      xmlns="http://www.w3.org/2000/svg" style="cursor:default;user-select:none;">
+      <defs>
+        <!-- Gradient revealed by mouse -->
+        <linearGradient id="ft-grad" gradientUnits="userSpaceOnUse" x1="40" y1="50" x2="260" y2="50">
+          <stop offset="0%"   stop-color="#DEFF9A" />
+          <stop offset="35%"  stop-color="#ffffff" />
+          <stop offset="65%"  stop-color="#DEFF9A" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+        <!-- Radial mask follows mouse -->
+        <radialGradient id="ft-reveal" gradientUnits="userSpaceOnUse" cx="150" cy="50" r="70">
+          <stop offset="0%"   stop-color="white" />
+          <stop offset="100%" stop-color="black" />
+        </radialGradient>
+        <mask id="ft-mask">
+          <rect x="0" y="0" width="300" height="100" fill="url(#ft-reveal)" />
+        </mask>
+      </defs>
+
+      <!-- Layer 1: faint ghost outline (opacity transition on hover) -->
+      <text id="ft-outline" x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="rgba(255,255,255,.1)" stroke-width="0.3"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;opacity:0;transition:opacity .45s;">
+        MLG.
+      </text>
+
+      <!-- Layer 2: animated draw stroke (lime, plays once on load) -->
+      <text id="ft-draw-text" x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="#DEFF9A" stroke-width="0.3"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;">
+        MLG.
+      </text>
+
+      <!-- Layer 3: gradient reveal that follows the mouse cursor -->
+      <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="url(#ft-grad)" stroke-width="0.35"
+        mask="url(#ft-mask)"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;">
+        MLG.
+      </text>
+    </svg>
+  </div>
+
+</footer>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- CASE MODALS — Think portfolio                -->
+<!-- ──────────────────────────────────────────── -->
+
+<!-- ── Modal Think 1 : Strategic Fog → Product ── -->
+<div id="modal-think1" class="case-overlay" role="dialog" aria-modal="true" aria-label="Case study: Strategic Fog → Product">
+  <div class="case-modal">
+    <button class="case-close" onclick="closeCase('think1')" aria-label="Close">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="case-eyebrow"><span class="case-eyebrow-dot"></span>Think &nbsp;·&nbsp; Strategic Engagement &nbsp;·&nbsp; 6–8 weeks</div>
+    <h2 class="case-title">From strategic fog<br>to a market-ready product.</h2>
+    <p class="case-sub">A leading European streaming platform caught between two markets. 17 stakeholders across 5 functions, months of decks, zero decisions. One quarter with MLG to fix that.</p>
+    <div class="case-stats">
+      <div class="case-stat">
+        <div class="case-stat-num">17</div>
+        <div class="case-stat-label">Stakeholders aligned across product, design, marketing, tech &amp; research</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-num">850+</div>
+        <div class="case-stat-label">Users in the quantitative study across 3 segments</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-num">51%</div>
+        <div class="case-stat-label">Retention signal among hybrid customers exposed to the new offer</div>
+      </div>
+    </div>
+    <div class="case-section-label">What MLG did</div>
+    <div class="case-moves">
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Ran a tightly facilitated co-creation workshop with a multi-criteria decision matrix. 17 stakeholders, one morning, a shared roadmap — what usually takes 3 to 6 months of meetings.</div></div>
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Built multi-modal concept artifacts — explainer videos, visual mockups, written specs — calibrated to remove ambiguity. Then tested them quantitatively with 850+ representative users across DTV loyalists, potential cord-cutters, and streaming-only customers.</div></div>
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Delivered a feature-by-feature read on clarity, perceived value, and adoption signal — granular enough to feed straight into roadmap and pricing decisions. Also surfaced two features below comprehension threshold, early enough to rework before launch.</div></div>
+    </div>
+    <div class="case-outcome">
+      <div class="case-outcome-label">Output</div>
+      <div class="case-outcome-text">Multi-quarter roadmap prioritized on real adoption signal. Pricing structure positioned against measured willingness to pay. Leadership aligned without political battles. Cross-functional teams executing instead of arguing.</div>
+    </div>
+    <a href="mailto:mlg.consult.be@gmail.com" class="case-cta">Start a Think sprint <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</div>
+
+<!-- ── Modal Think 2 : €100k Feature Kill ── -->
+<div id="modal-think2" class="case-overlay" role="dialog" aria-modal="true" aria-label="Case study: €100k Feature Kill">
+  <div class="case-modal">
+    <button class="case-close" onclick="closeCase('think2')" aria-label="Close">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="case-eyebrow"><span class="case-eyebrow-dot"></span>Think &nbsp;·&nbsp; Focused Diagnostic &nbsp;·&nbsp; 2–4 weeks</div>
+    <h2 class="case-title">We stopped a six-figure build<br>the market didn't want.</h2>
+    <p class="case-sub">A consumer platform had greenlit an AI feature with full internal buy-in — executive sponsor, engineering staffed, scope expanding. No user evidence. The cost of being wrong was growing every week.</p>
+    <div class="case-stats">
+      <div class="case-stat">
+        <div class="case-stat-num">€100k+</div>
+        <div class="case-stat-label">Engineering effort avoided and reallocated to real user problems</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-num">12%</div>
+        <div class="case-stat-label">Concept appeal — below every viability benchmark</div>
+      </div>
+      <div class="case-stat">
+        <div class="case-stat-num">470</div>
+        <div class="case-stat-label">Users surveyed. Results in one month.</div>
+      </div>
+    </div>
+    <div class="case-section-label">What MLG did</div>
+    <div class="case-moves">
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Scoped the research as a decision tool, not a report. One output: a clear go/no-go signal both CPO and CFO could act on. No 60-page deck. Fifteen questions, seven minutes, representative sample, scoring framework neither side could dismiss as subjective.</div></div>
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Forced internal vision alignment before a single user saw the concept. Everyone signed off on what was being tested — so results couldn't be argued away as testing the wrong thing.</div></div>
+      <div class="case-move"><div class="case-move-bullet"></div><div class="case-move-text">Corrected raw usage intent for curiosity-driven responses. 23% raw collapsed to 6% real. That's the difference between shipping a feature nobody needs and reallocating engineering to problems that actually matter.</div></div>
+    </div>
+    <div class="case-outcome">
+      <div class="case-outcome-label">Output</div>
+      <div class="case-outcome-text">Feature stopped before a single production line was written. Six figures reallocated to problems surfaced by the same study as genuinely under-served. The company exited with a repeatable decision framework for future concepts — not a one-off study, a method.</div>
+    </div>
+    <a href="mailto:mlg.consult.be@gmail.com" class="case-cta">Start a Think sprint <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────── -->
+<!-- SCRIPTS                                      -->
+<!-- ──────────────────────────────────────────── -->
+<script>
+'use strict';
+
+// ════════════════════════════════════════════════
+// PROGRESS BAR
+// ════════════════════════════════════════════════
+const bar = document.querySelector('#progress i');
+function updateBar() {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (max ? window.scrollY / max * 100 : 0) + '%';
+}
+
+// ════════════════════════════════════════════════
+// REVEAL ON SCROLL
+// ════════════════════════════════════════════════
+function handleReveals() {
+  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('in');
+  });
+}
+
+// ════════════════════════════════════════════════
+// HERO PARALLAX
+// ════════════════════════════════════════════════
+const heroSection = document.getElementById('hero-parallax');
+
+// ════════════════════════════════════════════════
+// HEADER STICKY
+// CSS sticky blocked by overflow:hidden → JS translateY trick.
+// Keeps header pinned in viewport while scrolling through the 300vh hero.
+// ════════════════════════════════════════════════
+const parallaxHeader = document.getElementById('parallax-header');
+
+function updateHeader() {
+  if (!heroSection || !parallaxHeader) return;
+  if (window.innerWidth <= 900) return; // CSS handles mobile layout
+  const scrollIn  = Math.max(0, window.scrollY - heroSection.offsetTop);
+  const maxScroll = heroSection.offsetHeight - window.innerHeight;
+  const progress  = scrollIn / maxScroll;
+
+  // Sticky: pin header for the first 45% of scroll
+  const translate = Math.min(scrollIn, maxScroll * 0.45);
+
+  // Fade out: 1 → 0 between progress 0.35 and 0.55
+  const opacity = progress < 0.35
+    ? 1
+    : progress > 0.55
+      ? 0
+      : 1 - (progress - 0.35) / (0.55 - 0.35);
+
+  parallaxHeader.style.transform    = `translateY(${translate}px)`;
+  parallaxHeader.style.opacity      = Math.max(0, Math.min(1, opacity)).toFixed(3);
+  parallaxHeader.style.pointerEvents = opacity < 0.05 ? 'none' : 'auto';
+}
+const grid        = document.getElementById('parallax-grid');
+const row1        = document.getElementById('row1');
+const row2        = document.getElementById('row2');
+
+let currentRotX = 15, targetRotX = 15;
+let currentRotZ = 20, targetRotZ = 20;
+let currentTY   = -700, targetTY = -700;
+let currentOp   = 0.2,  targetOp = 0.2;
+let currentTX  = 0, targetTX  = 0;
+let currentTXR = 0, targetTXR = 0;
+let rafPending  = false;
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function computeTargets() {
+  if (!heroSection || !grid) return;
+  const scrollY   = window.scrollY;
+  const secTop    = heroSection.offsetTop;
+  const secH      = heroSection.offsetHeight;
+  const vh        = window.innerHeight;
+  const maxScroll = secH - vh;
+  const progress  = Math.max(0, Math.min(1, (scrollY - secTop) / maxScroll));
+  const t         = Math.min(1, progress / 0.2);
+
+  targetRotX = 15   * (1 - t);
+  targetRotZ = 20   * (1 - t);
+  targetTY   = -700 + 1200 * t;
+  targetOp   = 0.2  + 0.8 * t;
+  targetTX   =  progress * 1000;
+  targetTXR  = -progress * 1000;
+}
+
+const SPRING = 0.12;
+
+function applyParallax() {
+  rafPending = false;
+  if (window.innerWidth <= 900) return; // CSS handles mobile layout
+  computeTargets();
+
+  currentRotX = lerp(currentRotX, targetRotX, SPRING);
+  currentRotZ = lerp(currentRotZ, targetRotZ, SPRING);
+  currentTY   = lerp(currentTY,   targetTY,   SPRING);
+  currentOp   = lerp(currentOp,   targetOp,   SPRING);
+  currentTX   = lerp(currentTX,   targetTX,   SPRING);
+  currentTXR  = lerp(currentTXR,  targetTXR,  SPRING);
+
+  if (grid) {
+    grid.style.transform = `rotateX(${currentRotX.toFixed(3)}deg) rotateZ(${currentRotZ.toFixed(3)}deg) translateY(${currentTY.toFixed(2)}px)`;
+    grid.style.opacity   = currentOp.toFixed(3);
+  }
+  if (row1) row1.style.transform = `translateX(${currentTX.toFixed(2)}px)`;
+  if (row2) row2.style.transform = `translateX(${currentTXR.toFixed(2)}px)`;
+
+  const delta = Math.abs(currentRotX - targetRotX) + Math.abs(currentTY - targetTY) + Math.abs(currentTX - targetTX);
+  if (delta > 0.05) { rafPending = true; requestAnimationFrame(applyParallax); }
+}
+
+function scheduleParallax() {
+  if (!rafPending) { rafPending = true; requestAnimationFrame(applyParallax); }
+}
+
+// ════════════════════════════════════════════════
+// GLOW CARD — pointer tracking (desktop only)
+// ════════════════════════════════════════════════
+if (window.matchMedia('(hover: hover)').matches) {
+  document.addEventListener('pointermove', (e) => {
+    const xp = (e.clientX / window.innerWidth).toFixed(4);
+    const yp = (e.clientY / window.innerHeight).toFixed(4);
+    document.querySelectorAll('[data-glow]').forEach(card => {
+      card.style.setProperty('--x',  e.clientX.toFixed(2));
+      card.style.setProperty('--xp', xp);
+      card.style.setProperty('--y',  e.clientY.toFixed(2));
+      card.style.setProperty('--yp', yp);
+    });
+  });
+}
+
+// ════════════════════════════════════════════════
+// TEAM SHOWCASE — cross-hover interaction (desktop only)
+// ════════════════════════════════════════════════
+function initSquad() {
+  if (!window.matchMedia('(hover: hover)').matches) return; // no sticky hover on touch
+  function setHovered(id) {
+    document.querySelectorAll('.squad-card-v2').forEach(card => {
+      const mid = card.dataset.squadId;
+      card.classList.toggle('ts-active', mid === id);
+      card.classList.toggle('ts-dimmed', id !== null && mid !== id);
+    });
+  }
+  document.querySelectorAll('.squad-card-v2').forEach(card => {
+    card.addEventListener('mouseenter', () => setHovered(card.dataset.squadId));
+    card.addEventListener('mouseleave', () => setHovered(null));
+  });
+}
+
+// ════════════════════════════════════════════════
+// MOBILE NAV
+// ════════════════════════════════════════════════
+(function() {
+  const toggle = document.getElementById('nav-toggle');
+  const menu   = document.getElementById('mobile-menu');
+  if (!toggle || !menu) return;
+
+  function openMenu() {
+    toggle.classList.add('open');
+    menu.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    toggle.classList.remove('open');
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  toggle.addEventListener('click', () =>
+    menu.classList.contains('open') ? closeMenu() : openMenu()
+  );
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMenu();
+  });
+})();
+
+// ════════════════════════════════════════════════
+// MANIFESTO — word-by-word text reveal on scroll
+// ════════════════════════════════════════════════
+const MANIFESTO_TEXT = "We don't sell slides. We provide the skills your team doesn't have time for. Your project is ours the moment you brief us.";
+const MANIFESTO_LIME = new Set(['skills', 'time', 'Your', 'project', 'is', 'ours']);
+let manifestoWords = [];
+const manifestoSection = document.getElementById('manifesto');
+
+function initManifesto() {
+  const textEl = document.getElementById('manifesto-text');
+  if (!textEl || !manifestoSection) return;
+  const words = MANIFESTO_TEXT.split(' ');
+  textEl.innerHTML = words.map((word, i) => {
+    const clean = word.replace(/[.,!?]/g, '');
+    const isLime = MANIFESTO_LIME.has(clean);
+    return `<span class="wr-word${isLime ? ' wr-lime' : ''}">${word}</span>${i < words.length - 1 ? ' ' : ''}`;
+  }).join('');
+  manifestoWords = Array.from(textEl.querySelectorAll('.wr-word'));
+  updateManifesto();
+}
+
+function updateManifesto() {
+  if (!manifestoSection || !manifestoWords.length) return;
+  const rect     = manifestoSection.getBoundingClientRect();
+  const maxScroll = manifestoSection.offsetHeight - window.innerHeight;
+  const progress  = Math.max(0, Math.min(1, -rect.top / maxScroll));
+  const N         = manifestoWords.length;
+  manifestoWords.forEach((span, i) => {
+    const start = i / N, end = (i + 1) / N;
+    let op;
+    if (progress <= start)     op = 0.13;
+    else if (progress >= end)  op = 1;
+    else                       op = 0.13 + ((progress - start) / (end - start)) * (1 - 0.13);
+    span.style.opacity = op.toFixed(3);
+  });
+}
+
+// ════════════════════════════════════════════════
+// FOOTER SVG — cursor reveal effect
+// ════════════════════════════════════════════════
+(function() {
+  const ftSvg     = document.getElementById('footer-svg');
+  const ftReveal  = document.getElementById('ft-reveal');
+  const ftOutline = document.getElementById('ft-outline');
+  if (!ftSvg || !ftReveal) return;
+
+  ftSvg.addEventListener('mouseenter', () => {
+    if (ftOutline) ftOutline.style.opacity = '1';
+  });
+  ftSvg.addEventListener('mouseleave', () => {
+    if (ftOutline) ftOutline.style.opacity = '0';
+    // Reset radial mask to center
+    ftReveal.setAttribute('cx', '150');
+    ftReveal.setAttribute('cy', '50');
+  });
+  ftSvg.addEventListener('mousemove', (e) => {
+    const rect = ftSvg.getBoundingClientRect();
+    const vx = ((e.clientX - rect.left) / rect.width  * 300).toFixed(2);
+    const vy = ((e.clientY - rect.top)  / rect.height * 100).toFixed(2);
+    ftReveal.setAttribute('cx', vx);
+    ftReveal.setAttribute('cy', vy);
+  });
+})();
+
+// ════════════════════════════════════════════════
+// CASE MODALS — Think portfolio
+// ════════════════════════════════════════════════
+function openCase(id) {
+  const overlay = document.getElementById('modal-' + id);
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCase(id) {
+  const overlay = document.getElementById('modal-' + id);
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close on backdrop click
+document.querySelectorAll('.case-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+});
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.case-overlay.open').forEach(o => {
+      o.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
+
+// ════════════════════════════════════════════════
+// INIT + SCROLL
+// ════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  applyParallax();
+  updateHeader();
+  handleReveals();
+  updateBar();
+  initSquad();
+  initManifesto();
+});
+
+window.addEventListener('scroll', () => {
+  updateBar();
+  handleReveals();
+  scheduleParallax();
+  updateHeader();
+  updateManifesto();
+}, { passive: true });
+</script>
+</body>
+</html>

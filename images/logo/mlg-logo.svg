@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="180" viewBox="0 0 560 180">
+  <!-- Background -->
+  <rect width="560" height="180" fill="#050806"/>
+
+  <!-- "MLG" en blanc -->
+  <text
+    x="269.2"
+    y="97.2"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="'Arial Black', 'Arial Bold', 'Helvetica Neue', Impact, sans-serif"
+    font-weight="900"
+    font-size="120"
+    letter-spacing="-4"
+    fill="#FFFFFF">MLG</text>
+
+  <!-- Point lime — cercle natif SVG -->
+  <circle cx="399.4" cy="124.8" r="8.4" fill="#DEFF9A"/>
+</svg>

@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quote request — MLG</title>
+<meta name="description" content="Tell us about your project. We'll get back to you within 48h." />
+
+<!-- =============================================================
+     FONTS — same stack as index.html
+     ============================================================= -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- =============================================================
+     TAILWIND CDN + CONFIG — same as index.html
+     ============================================================= -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg:       '#000000',
+          surface:  '#0A0A0A',
+          neutral:  '#1A1A1A',
+          line:     '#222222',
+          lime:     '#DEFF9A',
+          dim:      '#7A7A7A',
+        },
+        fontFamily: {
+          display: ['Urbanist', 'sans-serif'],
+          body:    ['Inter', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'monospace'],
+        },
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="design-system.css" />
+<style>
+  /* ── Footer V2 ── */
+  .footer-v2 {
+    position: relative; background: rgba(13,16,13,.55);
+    border-radius: 20px; overflow: hidden;
+    margin: 2.5rem 1.5rem 1.5rem;
+    border: 1px solid rgba(255,255,255,.07);
+  }
+  .footer-bg {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(140% 120% at 50% 0%, rgba(5,8,6,.5) 55%, rgba(222,255,154,.055) 100%);
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 3.5rem; }
+  .ft-link { font-size: .875rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+  .ft-link:hover { color: #DEFF9A; }
+  .ft-icon-link { color: rgba(255,255,255,.28); text-decoration: none; transition: color .2s; display: inline-flex; align-items: center; }
+  .ft-icon-link:hover { color: #DEFF9A; }
+  .footer-svg-wrap { height: 18rem; margin-top: -9.5rem; margin-bottom: -5.5rem; position: relative; z-index: 1; overflow: visible; }
+  @keyframes ft-draw { from { stroke-dashoffset: 3000; } to { stroke-dashoffset: 0; } }
+  #ft-draw-text { stroke-dasharray: 3000; stroke-dashoffset: 3000; animation: ft-draw 5s ease-in-out forwards; animation-delay: 1s; }
+  @media (max-width: 900px) {
+    .footer-v2 { margin: 1.5rem 1rem 1rem; border-radius: 14px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-svg-wrap { height: 12rem; margin-top: -6rem; margin-bottom: -3.5rem; }
+  }
+  @media (max-width: 768px) {
+    .ft-content { padding: 2rem 1.5rem 0 !important; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .footer-svg-wrap { height: 9rem; margin-top: -4.5rem; margin-bottom: -2.5rem; }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-svg-wrap { height: 6.5rem; margin-top: -3rem; margin-bottom: -1.5rem; }
+  }
+</style>
+</head>
+
+<body class="bg-bg text-white font-body antialiased">
+
+<!-- Ambient overlays -->
+<div class="grain"></div>
+
+<!-- =====================================================================
+     HEADER — same structure as index.html
+     ===================================================================== -->
+<header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 md:px-10 py-4" style="backdrop-filter:blur(14px);background:rgba(5,8,6,.75);border-bottom:1px solid rgba(255,255,255,.04);">
+  <a href="index.html" style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:1.375rem;color:#fff;text-decoration:none;letter-spacing:-.025em;">MLG<span style="color:#DEFF9A;">.</span></a>
+  <a href="index.html" class="flex items-center gap-1.5" style="font-size:.8125rem;font-weight:700;color:#DEFF9A;text-decoration:none;">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to MLG
+  </a>
+</header>
+
+
+<!-- =====================================================================
+     HERO
+     ===================================================================== -->
+<section id="hero-section" class="relative overflow-hidden">
+  <div class="gridlines"></div>
+  <div class="lime-glow" style="top:-200px; right:-150px; width:600px; height:600px;"></div>
+
+  <div class="relative max-w-3xl mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-12 text-center">
+    <span class="tag fade"><span class="dot-sm"></span> QUOTE REQUEST — 5 to 8 MIN</span>
+    <h1 class="display-tight text-5xl md:text-7xl mt-6 fade d1">
+      Tell us about<br/>your project.
+    </h1>
+    <p class="mt-6 text-white/65 text-lg leading-relaxed fade d2">
+      The more context you give, the better we prep. <br class="hidden md:block"/>
+      Everything you share stays in the MLG vault. No sales spam, ever.
+    </p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FORM
+     ===================================================================== -->
+<section id="form" class="relative pb-32">
+  <div class="max-w-2xl mx-auto px-6 md:px-10" style="overflow:hidden">
+
+    <!-- Resume banner (hidden by default) -->
+    <div id="resume-banner" class="resume-banner" style="display:none;">
+      <div class="flex-1 min-w-0">
+        <div class="eyebrow">Saved draft found</div>
+        <p class="mt-2 text-sm text-white/80">We've kept your previous answers. Want to pick up where you left off?</p>
+      </div>
+      <button id="btn-resume" class="btn-lime text-xs">Resume</button>
+      <button id="btn-discard" class="btn-ghost text-xs">Start over</button>
+    </div>
+
+    <!-- Progress bar -->
+    <div id="progress-bar-wrap">
+      <div class="progress-track">
+        <div id="progress-fill" class="progress-fill" style="width:0%;"></div>
+      </div>
+      <div class="progress-dots" id="progress-dots">
+        <div class="progress-dot current" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+        <div class="progress-dot" data-step="5"></div>
+        <div class="progress-dot" data-step="6"></div>
+        <div class="progress-dot" data-step="7"></div>
+      </div>
+      <div class="progress-labels" id="progress-labels">
+        <span class="active">01 Identity</span>
+        <span>02 Need</span>
+        <span>03 Project</span>
+        <span>04 Material</span>
+        <span>05 Specs</span>
+        <span>06 Budget</span>
+        <span>07 Submit</span>
+      </div>
+    </div>
+
+    <!-- Honeypot (bots fill this; humans never see it) -->
+    <div class="honeypot" aria-hidden="true">
+      <label>Don't fill this: <input type="text" id="website_check" name="website_check" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    <!-- =================================================================
+         STEP 1 — IDENTITY
+         ================================================================= -->
+    <div class="step-section active" data-step="1">
+      <span class="eyebrow">STEP 01 / 07 — IDENTITY</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">Who's behind this?</h2>
+      <p class="mt-4 text-white/65">Quick basics so we know who we're talking to.</p>
+
+      <div class="mt-10 space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="field-label" for="firstName">First name<span class="req">*</span></label>
+            <input type="text" id="firstName" class="form-input" placeholder="Marwan" data-required data-min="2"/>
+            <div class="field-error">Min 2 characters.</div>
+          </div>
+          <div>
+            <label class="field-label" for="lastName">Last name<span class="req">*</span></label>
+            <input type="text" id="lastName" class="form-input" placeholder="Louhichi" data-required data-min="2"/>
+            <div class="field-error">Min 2 characters.</div>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label" for="email">Work email<span class="req">*</span></label>
+          <input type="email" id="email" class="form-input" placeholder="marwan@yourcompany.com" data-required data-email/>
+          <div class="field-error">Enter a valid email address.</div>
+          <div class="field-warning">Got a work email? It helps us prep a better call.</div>
+        </div>
+
+        <div>
+          <label class="field-label" for="phone">Phone</label>
+          <input type="tel" id="phone" class="form-input" placeholder="+32 4XX XX XX XX"/>
+          <div class="field-hint">Optional.</div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <label class="field-label" for="company">Company name<span class="req">*</span></label>
+            <input type="text" id="company" class="form-input" placeholder="MLG" data-required/>
+            <div class="field-error">Required.</div>
+          </div>
+          <div>
+            <label class="field-label" for="website">Website</label>
+            <input type="text" id="website" class="form-input" placeholder="yourcompany.com" data-domain/>
+            <div class="field-error">Enter a valid domain (e.g. yourcompany.com).</div>
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label" for="role">Your role in the company<span class="req">*</span></label>
+          <select id="role" class="form-select" data-required>
+            <option value="">Select…</option>
+            <option>Founder/CEO</option>
+            <option>COO/Ops Director</option>
+            <option>CMO/Marketing Director</option>
+            <option>Sales/BizDev</option>
+            <option>Product Manager</option>
+            <option>Other</option>
+          </select>
+          <div class="field-error">Pick one.</div>
+        </div>
+
+        <div>
+          <label class="field-label">Team size<span class="req">*</span></label>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3" data-required-group="teamSize">
+            <label class="opt-card"><input type="radio" name="teamSize" value="Solo"><span class="opt-check"></span><span class="opt-label">Solo</span></label>
+            <label class="opt-card"><input type="radio" name="teamSize" value="2-5"><span class="opt-check"></span><span class="opt-label">2-5</span></label>
+            <label class="opt-card"><input type="radio" name="teamSize" value="5-20"><span class="opt-check"></span><span class="opt-label">5-20</span></label>
+            <label class="opt-card"><input type="radio" name="teamSize" value="20-50"><span class="opt-check"></span><span class="opt-label">20-50</span></label>
+            <label class="opt-card"><input type="radio" name="teamSize" value="50-200"><span class="opt-check"></span><span class="opt-label">50-200</span></label>
+            <label class="opt-card"><input type="radio" name="teamSize" value="200+"><span class="opt-check"></span><span class="opt-label">200+</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         STEP 2 — TYPE OF NEED (ROUTER)
+         ================================================================= -->
+    <div class="step-section" data-step="2">
+      <span class="eyebrow">STEP 02 / 07 — TYPE OF NEED</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">What's your main need?</h2>
+      <p class="mt-4 text-white/65">This shapes the rest of the questions. Pick the closest match — we'll fine-tune on the call.</p>
+
+      <div class="mt-10 space-y-3" data-required-group="needType">
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="A"><span class="opt-check"></span><span class="opt-label"><strong>Website / digital presence</strong><br/><span class="text-white/55 text-sm">Showcase, landing, light e-commerce</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="B"><span class="opt-check"></span><span class="opt-label"><strong>Business strategy</strong><br/><span class="text-white/55 text-sm">Positioning, offer, pricing</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="C"><span class="opt-check"></span><span class="opt-label"><strong>Product strategy</strong><br/><span class="text-white/55 text-sm">UX, roadmap, design</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="D"><span class="opt-check"></span><span class="opt-label"><strong>Marketing & acquisition</strong><br/><span class="text-white/55 text-sm">SEO, content, ads</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="E"><span class="opt-check"></span><span class="opt-label"><strong>Sales</strong><br/><span class="text-white/55 text-sm">Cold outreach, funnel, closing</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="F"><span class="opt-check"></span><span class="opt-label"><strong>Full end-to-end project</strong><br/><span class="text-white/55 text-sm">From strategy to launch</span></span></label>
+        <label class="opt-card opt-card-large"><input type="radio" name="needType" value="G"><span class="opt-check"></span><span class="opt-label"><strong>Other / not sure yet</strong><br/><span class="text-white/55 text-sm">Tell us in your own words</span></span></label>
+      </div>
+      <div class="field-error mt-2">Pick one.</div>
+
+      <!-- 'Other' free textarea -->
+      <div id="branch-G-textarea" class="mt-6" style="display:none;">
+        <label class="field-label" for="otherDescription">Tell us what you have in mind<span class="req">*</span></label>
+        <textarea id="otherDescription" class="form-textarea" placeholder="Describe your situation, your goal, what you'd like help with."></textarea>
+        <div class="field-error">Min 50 characters.</div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         STEP 3 — PROJECT DETAILS (BRANCHING)
+         ================================================================= -->
+    <div class="step-section" data-step="3">
+      <span class="eyebrow">STEP 03 / 07 — PROJECT DETAILS</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">Tell us about your project.</h2>
+      <p class="mt-4 text-white/65">The more context you give, the better we can prepare a useful conversation.</p>
+
+      <!-- ===== BRANCH A — Website ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="A" style="display:none;">
+        <div>
+          <label class="field-label">Estimated number of pages<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="pages_A">
+            <label class="opt-card"><input type="radio" name="pages_A" value="1-3 pages"><span class="opt-check"></span><span class="opt-label">1-3 pages (one-pager / simple showcase)</span></label>
+            <label class="opt-card"><input type="radio" name="pages_A" value="4-8 pages"><span class="opt-check"></span><span class="opt-label">4-8 pages (classic site)</span></label>
+            <label class="opt-card"><input type="radio" name="pages_A" value="8+ pages"><span class="opt-check"></span><span class="opt-label">8+ pages (extensive site)</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Type of site (select all that apply)<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="siteType_A" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="siteType_A" value="Pure showcase"><span class="opt-check"></span><span class="opt-label">Pure showcase (presentation)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="siteType_A" value="Showcase + blog"><span class="opt-check"></span><span class="opt-label">Showcase + blog</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="siteType_A" value="Showcase + booking"><span class="opt-check"></span><span class="opt-label">Showcase + booking</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="siteType_A" value="Showcase + e-commerce"><span class="opt-check"></span><span class="opt-label">Showcase + payment / light e-commerce</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="siteType_A" value="Campaign landing page"><span class="opt-check"></span><span class="opt-label">Campaign landing page</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label">Do you have existing content (text, images) or does everything need to be created?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="content_A">
+            <label class="opt-card"><input type="radio" name="content_A" value="Everything ready"><span class="opt-check"></span><span class="opt-label">Everything ready</span></label>
+            <label class="opt-card"><input type="radio" name="content_A" value="Some ready"><span class="opt-check"></span><span class="opt-label">Some ready</span></label>
+            <label class="opt-card"><input type="radio" name="content_A" value="Nothing besides the brief"><span class="opt-check"></span><span class="opt-label">Nothing besides the brief</span></label>
+            <label class="opt-card"><input type="radio" name="content_A" value="Not sure yet"><span class="opt-check"></span><span class="opt-label">Not sure yet</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Existing branding or to be created?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="branding_A">
+            <label class="opt-card"><input type="radio" name="branding_A" value="Full branding"><span class="opt-check"></span><span class="opt-label">Full branding (logo + guidelines)</span></label>
+            <label class="opt-card"><input type="radio" name="branding_A" value="Logo only"><span class="opt-check"></span><span class="opt-label">Logo only</span></label>
+            <label class="opt-card"><input type="radio" name="branding_A" value="Nothing, to create with MLG"><span class="opt-check"></span><span class="opt-label">Nothing, to create with MLG</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH B — Business strategy ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="B" style="display:none;">
+        <div>
+          <label class="field-label" for="project_B">Tell us about your project in a few sentences<span class="req">*</span></label>
+          <textarea id="project_B" class="form-textarea" placeholder="What do you want to clarify or reposition?" data-min="50"></textarea>
+          <div class="field-error">Min 50 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">What stage are you at?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="stage_B">
+            <label class="opt-card"><input type="radio" name="stage_B" value="Idea"><span class="opt-check"></span><span class="opt-label">Idea (not launched yet)</span></label>
+            <label class="opt-card"><input type="radio" name="stage_B" value="Early"><span class="opt-check"></span><span class="opt-label">Early (first revenue)</span></label>
+            <label class="opt-card"><input type="radio" name="stage_B" value="Growing"><span class="opt-check"></span><span class="opt-label">Growing (PMF found)</span></label>
+            <label class="opt-card"><input type="radio" name="stage_B" value="Scaling"><span class="opt-check"></span><span class="opt-label">Scaling (need for structuring)</span></label>
+            <label class="opt-card"><input type="radio" name="stage_B" value="Repositioning"><span class="opt-check"></span><span class="opt-label">Repositioning</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label" for="blocker_B">What's blocking you the most today?<span class="req">*</span></label>
+          <textarea id="blocker_B" class="form-textarea" placeholder="The bottleneck, the unclear part, the thing keeping you up at night." data-min="50"></textarea>
+          <div class="field-error">Min 50 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">Have you worked with a consultant/agency on strategy before?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="consult_B">
+            <label class="opt-card"><input type="radio" name="consult_B" value="Yes and it worked"><span class="opt-check"></span><span class="opt-label">Yes and it worked</span></label>
+            <label class="opt-card"><input type="radio" name="consult_B" value="Yes and it didn't work"><span class="opt-check"></span><span class="opt-label">Yes and it didn't work</span></label>
+            <label class="opt-card"><input type="radio" name="consult_B" value="No never"><span class="opt-check"></span><span class="opt-label">No, never</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+          <div id="consult_B_followup" class="mt-4" style="display:none;">
+            <label class="field-label" for="consult_B_what">What didn't work?</label>
+            <textarea id="consult_B_what" class="form-textarea" placeholder="The mismatch, the deliverables, the methodology — whatever you can share."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH C — Product strategy ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="C" style="display:none;">
+        <div>
+          <label class="field-label" for="project_C">Tell us about your product in a few sentences<span class="req">*</span></label>
+          <textarea id="project_C" class="form-textarea" placeholder="What does it do, for whom, and what's the current state?" data-min="50"></textarea>
+          <div class="field-error">Min 50 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">Type of product<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="prodType_C">
+            <label class="opt-card"><input type="radio" name="prodType_C" value="B2B SaaS"><span class="opt-check"></span><span class="opt-label">B2B SaaS</span></label>
+            <label class="opt-card"><input type="radio" name="prodType_C" value="B2C SaaS"><span class="opt-check"></span><span class="opt-label">B2C SaaS</span></label>
+            <label class="opt-card"><input type="radio" name="prodType_C" value="B2B2C platform"><span class="opt-check"></span><span class="opt-label">B2B2C platform</span></label>
+            <label class="opt-card"><input type="radio" name="prodType_C" value="Mobile app"><span class="opt-check"></span><span class="opt-label">Mobile app</span></label>
+            <label class="opt-card"><input type="radio" name="prodType_C" value="Marketplace"><span class="opt-check"></span><span class="opt-label">Marketplace</span></label>
+            <label class="opt-card"><input type="radio" name="prodType_C" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Product stage<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="prodStage_C">
+            <label class="opt-card"><input type="radio" name="prodStage_C" value="Idea"><span class="opt-check"></span><span class="opt-label">Idea / not yet developed</span></label>
+            <label class="opt-card"><input type="radio" name="prodStage_C" value="MVP in progress"><span class="opt-check"></span><span class="opt-label">MVP in progress</span></label>
+            <label class="opt-card"><input type="radio" name="prodStage_C" value="Launched no traction"><span class="opt-check"></span><span class="opt-label">Launched without traction</span></label>
+            <label class="opt-card"><input type="radio" name="prodStage_C" value="Launched with traction"><span class="opt-check"></span><span class="opt-label">Launched with traction</span></label>
+            <label class="opt-card"><input type="radio" name="prodStage_C" value="Mature"><span class="opt-check"></span><span class="opt-label">Mature, optimizing</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">What do you expect from product work?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="expect_C" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="UX/UI redesign"><span class="opt-check"></span><span class="opt-label">UX/UI redesign</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="Product roadmap"><span class="opt-check"></span><span class="opt-label">Product roadmap</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="User research"><span class="opt-check"></span><span class="opt-label">User research</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="Conversion optimization"><span class="opt-check"></span><span class="opt-label">Conversion optimization</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="Product audit"><span class="opt-check"></span><span class="opt-label">Product audit</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="Design system"><span class="opt-check"></span><span class="opt-label">Design system</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="expect_C" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH D — Marketing ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="D" style="display:none;">
+        <div>
+          <label class="field-label" for="biz_D">Describe your business and target audience<span class="req">*</span></label>
+          <textarea id="biz_D" class="form-textarea" placeholder="What you sell, to whom, and what makes you different." data-min="50"></textarea>
+          <div class="field-error">Min 50 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">Desired acquisition channels<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="channels_D" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="SEO"><span class="opt-check"></span><span class="opt-label">SEO</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Content marketing"><span class="opt-check"></span><span class="opt-label">Content marketing (blog, resources)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Organic LinkedIn"><span class="opt-check"></span><span class="opt-label">Organic LinkedIn</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Meta Ads"><span class="opt-check"></span><span class="opt-label">Meta Ads (Facebook/Instagram)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Google Ads"><span class="opt-check"></span><span class="opt-label">Google Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="LinkedIn Ads"><span class="opt-check"></span><span class="opt-label">LinkedIn Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Email marketing"><span class="opt-check"></span><span class="opt-label">Email marketing</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Influence/partnerships"><span class="opt-check"></span><span class="opt-label">Influence / partnerships</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="channels_D" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label">Are you already running acquisition?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="running_D">
+            <label class="opt-card"><input type="radio" name="running_D" value="Yes working well"><span class="opt-check"></span><span class="opt-label">Yes, working well (need to scale)</span></label>
+            <label class="opt-card"><input type="radio" name="running_D" value="Yes not working"><span class="opt-check"></span><span class="opt-label">Yes, but not working</span></label>
+            <label class="opt-card"><input type="radio" name="running_D" value="No"><span class="opt-check"></span><span class="opt-label">No, nothing yet</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label" for="goal_D">Numerical goal (if you have one)</label>
+          <input type="text" id="goal_D" class="form-input" placeholder="50 leads/month, 200 signups, etc."/>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH E — Sales ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="E" style="display:none;">
+        <div>
+          <label class="field-label" for="offer_E">Describe your offer and average deal size<span class="req">*</span></label>
+          <textarea id="offer_E" class="form-textarea" placeholder="What you sell, the typical price tag, the buyer profile." data-min="50"></textarea>
+          <div class="field-error">Min 50 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">Type of sales<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="salesType_E">
+            <label class="opt-card"><input type="radio" name="salesType_E" value="B2B SaaS"><span class="opt-check"></span><span class="opt-label">B2B SaaS / recurring</span></label>
+            <label class="opt-card"><input type="radio" name="salesType_E" value="B2B services"><span class="opt-check"></span><span class="opt-label">B2B services</span></label>
+            <label class="opt-card"><input type="radio" name="salesType_E" value="B2C product"><span class="opt-check"></span><span class="opt-label">B2C product</span></label>
+            <label class="opt-card"><input type="radio" name="salesType_E" value="B2C services"><span class="opt-check"></span><span class="opt-label">B2C services</span></label>
+            <label class="opt-card"><input type="radio" name="salesType_E" value="Mix"><span class="opt-check"></span><span class="opt-label">Mix</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Average sales cycle<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="cycle_E">
+            <label class="opt-card"><input type="radio" name="cycle_E" value="< 1 week"><span class="opt-check"></span><span class="opt-label">&lt; 1 week</span></label>
+            <label class="opt-card"><input type="radio" name="cycle_E" value="1-4 weeks"><span class="opt-check"></span><span class="opt-label">1-4 weeks</span></label>
+            <label class="opt-card"><input type="radio" name="cycle_E" value="1-3 months"><span class="opt-check"></span><span class="opt-label">1-3 months</span></label>
+            <label class="opt-card"><input type="radio" name="cycle_E" value="3-6 months"><span class="opt-check"></span><span class="opt-label">3-6 months</span></label>
+            <label class="opt-card"><input type="radio" name="cycle_E" value="> 6 months"><span class="opt-check"></span><span class="opt-label">&gt; 6 months</span></label>
+            <label class="opt-card"><input type="radio" name="cycle_E" value="Not sure"><span class="opt-check"></span><span class="opt-label">Not sure</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Main sales need<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="need_E" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Cold outreach"><span class="opt-check"></span><span class="opt-label">Cold outreach (email, LinkedIn)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Cold calling"><span class="opt-check"></span><span class="opt-label">Cold calling</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Funnel building"><span class="opt-check"></span><span class="opt-label">Funnel building</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Scripts and templates"><span class="opt-check"></span><span class="opt-label">Scripts and templates</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Closing/negotiation"><span class="opt-check"></span><span class="opt-label">Closing / negotiation</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="SDR/Sales hiring"><span class="opt-check"></span><span class="opt-label">SDR / Sales hiring</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="need_E" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH F — End-to-end ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="F" style="display:none;">
+        <div>
+          <label class="field-label" for="project_F">Describe your project in detail<span class="req">*</span></label>
+          <textarea id="project_F" class="form-textarea" placeholder="What's the project, where you stand today, and what you're trying to accomplish." data-min="100"></textarea>
+          <div class="field-error">Min 100 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">What parts have you already worked on?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="done_F" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Business strategy"><span class="opt-check"></span><span class="opt-label">Business strategy / business plan</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Branding"><span class="opt-check"></span><span class="opt-label">Branding</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Site/digital"><span class="opt-check"></span><span class="opt-label">Site / digital presence</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Product"><span class="opt-check"></span><span class="opt-label">Product (MVP or more)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Marketing"><span class="opt-check"></span><span class="opt-label">Marketing & acquisition</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Sales"><span class="opt-check"></span><span class="opt-label">Sales / commercial</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="done_F" value="Nothing yet"><span class="opt-check"></span><span class="opt-label">Nothing yet</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label">Which parts do you want MLG to handle?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="want_F" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Business strategy"><span class="opt-check"></span><span class="opt-label">Business strategy</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Branding & identity"><span class="opt-check"></span><span class="opt-label">Branding & identity</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Site/digital"><span class="opt-check"></span><span class="opt-label">Site / digital</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Product"><span class="opt-check"></span><span class="opt-label">Product</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Marketing"><span class="opt-check"></span><span class="opt-label">Marketing & acquisition</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Sales"><span class="opt-check"></span><span class="opt-label">Sales</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="want_F" value="Full end-to-end"><span class="opt-check"></span><span class="opt-label">Full end-to-end</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label" for="deadline_F">Critical deadline or strong constraint?</label>
+          <textarea id="deadline_F" class="form-textarea" placeholder="Fundraising in Q3, product launch in September, etc."></textarea>
+        </div>
+      </div>
+
+      <!-- Branch G has no Step 3 content — handled by skip logic -->
+    </div>
+
+    <!-- =================================================================
+         STEP 4 — CREATIVE MATERIAL (COMMON)
+         ================================================================= -->
+    <div class="step-section" data-step="4">
+      <span class="eyebrow">STEP 04 / 07 — CREATIVE MATERIAL</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">Show us your world.</h2>
+
+      <!-- Educational card -->
+      <div class="card-shine p-6 md:p-8 mt-8">
+        <span class="eyebrow">— WHY THIS MATTERS</span>
+        <p class="mt-4 text-[16px] leading-relaxed text-white/90">
+          The more existing materials you share, the faster we can move and the closer the result will feel to your world. With everything in hand, we can ship a first version in days instead of weeks.
+        </p>
+      </div>
+
+      <div class="mt-10 space-y-8">
+
+        <!-- Brand identity -->
+        <div>
+          <span class="tag mb-4">4.1 — BRAND IDENTITY</span>
+
+          <div class="mt-6">
+            <label class="field-label">Do you have a logo?<span class="req">*</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" data-required-group="hasLogo">
+              <label class="opt-card"><input type="radio" name="hasLogo" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes (upload below)</span></label>
+              <label class="opt-card"><input type="radio" name="hasLogo" value="No"><span class="opt-check"></span><span class="opt-label">No, to create with MLG</span></label>
+            </div>
+            <div class="field-error">Pick one.</div>
+            <div id="upload-logo" class="mt-4" style="display:none;">
+              <div class="upload-zone" data-upload="logo" data-formats=".png,.svg,.jpg,.jpeg,.pdf,.ai" data-max-size="10485760">
+                <div class="upload-icon">↑</div>
+                <p><strong class="text-white">Drop your logo here</strong> or click to browse</p>
+                <p class="mt-1">PNG, SVG, AI, JPG, PDF — max 10MB</p>
+              </div>
+              <div class="file-list" data-file-list="logo"></div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <label class="field-label">Do you have a brand guidelines / brand book?<span class="req">*</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" data-required-group="hasBrandbook">
+              <label class="opt-card"><input type="radio" name="hasBrandbook" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes (PDF upload)</span></label>
+              <label class="opt-card"><input type="radio" name="hasBrandbook" value="No"><span class="opt-check"></span><span class="opt-label">No, to create with MLG</span></label>
+            </div>
+            <div class="field-error">Pick one.</div>
+            <div id="upload-brandbook" class="mt-4" style="display:none;">
+              <div class="upload-zone" data-upload="brandbook" data-formats=".pdf" data-max-size="20971520">
+                <div class="upload-icon">↑</div>
+                <p><strong class="text-white">Drop the brand book</strong> or click to browse</p>
+                <p class="mt-1">PDF only — max 20MB</p>
+              </div>
+              <div class="file-list" data-file-list="brandbook"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-divider"></div>
+
+        <!-- Textual content -->
+        <div>
+          <span class="tag mb-4">4.2 — TEXT CONTENT</span>
+          <div class="mt-6">
+            <label class="field-label">Do you have existing text content for the project?<span class="req">*</span></label>
+            <div class="space-y-3" data-required-group="hasContent">
+              <label class="opt-card"><input type="radio" name="hasContent" value="Everything ready"><span class="opt-check"></span><span class="opt-label">Yes, everything ready</span></label>
+              <label class="opt-card"><input type="radio" name="hasContent" value="Partial"><span class="opt-check"></span><span class="opt-label">Yes, partially</span></label>
+              <label class="opt-card"><input type="radio" name="hasContent" value="No"><span class="opt-check"></span><span class="opt-label">No, to write with MLG</span></label>
+            </div>
+            <div class="field-error">Pick one.</div>
+            <div id="upload-content" class="mt-4" style="display:none;">
+              <div class="upload-zone" data-upload="content" data-formats=".doc,.docx,.pdf,.txt" data-max-size="20971520">
+                <div class="upload-icon">↑</div>
+                <p><strong class="text-white">Drop your docs</strong> or click to browse</p>
+                <p class="mt-1">DOC, DOCX, PDF, TXT — max 20MB each</p>
+              </div>
+              <div class="file-list" data-file-list="content"></div>
+              <div class="mt-3">
+                <label class="field-label" for="contentLink">…or paste a Google Doc link</label>
+                <input type="url" id="contentLink" class="form-input" placeholder="https://docs.google.com/..." data-url/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-divider"></div>
+
+        <!-- Existing visuals -->
+        <div>
+          <span class="tag mb-4">4.3 — EXISTING VISUALS</span>
+
+          <div class="mt-6">
+            <label class="field-label">Photos (product, team, premises, events)</label>
+            <p class="field-hint mb-3">Optional. Max 20 files, 10MB each. Or paste a Drive/Dropbox/WeTransfer link below.</p>
+            <div class="upload-zone" data-upload="photos" data-formats=".jpg,.jpeg,.png,.heic" data-max-size="10485760" data-multi>
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop your photos</strong> or click to browse</p>
+              <p class="mt-1">JPG, PNG, HEIC — max 10MB each</p>
+            </div>
+            <div class="file-list" data-file-list="photos"></div>
+            <div class="mt-3">
+              <input type="url" id="photosLink" class="form-input" placeholder="Drive / Dropbox / WeTransfer link" data-url/>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <label class="field-label">Existing videos</label>
+            <p class="field-hint mb-3">Optional. YouTube/Vimeo link or upload up to 500MB.</p>
+            <div class="upload-zone" data-upload="videos" data-formats=".mp4,.mov" data-max-size="524288000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop a video</strong> or click to browse</p>
+              <p class="mt-1">MP4, MOV — max 500MB</p>
+            </div>
+            <div class="file-list" data-file-list="videos"></div>
+            <div class="mt-3">
+              <input type="url" id="videosLink" class="form-input" placeholder="YouTube / Vimeo link" data-url/>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-divider"></div>
+
+        <!-- Inspirations -->
+        <div>
+          <span class="tag mb-4">4.4 — INSPIRATIONS & REFERENCES</span>
+
+          <div class="mt-6">
+            <label class="field-label">Sites you like (up to 5)</label>
+            <p class="field-hint mb-3">Add the URL and optionally what you like about it.</p>
+            <div id="inspirations-list">
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://inspiringsite.com" data-url/><input type="text" class="form-input" placeholder="What you like (optional)"/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://inspiringsite.com" data-url/><input type="text" class="form-input" placeholder="What you like (optional)"/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://inspiringsite.com" data-url/><input type="text" class="form-input" placeholder="What you like (optional)"/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://inspiringsite.com" data-url/><input type="text" class="form-input" placeholder="What you like (optional)"/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://inspiringsite.com" data-url/><input type="text" class="form-input" placeholder="What you like (optional)"/></div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <label class="field-label">Competitor sites (up to 3)</label>
+            <div id="competitors-list">
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://competitor.com" data-url/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://competitor.com" data-url/></div>
+              <div class="url-row"><input type="url" class="form-input" placeholder="https://competitor.com" data-url/></div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <label class="field-label">Mood board or collection</label>
+            <p class="field-hint mb-3">Pinterest, Figma, Behance link — or upload a PDF (max 50MB).</p>
+            <input type="url" id="moodLink" class="form-input mb-3" placeholder="Pinterest / Figma / Behance link" data-url/>
+            <div class="upload-zone" data-upload="moodboard" data-formats=".pdf" data-max-size="52428800">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Or drop a PDF</strong> or click to browse</p>
+              <p class="mt-1">PDF — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="moodboard"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         STEP 5 — TECHNICAL SPECS (BRANCHING)
+         ================================================================= -->
+    <div class="step-section" data-step="5">
+      <span class="eyebrow">STEP 05 / 07 — TECHNICAL SPECS</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">The tech behind it.</h2>
+      <p class="mt-4 text-white/65">Quick technical context so we know what we're plugging into.</p>
+
+      <!-- ===== BRANCH A — Website tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="A" style="display:none;">
+        <div>
+          <label class="field-label">Do you have a domain name?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="hasDomain_A">
+            <label class="opt-card"><input type="radio" name="hasDomain_A" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="hasDomain_A" value="No"><span class="opt-check"></span><span class="opt-label">No, we'll handle it</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+          <div id="domain_A_followup" class="mt-4" style="display:none;">
+            <label class="field-label" for="domainName_A">Which one?</label>
+            <input type="text" id="domainName_A" class="form-input" placeholder="yourcompany.com"/>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="hosting_A">Current hosting?</label>
+          <input type="text" id="hosting_A" class="form-input" placeholder="OVH, Hostinger, AWS, none yet"/>
+        </div>
+        <div>
+          <label class="field-label">Existing tools to integrate?</label>
+          <div class="space-y-3" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="Newsletter"><span class="opt-check"></span><span class="opt-label">Newsletter (Brevo, Mailchimp, ActiveCampaign)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="Calendar"><span class="opt-check"></span><span class="opt-label">Calendar (Calendly, Cal.com)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="Payment"><span class="opt-check"></span><span class="opt-label">Payment (Stripe, PayPal)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="CRM"><span class="opt-check"></span><span class="opt-label">CRM (HubSpot, Pipedrive)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="Analytics"><span class="opt-check"></span><span class="opt-label">Analytics (GA4, Plausible)</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="tools_A" value="Chat"><span class="opt-check"></span><span class="opt-label">Chat (Crisp, Intercom)</span></label>
+          </div>
+          <input type="text" id="toolsOther_A" class="form-input mt-3" placeholder="Other tools (optional)"/>
+        </div>
+        <div>
+          <label class="field-label">Do you want to be able to edit the site yourself after delivery?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="cms_A">
+            <label class="opt-card"><input type="radio" name="cms_A" value="Yes CMS"><span class="opt-check"></span><span class="opt-label">Yes with a CMS (Webflow, WordPress, etc.)</span></label>
+            <label class="opt-card"><input type="radio" name="cms_A" value="No static"><span class="opt-check"></span><span class="opt-label">No, static site is fine</span></label>
+            <label class="opt-card"><input type="radio" name="cms_A" value="Advise me"><span class="opt-check"></span><span class="opt-label">Not sure, advise me</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH B — Business strategy tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="B" style="display:none;">
+        <div>
+          <label class="field-label">Do you have an existing business plan?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="bizPlan_B">
+            <label class="opt-card"><input type="radio" name="bizPlan_B" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="bizPlan_B" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-bizPlan_B" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="bizPlan_B" data-formats=".pdf" data-max-size="52428800">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop your business plan</strong> or click to browse</p>
+              <p class="mt-1">PDF — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="bizPlan_B"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Do you have business figures to share?</label>
+          <p class="field-hint mb-3">Revenue, margins, forecast — anything you can share.</p>
+          <div class="grid grid-cols-2 gap-3" data-group-name="figures_B">
+            <label class="opt-card"><input type="radio" name="figures_B" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="figures_B" value="No"><span class="opt-check"></span><span class="opt-label">No, we'll discuss on the call</span></label>
+          </div>
+          <div id="upload-figures_B" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="figures_B" data-formats=".pdf,.xlsx,.csv" data-max-size="52428800">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop the figures</strong> or click to browse</p>
+              <p class="mt-1">PDF, XLSX, CSV — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="figures_B"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Market research already done?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="market_B">
+            <label class="opt-card"><input type="radio" name="market_B" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="market_B" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-market_B" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="market_B" data-formats=".pdf" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop the research</strong> or click to browse</p>
+              <p class="mt-1">PDF — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="market_B"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Customer personas defined?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="personas_B">
+            <label class="opt-card"><input type="radio" name="personas_B" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="personas_B" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-personas_B" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="personas_B" data-formats=".pdf,.doc,.docx" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop the personas</strong> or click to browse</p>
+              <p class="mt-1">PDF, DOC — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="personas_B"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH C — Product tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="C" style="display:none;">
+        <div>
+          <label class="field-label">Existing wireframes or mockups?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="wireframes_C">
+            <label class="opt-card"><input type="radio" name="wireframes_C" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="wireframes_C" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-wireframes_C" class="mt-4" style="display:none;">
+            <input type="url" id="wireframesLink_C" class="form-input mb-3" placeholder="Figma / Sketch link" data-url/>
+            <div class="upload-zone" data-upload="wireframes_C" data-formats=".pdf,.png,.jpg" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Or drop files</strong> or click to browse</p>
+              <p class="mt-1">PDF, PNG, JPG — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="wireframes_C"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Current product roadmap?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="roadmap_C">
+            <label class="opt-card"><input type="radio" name="roadmap_C" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="roadmap_C" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-roadmap_C" class="mt-4" style="display:none;">
+            <input type="url" id="roadmapLink_C" class="form-input mb-3" placeholder="Notion / Linear link" data-url/>
+            <div class="upload-zone" data-upload="roadmap_C" data-formats=".pdf" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Or drop a PDF</strong> or click to browse</p>
+            </div>
+            <div class="file-list" data-file-list="roadmap_C"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">User data (analytics, interviews, surveys)?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="userdata_C">
+            <label class="opt-card"><input type="radio" name="userdata_C" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="userdata_C" value="No"><span class="opt-check"></span><span class="opt-label">No, nothing yet</span></label>
+          </div>
+          <div id="upload-userdata_C" class="mt-4" style="display:none;">
+            <input type="url" id="userdataLink_C" class="form-input mb-3" placeholder="Link to docs / dashboard" data-url/>
+            <div class="upload-zone" data-upload="userdata_C" data-formats=".pdf,.doc,.docx,.csv,.xlsx" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Or drop files</strong> or click to browse</p>
+            </div>
+            <div class="file-list" data-file-list="userdata_C"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="stack_C">Product tech stack<span class="req">*</span></label>
+          <input type="text" id="stack_C" class="form-input" placeholder="React + Node, Webflow, WordPress, Bubble, etc." data-required/>
+          <div class="field-error">Required.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH D — Marketing tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="D" style="display:none;">
+        <div>
+          <label class="field-label">Existing ad accounts?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="adAccounts_D" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="adAccounts_D" value="Meta Ads"><span class="opt-check"></span><span class="opt-label">Meta Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="adAccounts_D" value="Google Ads"><span class="opt-check"></span><span class="opt-label">Google Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="adAccounts_D" value="LinkedIn Ads"><span class="opt-check"></span><span class="opt-label">LinkedIn Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="adAccounts_D" value="TikTok Ads"><span class="opt-check"></span><span class="opt-label">TikTok Ads</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="adAccounts_D" value="None"><span class="opt-check"></span><span class="opt-label">None</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label">Analytics installed?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="analytics_D" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="GA4"><span class="opt-check"></span><span class="opt-label">GA4</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="Plausible"><span class="opt-check"></span><span class="opt-label">Plausible</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="Matomo"><span class="opt-check"></span><span class="opt-label">Matomo</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="Mixpanel"><span class="opt-check"></span><span class="opt-label">Mixpanel</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="Amplitude"><span class="opt-check"></span><span class="opt-label">Amplitude</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="analytics_D" value="None"><span class="opt-check"></span><span class="opt-label">None</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+        <div>
+          <label class="field-label">CRM in place?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="crm_D">
+            <label class="opt-card"><input type="radio" name="crm_D" value="HubSpot"><span class="opt-check"></span><span class="opt-label">HubSpot</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="Pipedrive"><span class="opt-check"></span><span class="opt-label">Pipedrive</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="Salesforce"><span class="opt-check"></span><span class="opt-label">Salesforce</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="Notion"><span class="opt-check"></span><span class="opt-label">Notion (custom)</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="Airtable"><span class="opt-check"></span><span class="opt-label">Airtable (custom)</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+            <label class="opt-card"><input type="radio" name="crm_D" value="None"><span class="opt-check"></span><span class="opt-label">None</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Email / automation tools<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="email_D" data-multi>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="Mailchimp"><span class="opt-check"></span><span class="opt-label">Mailchimp</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="Brevo"><span class="opt-check"></span><span class="opt-label">Brevo</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="ActiveCampaign"><span class="opt-check"></span><span class="opt-label">ActiveCampaign</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="Klaviyo"><span class="opt-check"></span><span class="opt-label">Klaviyo</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="Lemlist"><span class="opt-check"></span><span class="opt-label">Lemlist</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+            <label class="opt-card is-checkbox"><input type="checkbox" name="email_D" value="None"><span class="opt-check"></span><span class="opt-label">None</span></label>
+          </div>
+          <div class="field-error">Pick at least one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH E — Sales tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="E" style="display:none;">
+        <div>
+          <label class="field-label" for="process_E">Current sales process<span class="req">*</span></label>
+          <textarea id="process_E" class="form-textarea" placeholder="Describe how you sell today (cold/inbound, channels, steps)." data-min="30"></textarea>
+          <div class="field-error">Min 30 characters.</div>
+        </div>
+        <div>
+          <label class="field-label">CRM in place?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="crm_E">
+            <label class="opt-card"><input type="radio" name="crm_E" value="HubSpot"><span class="opt-check"></span><span class="opt-label">HubSpot</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="Pipedrive"><span class="opt-check"></span><span class="opt-label">Pipedrive</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="Salesforce"><span class="opt-check"></span><span class="opt-label">Salesforce</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="Notion"><span class="opt-check"></span><span class="opt-label">Notion (custom)</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="Airtable"><span class="opt-check"></span><span class="opt-label">Airtable (custom)</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+            <label class="opt-card"><input type="radio" name="crm_E" value="None"><span class="opt-check"></span><span class="opt-label">None</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+        <div>
+          <label class="field-label">Existing cold call scripts / email templates?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="scripts_E">
+            <label class="opt-card"><input type="radio" name="scripts_E" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="scripts_E" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-scripts_E" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="scripts_E" data-formats=".pdf,.doc,.docx,.txt" data-max-size="20000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop your scripts</strong> or click to browse</p>
+              <p class="mt-1">PDF, DOCX, TXT — max 20MB</p>
+            </div>
+            <div class="file-list" data-file-list="scripts_E"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Prospecting target<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="target_E">
+            <label class="opt-card"><input type="radio" name="target_E" value="B2B"><span class="opt-check"></span><span class="opt-label">B2B</span></label>
+            <label class="opt-card"><input type="radio" name="target_E" value="B2C"><span class="opt-check"></span><span class="opt-label">B2C</span></label>
+            <label class="opt-card"><input type="radio" name="target_E" value="Mix"><span class="opt-check"></span><span class="opt-label">Mix</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+      </div>
+
+      <!-- ===== BRANCH F — End-to-end tech ===== -->
+      <div class="branch-content mt-10 space-y-6" data-branch="F" style="display:none;">
+        <div>
+          <label class="field-label">Existing project brief?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="brief_F">
+            <label class="opt-card"><input type="radio" name="brief_F" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="brief_F" value="No"><span class="opt-check"></span><span class="opt-label">No, to co-build</span></label>
+          </div>
+          <div id="upload-brief_F" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="brief_F" data-formats=".pdf" data-max-size="100000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop the brief</strong> or click to browse</p>
+              <p class="mt-1">PDF — max 100MB</p>
+            </div>
+            <div class="file-list" data-file-list="brief_F"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">Vision / strategy document?</label>
+          <div class="grid grid-cols-2 gap-3" data-group-name="vision_F">
+            <label class="opt-card"><input type="radio" name="vision_F" value="Yes"><span class="opt-check"></span><span class="opt-label">Yes</span></label>
+            <label class="opt-card"><input type="radio" name="vision_F" value="No"><span class="opt-check"></span><span class="opt-label">No</span></label>
+          </div>
+          <div id="upload-vision_F" class="mt-4" style="display:none;">
+            <div class="upload-zone" data-upload="vision_F" data-formats=".pdf,.doc,.docx" data-max-size="50000000">
+              <div class="upload-icon">↑</div>
+              <p><strong class="text-white">Drop the document</strong> or click to browse</p>
+              <p class="mt-1">PDF, DOC — max 50MB</p>
+            </div>
+            <div class="file-list" data-file-list="vision_F"></div>
+          </div>
+        </div>
+        <div>
+          <label class="field-label" for="stack_F">Current tech stack (if applicable)</label>
+          <input type="text" id="stack_F" class="form-input" placeholder="Product in React + Node, Webflow site, etc."/>
+        </div>
+        <div>
+          <label class="field-label" for="tools_F">Existing tools already in place</label>
+          <p class="field-hint mb-3">Analytics, CRM, email, ads — free list.</p>
+          <textarea id="tools_F" class="form-textarea" placeholder="GA4, HubSpot, Mailchimp, Meta Ads…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         STEP 6 — BUDGET & TIMING
+         ================================================================= -->
+    <div class="step-section" data-step="6">
+      <span class="eyebrow">STEP 06 / 07 — BUDGET & TIMING</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">Money & calendar.</h2>
+      <p class="mt-4 text-white/65">Real talk: what's the order of magnitude, and how fast do you want to move?</p>
+
+      <div class="mt-10 space-y-6">
+        <div>
+          <label class="field-label">Estimated budget<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="budget">
+            <label class="opt-card"><input type="radio" name="budget" value="< €3k"><span class="opt-check"></span><span class="opt-label">&lt; €3k (short sprint / simple site)</span></label>
+            <label class="opt-card"><input type="radio" name="budget" value="€3-10k"><span class="opt-check"></span><span class="opt-label">€3-10k</span></label>
+            <label class="opt-card"><input type="radio" name="budget" value="€10-30k"><span class="opt-check"></span><span class="opt-label">€10-30k</span></label>
+            <label class="opt-card"><input type="radio" name="budget" value="€30-80k"><span class="opt-check"></span><span class="opt-label">€30-80k</span></label>
+            <label class="opt-card"><input type="radio" name="budget" value="€80k+"><span class="opt-check"></span><span class="opt-label">€80k+</span></label>
+            <label class="opt-card"><input type="radio" name="budget" value="Discuss on call"><span class="opt-check"></span><span class="opt-label">Let's discuss on a call</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+
+        <div>
+          <label class="field-label">When do you want to start?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="start">
+            <label class="opt-card"><input type="radio" name="start" value="ASAP"><span class="opt-check"></span><span class="opt-label">ASAP (this week or next)</span></label>
+            <label class="opt-card"><input type="radio" name="start" value="Within month"><span class="opt-check"></span><span class="opt-label">Within the month</span></label>
+            <label class="opt-card"><input type="radio" name="start" value="1-3 months"><span class="opt-check"></span><span class="opt-label">1-3 months</span></label>
+            <label class="opt-card"><input type="radio" name="start" value="3-6 months"><span class="opt-check"></span><span class="opt-label">3-6 months</span></label>
+            <label class="opt-card"><input type="radio" name="start" value="No deadline"><span class="opt-check"></span><span class="opt-label">No firm deadline</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+
+        <div>
+          <label class="field-label" for="constraint">Delivery deadline or constraint?</label>
+          <textarea id="constraint" class="form-textarea" placeholder="Client event, product launch, end of fiscal year, etc."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         STEP 7 — NEXT STEPS & SUBMISSION
+         ================================================================= -->
+    <div class="step-section" data-step="7">
+      <span class="eyebrow">STEP 07 / 07 — LAST STRETCH</span>
+      <h2 class="display-tight text-4xl md:text-5xl mt-4">Almost done.</h2>
+      <p class="mt-4 text-white/65">Three quick questions and we're sending it off.</p>
+
+      <div class="mt-10 space-y-6">
+        <div>
+          <label class="field-label">How did you hear about MLG?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="source">
+            <label class="opt-card"><input type="radio" name="source" value="Word of mouth"><span class="opt-check"></span><span class="opt-label">Word of mouth / referral</span></label>
+            <label class="opt-card"><input type="radio" name="source" value="LinkedIn"><span class="opt-check"></span><span class="opt-label">LinkedIn</span></label>
+            <label class="opt-card"><input type="radio" name="source" value="Google"><span class="opt-check"></span><span class="opt-label">Google search</span></label>
+            <label class="opt-card"><input type="radio" name="source" value="Pro network"><span class="opt-check"></span><span class="opt-label">Pro network / event</span></label>
+            <label class="opt-card"><input type="radio" name="source" value="Other social"><span class="opt-check"></span><span class="opt-label">Other social media</span></label>
+            <label class="opt-card"><input type="radio" name="source" value="Other"><span class="opt-check"></span><span class="opt-label">Other</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+
+        <div>
+          <label class="field-label">How do you prefer we follow up?<span class="req">*</span></label>
+          <div class="space-y-3" data-required-group="followup">
+            <label class="opt-card"><input type="radio" name="followup" value="Call"><span class="opt-check"></span><span class="opt-label">30-min call this week or next</span></label>
+            <label class="opt-card"><input type="radio" name="followup" value="Email scope"><span class="opt-check"></span><span class="opt-label">Email first to scope</span></label>
+            <label class="opt-card"><input type="radio" name="followup" value="Written"><span class="opt-check"></span><span class="opt-label">Prefer writing first, we'll see later</span></label>
+          </div>
+          <div class="field-error">Pick one.</div>
+        </div>
+
+        <div>
+          <label class="field-label" for="addInfo">Anything you'd like to add?</label>
+          <textarea id="addInfo" class="form-textarea" placeholder="Additional info, specific constraints, etc."></textarea>
+        </div>
+
+        <div class="card p-5 mt-6">
+          <label class="opt-card is-checkbox" style="background:transparent; border:none; padding:0;">
+            <input type="checkbox" id="gdpr" data-required-bool>
+            <span class="opt-check"></span>
+            <span class="opt-label text-sm leading-relaxed">I agree that MLG keeps this info to process my request. We'll never share or sell your data. <a href="#" id="privacy-link" class="text-lime underline">Privacy policy</a>.<span class="req">*</span></span>
+          </label>
+          <div class="field-error mt-3">Required to submit.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================
+         NAVIGATION (PREV / NEXT / SUBMIT)
+         ================================================================= -->
+    <div class="mt-20">
+      <div id="validation-banner" class="validation-banner">
+        <span class="vb-icon">!</span>
+        <span id="validation-banner-text">Some fields need attention before moving on.</span>
+      </div>
+
+      <div class="flex items-center justify-between gap-4">
+      <button id="btn-prev" class="btn-ghost" style="opacity:0;pointer-events:none;transition:opacity .2s;">← Back</button>
+      <div class="flex items-center gap-3">
+        <span id="step-counter" class="text-xs text-white/40 font-mono">01 / 07</span>
+        <button id="btn-next" class="btn-lime">Next →</button>
+        <button id="btn-submit" class="btn-lime" style="display:none;">Send request →</button>
+      </div>
+    </div>
+    </div>
+
+    <!-- Debug panel (toggle with Cmd+Shift+D) -->
+    <div id="debug-panel" class="debug-panel" style="display:none;">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-lime">— DEBUG STATE</span>
+        <button id="btn-debug-close" class="text-white/40 hover:text-white">✕</button>
+      </div>
+      <pre id="debug-content"></pre>
+    </div>
+
+    <!-- =================================================================
+         CONFIRMATION (HIDDEN UNTIL SUBMIT)
+         ================================================================= -->
+    <div id="confirmation" class="text-center py-12" style="display:none;">
+      <div class="check-anim">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <span class="eyebrow">REQUEST RECEIVED</span>
+      <h2 class="display-tight text-5xl md:text-6xl mt-6">Locked & loaded.</h2>
+      <p class="mt-6 text-white/75 max-w-md mx-auto leading-relaxed">
+        We've got your request. Marwan will go through it personally and get back to you <strong class="text-lime">within 48 business hours.</strong>
+      </p>
+
+      <div class="card p-6 mt-10 max-w-md mx-auto text-left">
+        <span class="eyebrow">— RECAP</span>
+        <div id="confirmation-recap" class="mt-4 space-y-3 text-sm"></div>
+      </div>
+
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="https://calendly.com/mlg-consult-be/30min" target="_blank" rel="noopener" class="btn-lime">Book a slot now →</a>
+        <a href="index.html" class="btn-ghost">Back to homepage</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================================================================
+     FOOTER V2 — same as landing
+     ===================================================================== -->
+<footer class="footer-v2">
+  <div class="footer-bg"></div>
+  <div class="ft-content" style="position:relative;z-index:10;padding:3.5rem 3.5rem 0;">
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div>
+        <div style="font-family:'Urbanist',sans-serif;font-weight:900;font-size:2.25rem;letter-spacing:-.035em;color:#fff;margin-bottom:.4rem;line-height:1;">
+          MLG<span style="color:#DEFF9A;">.</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:#DEFF9A;opacity:.65;margin-bottom:1.25rem;">
+          Management &amp; Lean Guidance
+        </div>
+        <p style="font-size:.875rem;color:rgba(255,255,255,.38);line-height:1.7;max-width:210px;">
+          End-to-end digital squad based in Brussels. Strategy, design, development and growth — one team, zero friction.
+        </p>
+      </div>
+
+      <!-- About Us -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">About us</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.75rem;">
+          <li><a href="index.html#squad"    class="ft-link">The squad</a></li>
+          <li><a href="index.html#services" class="ft-link">Services</a></li>
+          <li><a href="index.html#proof"    class="ft-link">Clients</a></li>
+        </ul>
+      </div>
+
+      <!-- Get a quote -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">Get a quote</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.75rem;">
+          <li style="position:relative;display:inline-block;">
+            <a href="devis.html" class="ft-link">Fill a brief</a>
+            <span style="position:absolute;top:3px;right:-10px;width:5px;height:5px;border-radius:50%;background:#DEFF9A;animation:pulse 2.2s ease-in-out infinite;"></span>
+          </li>
+          <li><a href="mailto:mlg.consult.be@gmail.com" class="ft-link">Let's talk</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 style="font-family:'Urbanist',sans-serif;font-weight:700;font-size:.9375rem;color:#fff;margin-bottom:1.375rem;">Contact</h4>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:1rem;">
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <a href="mailto:mlg.consult.be@gmail.com" class="ft-link" style="font-size:.8125rem;">mlg.consult.be<br/>@gmail.com</a>
+          </li>
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.38 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+32470102832" class="ft-link" style="font-size:.8125rem;">0470 10 28 32</a>
+          </li>
+          <li style="display:flex;align-items:center;gap:.625rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#DEFF9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="font-size:.8125rem;color:rgba(255,255,255,.4);">Brussels, Belgium</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,.07);margin:2.75rem 0 2rem;" />
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:2.75rem;gap:1rem;flex-wrap:wrap;">
+      <div style="display:flex;gap:1.25rem;align-items:center;">
+        <a href="#" aria-label="Instagram" class="ft-icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube" class="ft-icon-link">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:rgba(255,255,255,.2);text-transform:uppercase;">Brussels · Remote · © 2026 MLG</p>
+    </div>
+  </div>
+
+  <!-- Big SVG text — hover gradient reveal -->
+  <div class="footer-svg-wrap" aria-hidden="true">
+    <svg id="footer-svg" width="100%" height="100%" viewBox="0 0 300 100"
+      xmlns="http://www.w3.org/2000/svg" style="cursor:default;user-select:none;">
+      <defs>
+        <linearGradient id="ft-grad" gradientUnits="userSpaceOnUse" x1="40" y1="50" x2="260" y2="50">
+          <stop offset="0%"   stop-color="#DEFF9A" />
+          <stop offset="35%"  stop-color="#ffffff" />
+          <stop offset="65%"  stop-color="#DEFF9A" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+        <radialGradient id="ft-reveal" gradientUnits="userSpaceOnUse" cx="150" cy="50" r="70">
+          <stop offset="0%"   stop-color="white" />
+          <stop offset="100%" stop-color="black" />
+        </radialGradient>
+        <mask id="ft-mask">
+          <rect x="0" y="0" width="300" height="100" fill="url(#ft-reveal)" />
+        </mask>
+      </defs>
+      <text id="ft-outline" x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="rgba(255,255,255,.1)" stroke-width="0.3"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;opacity:0;transition:opacity .45s;">
+        MLG.
+      </text>
+      <text id="ft-draw-text" x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="#DEFF9A" stroke-width="0.3"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;">
+        MLG.
+      </text>
+      <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle"
+        fill="none" stroke="url(#ft-grad)" stroke-width="0.35"
+        mask="url(#ft-mask)"
+        style="font-family:'Urbanist',sans-serif;font-size:72px;font-weight:900;">
+        MLG.
+      </text>
+    </svg>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     PRIVACY MODAL
+     ===================================================================== -->
+<div id="privacy-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+  <div class="modal-card">
+    <button type="button" class="modal-close" id="privacy-close" aria-label="Close">✕</button>
+    <span class="eyebrow">— PRIVACY POLICY</span>
+    <h3 id="privacy-title" class="display-tight text-3xl mt-4">Short and straight.</h3>
+    <div class="mt-6 space-y-4 text-[15px] leading-relaxed text-white/85">
+      <p>We keep your data to process your request, that's it. Stored in our Google Drive, never shared, never sold.</p>
+      <p>If we don't end up working together, your file gets deleted within <strong class="text-lime">6 months</strong>.</p>
+      <p>If we do work together, we keep it for the duration of the project + <strong class="text-lime">2 years</strong> for legal reasons (invoicing, accounting).</p>
+      <p class="text-white/60 text-sm pt-2 border-t border-white/[0.06]">Want it deleted earlier, or have any question? Email <a href="mailto:mlg.consult.be@gmail.com" class="text-lime underline">mlg.consult.be@gmail.com</a>.</p>
+    </div>
+    <div class="mt-8 flex justify-end">
+      <button type="button" class="btn-lime" id="privacy-ok">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     JAVASCRIPT — state machine, validation, uploads, localStorage
+     ===================================================================== -->
+<script>
+/* ==================================================================
+   CONFIG
+   ================================================================== */
+const CONFIG = {
+  WEBHOOK_URL: 'https://script.google.com/macros/s/AKfycbz-D0R7B9bYeg9g5Nbkci_zUioGHO1DZuiiobU5ABykmQQPjUSGt5RPMMB3KtIRdPNk/exec',
+  STORAGE_KEY: 'mlg_quote_v1',
+  STORAGE_EXPIRY_DAYS: 7,
+  MOCK_BACKEND: false, // set false when real backend connected
+  CONSUMER_EMAILS: ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'live.com', 'me.com'],
+  TOTAL_UPLOAD_LIMIT: 1024 * 1024 * 1024, // 1GB
+};
+
+/* ==================================================================
+   STATE
+   ================================================================== */
+const state = {
+  currentStep: 1,
+  needType: null,           // A | B | C | D | E | F | G
+  previousNeedType: null,   // for branch-change warning
+  data: {},                 // all form values
+  files: {},                // { uploadId: [File, File, ...] }
+};
+
+/* ==================================================================
+   STEP NAVIGATION
+   ================================================================== */
+function getActiveSteps() {
+  // Branch G skips Step 3 and Step 5
+  if (state.needType === 'G') return [1, 2, 4, 6, 7];
+  return [1, 2, 3, 4, 5, 6, 7];
+}
+
+function showStep(n) {
+  document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+  const el = document.querySelector(`.step-section[data-step="${n}"]`);
+  if (el) el.classList.add('active');
+
+  // Branch visibility within step 3 and step 5
+  if ((n === 3 || n === 5) && state.needType && state.needType !== 'G') {
+    el.querySelectorAll('.branch-content').forEach(b => {
+      b.style.display = (b.dataset.branch === state.needType) ? 'block' : 'none';
+    });
+  }
+
+  // Hero intro: hide from step 2 onward, restore on step 1
+  const heroSection = document.getElementById('hero-section');
+  if (heroSection) {
+    heroSection.classList.toggle('hero-hidden', n !== 1);
+  }
+
+  // Progress bar extra spacing in immersive mode (step 2+)
+  const progressWrap = document.getElementById('progress-bar-wrap');
+  if (progressWrap) {
+    progressWrap.classList.toggle('immersive', n !== 1);
+  }
+
+  state.currentStep = n;
+  updateProgress();
+  updateNavButtons();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const active = getActiveSteps();
+  const posInActive = active.indexOf(state.currentStep); // 0-based position within active steps
+  const total = active.length;
+  const stepIdx = state.currentStep - 1; // absolute 0-based index (for labels)
+
+  const dots = document.querySelectorAll('#progress-dots .progress-dot');
+  const labels = document.querySelectorAll('#progress-labels span');
+
+  dots.forEach((dot, i) => {
+    const stepNum = i + 1;
+    dot.classList.remove('done', 'current');
+    if (!active.includes(stepNum)) {
+      dot.style.opacity = '0.2'; // visually dim skipped steps
+      return;
+    }
+    dot.style.opacity = '';
+    const pos = active.indexOf(stepNum);
+    if (pos < posInActive) dot.classList.add('done');
+    if (stepNum === state.currentStep) dot.classList.add('current');
+  });
+  labels.forEach((lbl, i) => lbl.classList.toggle('active', i === stepIdx));
+
+  // Fill based on position within active steps, not raw step number
+  const fillPct = total > 1 ? (posInActive / (total - 1)) * 100 : 100;
+  document.getElementById('progress-fill').style.width = fillPct + '%';
+
+  // Counter reflects actual position (e.g. "03 / 05" for branch G)
+  document.getElementById('step-counter').textContent =
+    String(posInActive + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+}
+
+function updateNavButtons() {
+  const prevBtn = document.getElementById('btn-prev');
+  const nextBtn = document.getElementById('btn-next');
+  const submitBtn = document.getElementById('btn-submit');
+
+  prevBtn.style.opacity = (state.currentStep === 1) ? '0' : '1';
+  prevBtn.style.pointerEvents = (state.currentStep === 1) ? 'none' : '';
+
+  if (state.currentStep === 7) {
+    nextBtn.style.display = 'none';
+    submitBtn.style.display = 'inline-flex';
+  } else {
+    nextBtn.style.display = 'inline-flex';
+    submitBtn.style.display = 'none';
+  }
+}
+
+function goNext() {
+  const result = validateStep(state.currentStep);
+  if (!result.ok) {
+    const section = document.querySelector(`.step-section[data-step="${state.currentStep}"]`);
+    const scope = (state.currentStep === 3 || state.currentStep === 5) && state.needType && state.needType !== 'G'
+      ? section.querySelector(`.branch-content[data-branch="${state.needType}"]`)
+      : section;
+    showValidationBanner(result.errors, scope);
+    return;
+  }
+  hideValidationBanner();
+  collectStep(state.currentStep);
+  persistState();
+
+  const active = getActiveSteps();
+  const idx = active.indexOf(state.currentStep);
+  if (idx < active.length - 1) {
+    showStep(active[idx + 1]);
+  }
+}
+
+function goPrev() {
+  hideValidationBanner();
+  const active = getActiveSteps();
+  const idx = active.indexOf(state.currentStep);
+  if (idx > 0) {
+    showStep(active[idx - 1]);
+  }
+}
+
+/* ==================================================================
+   VALIDATION
+   ================================================================== */
+function validateStep(n) {
+  const section = document.querySelector(`.step-section[data-step="${n}"]`);
+  if (!section) return { ok: true, errors: 0 };
+  let errors = 0;
+
+  // For step 3 and 5, only validate visible branch
+  const scope = (n === 3 || n === 5) && state.needType && state.needType !== 'G'
+    ? section.querySelector(`.branch-content[data-branch="${state.needType}"]`)
+    : section;
+
+  if (!scope) return { ok: true, errors: 0 }; // branch G skips
+
+  // Required text inputs / textareas / selects
+  scope.querySelectorAll('[data-required]').forEach(input => {
+    if (input.offsetParent === null && input.type !== 'hidden') return; // hidden
+    const val = (input.value || '').trim();
+    const minAttr = input.getAttribute('data-min');
+    const min = minAttr ? parseInt(minAttr) : 1;
+    const errEl = input.parentElement.querySelector('.field-error');
+    if (!val || val.length < min) {
+      input.classList.add('invalid');
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    } else {
+      input.classList.remove('invalid');
+      if (errEl) errEl.classList.remove('show');
+    }
+  });
+
+  // Required radio/checkbox groups
+  scope.querySelectorAll('[data-required-group]').forEach(group => {
+    const name = group.dataset.requiredGroup;
+    const inputs = group.querySelectorAll(`input[name="${name}"]`);
+    const checked = Array.from(inputs).some(i => i.checked);
+    const errEl = group.parentElement.querySelector('.field-error');
+    if (!checked) {
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    } else {
+      if (errEl) errEl.classList.remove('show');
+    }
+  });
+
+  // Required boolean (gdpr)
+  scope.querySelectorAll('[data-required-bool]').forEach(cb => {
+    const errEl = cb.closest('.card').querySelector('.field-error');
+    if (!cb.checked) {
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    } else {
+      if (errEl) errEl.classList.remove('show');
+    }
+  });
+
+  // Min characters on textareas (non-required but if filled with data-min)
+  scope.querySelectorAll('textarea[data-min]').forEach(ta => {
+    const min = parseInt(ta.getAttribute('data-min'));
+    const val = ta.value.trim();
+    const errEl = ta.parentElement.querySelector('.field-error');
+    if (val && val.length < min) {
+      ta.classList.add('invalid');
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    }
+  });
+
+  // Email format
+  scope.querySelectorAll('[data-email]').forEach(input => {
+    const val = input.value.trim();
+    if (val && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+      input.classList.add('invalid');
+      const errEl = input.parentElement.querySelector('.field-error');
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    }
+  });
+
+  // URL format (strict — requires protocol)
+  scope.querySelectorAll('[data-url]').forEach(input => {
+    const val = input.value.trim();
+    if (val && !/^https?:\/\/.+\..+/.test(val)) {
+      input.classList.add('invalid');
+      const errEl = input.parentElement.querySelector('.field-error');
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    }
+  });
+
+  // Domain format (flexible — accepts domain without protocol)
+  scope.querySelectorAll('[data-domain]').forEach(input => {
+    const val = input.value.trim();
+    const errEl = input.parentElement.querySelector('.field-error');
+    if (val && !/^(https?:\/\/)?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/.*)?$/.test(val)) {
+      input.classList.add('invalid');
+      if (errEl) errEl.classList.add('show');
+      errors++;
+    } else {
+      input.classList.remove('invalid');
+      if (errEl) errEl.classList.remove('show');
+    }
+  });
+
+  // Phone validation removed — no country/format check, accept anything
+
+  // Step 2 special: branch G needs the textarea
+  if (n === 2 && state.needType === 'G') {
+    const ta = document.getElementById('otherDescription');
+    if (!ta.value.trim() || ta.value.trim().length < 50) {
+      ta.classList.add('invalid');
+      ta.parentElement.querySelector('.field-error').classList.add('show');
+      errors++;
+    }
+  }
+
+  return { ok: errors === 0, errors };
+}
+
+/* ==================================================================
+   VALIDATION BANNER
+   ================================================================== */
+function showValidationBanner(count, scope) {
+  const banner = document.getElementById('validation-banner');
+  const text = document.getElementById('validation-banner-text');
+  const label = count === 1 ? '1 field needs attention' : `${count} fields need attention`;
+  text.textContent = `${label} before moving on.`;
+  banner.classList.add('show');
+
+  // Scroll to first invalid element within current scope
+  if (scope) {
+    const firstInvalid = scope.querySelector('.invalid, .field-error.show');
+    if (firstInvalid) {
+      const target = firstInvalid.closest('div[data-required-group], div') || firstInvalid;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function hideValidationBanner() {
+  document.getElementById('validation-banner').classList.remove('show');
+}
+
+/* ==================================================================
+   DATA COLLECTION
+   ================================================================== */
+function collectStep(n) {
+  const section = document.querySelector(`.step-section[data-step="${n}"]`);
+  if (!section) return;
+
+  // All inputs/selects/textareas with an id
+  section.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (el.type === 'radio' || el.type === 'checkbox') return; // handled below
+    if (el.id === 'website_check') return; // honeypot
+    state.data[el.id] = el.value.trim();
+  });
+
+  // Radios by name
+  const radioNames = new Set();
+  section.querySelectorAll('input[type="radio"]').forEach(r => radioNames.add(r.name));
+  radioNames.forEach(name => {
+    const checked = section.querySelector(`input[type="radio"][name="${name}"]:checked`);
+    state.data[name] = checked ? checked.value : null;
+  });
+
+  // Checkboxes by name (multi)
+  const cbNames = new Set();
+  section.querySelectorAll('input[type="checkbox"]').forEach(c => {
+    if (c.id === 'gdpr') return;
+    cbNames.add(c.name);
+  });
+  cbNames.forEach(name => {
+    const checked = Array.from(section.querySelectorAll(`input[type="checkbox"][name="${name}"]:checked`));
+    state.data[name] = checked.map(c => c.value);
+  });
+
+  if (n === 7) {
+    state.data.gdpr = document.getElementById('gdpr').checked;
+  }
+
+  // Step 4: URL lists
+  if (n === 4) {
+    state.data.inspirations = Array.from(document.querySelectorAll('#inspirations-list .url-row')).map(row => {
+      const url = row.querySelector('input[type="url"]').value.trim();
+      const note = row.querySelector('input[type="text"]').value.trim();
+      return url ? { url, note } : null;
+    }).filter(Boolean);
+    state.data.competitors = Array.from(document.querySelectorAll('#competitors-list .url-row')).map(row => {
+      return row.querySelector('input[type="url"]').value.trim();
+    }).filter(Boolean);
+  }
+
+  // Normalize website URL (prepend https:// if no protocol)
+  if (n === 1 && state.data.website) {
+    const w = state.data.website.trim();
+    if (w && !/^https?:\/\//i.test(w)) {
+      state.data.website = 'https://' + w;
+    }
+  }
+
+  // needType update
+  if (n === 2) {
+    const checked = section.querySelector('input[name="needType"]:checked');
+    if (checked) {
+      const newType = checked.value;
+      if (state.needType && state.needType !== newType && state.previousNeedType !== null) {
+        // already warned, accept change
+      }
+      state.previousNeedType = state.needType;
+      state.needType = newType;
+    }
+  }
+}
+
+/* ==================================================================
+   LOCALSTORAGE PERSISTENCE
+   ================================================================== */
+function persistState() {
+  try {
+    const payload = {
+      ts: Date.now(),
+      currentStep: state.currentStep,
+      needType: state.needType,
+      data: state.data,
+      // files NOT persisted (File objects can't be serialized)
+    };
+    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) {
+    console.warn('localStorage unavailable', e);
+  }
+}
+
+function loadPersistedState() {
+  try {
+    const raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const ageDays = (Date.now() - parsed.ts) / (1000 * 60 * 60 * 24);
+    if (ageDays > CONFIG.STORAGE_EXPIRY_DAYS) {
+      localStorage.removeItem(CONFIG.STORAGE_KEY);
+      return null;
+    }
+    return parsed;
+  } catch (e) {
+    return null;
+  }
+}
+
+function clearPersistedState() {
+  try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch (e) {}
+}
+
+function restoreFromPersisted(parsed) {
+  // Rehydrate state
+  state.needType = parsed.needType;
+  state.data = parsed.data || {};
+
+  // Restore inputs in DOM
+  Object.entries(state.data).forEach(([key, val]) => {
+    const el = document.getElementById(key);
+    if (el && typeof val === 'string') {
+      el.value = val;
+    }
+    // Radios
+    document.querySelectorAll(`input[type="radio"][name="${key}"]`).forEach(r => {
+      r.checked = (r.value === val);
+    });
+    // Checkboxes
+    if (Array.isArray(val)) {
+      document.querySelectorAll(`input[type="checkbox"][name="${key}"]`).forEach(c => {
+        c.checked = val.includes(c.value);
+      });
+    }
+    // GDPR
+    if (key === 'gdpr' && val === true) {
+      document.getElementById('gdpr').checked = true;
+    }
+  });
+
+  // Inspirations / competitors
+  if (Array.isArray(state.data.inspirations)) {
+    const rows = document.querySelectorAll('#inspirations-list .url-row');
+    state.data.inspirations.forEach((item, i) => {
+      if (rows[i]) {
+        rows[i].querySelector('input[type="url"]').value = item.url || '';
+        rows[i].querySelector('input[type="text"]').value = item.note || '';
+      }
+    });
+  }
+  if (Array.isArray(state.data.competitors)) {
+    const rows = document.querySelectorAll('#competitors-list .url-row');
+    state.data.competitors.forEach((url, i) => {
+      if (rows[i]) rows[i].querySelector('input[type="url"]').value = url;
+    });
+  }
+
+  // Trigger conditional displays
+  refreshConditionalDisplays();
+  showStep(parsed.currentStep || 1);
+}
+
+/* ==================================================================
+   CONDITIONAL DISPLAYS (radio that shows/hides an upload zone)
+   ================================================================== */
+const conditionalToggles = [
+  { name: 'needType', targetByValue: { G: 'branch-G-textarea' } },
+  { name: 'hasLogo', target: 'upload-logo', showOn: 'Yes' },
+  { name: 'hasBrandbook', target: 'upload-brandbook', showOn: 'Yes' },
+  { name: 'hasContent', target: 'upload-content', showOn: ['Everything ready', 'Partial'] },
+  { name: 'consult_B', target: 'consult_B_followup', showOn: 'Yes and it didn\'t work' },
+  { name: 'hasDomain_A', target: 'domain_A_followup', showOn: 'Yes' },
+  { name: 'bizPlan_B', target: 'upload-bizPlan_B', showOn: 'Yes' },
+  { name: 'figures_B', target: 'upload-figures_B', showOn: 'Yes' },
+  { name: 'market_B', target: 'upload-market_B', showOn: 'Yes' },
+  { name: 'personas_B', target: 'upload-personas_B', showOn: 'Yes' },
+  { name: 'wireframes_C', target: 'upload-wireframes_C', showOn: 'Yes' },
+  { name: 'roadmap_C', target: 'upload-roadmap_C', showOn: 'Yes' },
+  { name: 'userdata_C', target: 'upload-userdata_C', showOn: 'Yes' },
+  { name: 'scripts_E', target: 'upload-scripts_E', showOn: 'Yes' },
+  { name: 'brief_F', target: 'upload-brief_F', showOn: 'Yes' },
+  { name: 'vision_F', target: 'upload-vision_F', showOn: 'Yes' },
+];
+
+function refreshConditionalDisplays() {
+  conditionalToggles.forEach(rule => {
+    if (rule.targetByValue) {
+      // Multi-target by value
+      const checked = document.querySelector(`input[name="${rule.name}"]:checked`);
+      Object.entries(rule.targetByValue).forEach(([val, targetId]) => {
+        const el = document.getElementById(targetId);
+        if (el) el.style.display = (checked && checked.value === val) ? 'block' : 'none';
+      });
+    } else {
+      const checked = document.querySelector(`input[name="${rule.name}"]:checked`);
+      const el = document.getElementById(rule.target);
+      if (!el) return;
+      const shouldShow = checked && (
+        Array.isArray(rule.showOn)
+          ? rule.showOn.includes(checked.value)
+          : checked.value === rule.showOn
+      );
+      el.style.display = shouldShow ? 'block' : 'none';
+    }
+  });
+}
+
+/* ==================================================================
+   FILE UPLOADS
+   ================================================================== */
+function setupUploadZones() {
+  document.querySelectorAll('.upload-zone').forEach(zone => {
+    const id = zone.dataset.upload;
+    const formats = zone.dataset.formats;
+    const maxSize = parseInt(zone.dataset.maxSize);
+    const multi = zone.hasAttribute('data-multi');
+
+    // Create hidden input
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'file';
+    hiddenInput.accept = formats;
+    if (multi) hiddenInput.multiple = true;
+    hiddenInput.style.display = 'none';
+    zone.appendChild(hiddenInput);
+
+    zone.addEventListener('click', e => {
+      if (e.target === hiddenInput) return;
+      hiddenInput.click();
+    });
+
+    hiddenInput.addEventListener('change', e => {
+      handleFiles(id, e.target.files, maxSize, multi);
+    });
+
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('drag-over');
+      handleFiles(id, e.dataTransfer.files, maxSize, multi);
+    });
+  });
+}
+
+function handleFiles(uploadId, fileList, maxSize, multi) {
+  if (!state.files[uploadId]) state.files[uploadId] = [];
+  const arr = state.files[uploadId];
+
+  Array.from(fileList).forEach(file => {
+    if (file.size > maxSize) {
+      alert(`"${file.name}" exceeds the size limit (${formatBytes(maxSize)}). Suggest a WeTransfer or Drive link instead.`);
+      return;
+    }
+    if (!multi) arr.length = 0; // single — replace
+    arr.push(file);
+  });
+
+  renderFileList(uploadId);
+  checkTotalUploadSize();
+}
+
+function renderFileList(uploadId) {
+  const container = document.querySelector(`[data-file-list="${uploadId}"]`);
+  if (!container) return;
+  container.innerHTML = '';
+  const files = state.files[uploadId] || [];
+  files.forEach((file, idx) => {
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    const ext = file.name.split('.').pop().toLowerCase();
+    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic'].includes(ext);
+
+    let thumbHtml = `<span class="file-ext">${ext}</span>`;
+    if (isImage) {
+      const url = URL.createObjectURL(file);
+      thumbHtml = `<img src="${url}" alt=""/>`;
+    }
+
+    item.innerHTML = `
+      <div class="file-thumb">${thumbHtml}</div>
+      <div class="file-name">${escapeHtml(file.name)}</div>
+      <span class="file-size">${formatBytes(file.size)}</span>
+      <button type="button" class="file-remove" data-remove-idx="${idx}" aria-label="Remove">✕</button>
+    `;
+    container.appendChild(item);
+  });
+
+  container.querySelectorAll('.file-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.removeIdx);
+      state.files[uploadId].splice(idx, 1);
+      renderFileList(uploadId);
+    });
+  });
+}
+
+function checkTotalUploadSize() {
+  let total = 0;
+  Object.values(state.files).forEach(arr => arr.forEach(f => total += f.size));
+  if (total > CONFIG.TOTAL_UPLOAD_LIMIT) {
+    alert(`You're past the 1GB total upload limit (${formatBytes(total)}). Better to send a WeTransfer or Drive link in the relevant link field.`);
+  }
+}
+
+function formatBytes(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  if (bytes < 1024 * 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+}
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+/* ==================================================================
+   EMAIL CONSUMER WARNING
+   ================================================================== */
+function setupEmailWarning() {
+  const emailInput = document.getElementById('email');
+  emailInput.addEventListener('blur', () => {
+    const val = emailInput.value.trim().toLowerCase();
+    const warning = emailInput.parentElement.querySelector('.field-warning');
+    if (!warning) return;
+    if (val.includes('@')) {
+      const domain = val.split('@')[1];
+      if (CONFIG.CONSUMER_EMAILS.includes(domain)) {
+        warning.classList.add('show');
+      } else {
+        warning.classList.remove('show');
+      }
+    }
+  });
+}
+
+/* ==================================================================
+   BRANCH CHANGE WARNING (Step 2)
+   ================================================================== */
+function setupBranchChangeWarning() {
+  document.querySelectorAll('input[name="needType"]').forEach(radio => {
+    radio.addEventListener('change', e => {
+      const newVal = e.target.value;
+      // Check if step 3 was already filled
+      const step3HasData = state.previousNeedType && state.needType && state.needType !== 'G' &&
+        Object.keys(state.data).some(k => k.endsWith('_' + state.needType));
+      if (state.needType && state.needType !== newVal && step3HasData) {
+        if (!confirm("You'll lose your subsequent answers in this section. Continue?")) {
+          // revert
+          const oldRadio = document.querySelector(`input[name="needType"][value="${state.needType}"]`);
+          if (oldRadio) oldRadio.checked = true;
+          return;
+        }
+        // Clear branch-specific data
+        Object.keys(state.data).forEach(k => {
+          if (k.endsWith('_' + state.needType)) delete state.data[k];
+        });
+      }
+      state.previousNeedType = state.needType;
+      state.needType = newVal;
+      refreshConditionalDisplays();
+    });
+  });
+}
+
+/* ==================================================================
+   SUBMIT
+   ================================================================== */
+async function handleSubmit() {
+  // Final validation: validate all required steps
+  const active = getActiveSteps();
+  for (const stepNum of active) {
+    const result = validateStep(stepNum);
+    if (!result.ok) {
+      showStep(stepNum);
+      const section = document.querySelector(`.step-section[data-step="${stepNum}"]`);
+      const scope = (stepNum === 3 || stepNum === 5) && state.needType && state.needType !== 'G'
+        ? section.querySelector(`.branch-content[data-branch="${state.needType}"]`)
+        : section;
+      showValidationBanner(result.errors, scope);
+      return;
+    }
+    collectStep(stepNum);
+  }
+  hideValidationBanner();
+
+  // Honeypot check
+  if (document.getElementById('website_check').value.trim() !== '') {
+    console.warn('Honeypot triggered — bot suspected');
+    showConfirmation(); // fake success to fool bots
+    return;
+  }
+
+  const submitBtn = document.getElementById('btn-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  const payload = buildPayload();
+
+  if (CONFIG.MOCK_BACKEND) {
+    // Simulate backend latency
+    console.log('=== MOCK SUBMIT PAYLOAD ===');
+    console.log(payload);
+    console.log('=== FILES ===');
+    Object.entries(state.files).forEach(([k, arr]) => {
+      arr.forEach(f => console.log(`  [${k}] ${f.name} (${formatBytes(f.size)})`));
+    });
+    await new Promise(r => setTimeout(r, 1200));
+    clearPersistedState();
+    showConfirmation();
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send request →';
+    return;
+  }
+
+  // Real backend
+  try {
+    const formData = new FormData();
+    formData.append('payload', JSON.stringify(payload));
+    Object.entries(state.files).forEach(([key, arr]) => {
+      arr.forEach((file, i) => formData.append(`${key}_${i}`, file));
+    });
+
+    const res = await fetch(CONFIG.WEBHOOK_URL, { method: 'POST', body: formData });
+    const json = await res.json();
+    if (json.success) {
+      clearPersistedState();
+      showConfirmation();
+    } else {
+      throw new Error(json.error || 'Backend error');
+    }
+  } catch (e) {
+    alert('Something went wrong. Please try again or email mlg.consult.be@gmail.com.');
+    console.error(e);
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send request →';
+  }
+}
+
+function buildPayload() {
+  return {
+    submittedAt: new Date().toISOString(),
+    needType: state.needType,
+    ...state.data,
+    _files: Object.fromEntries(
+      Object.entries(state.files).map(([k, arr]) => [k, arr.map(f => ({ name: f.name, size: f.size, type: f.type }))])
+    ),
+  };
+}
+
+function showConfirmation() {
+  document.querySelectorAll('.step-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('btn-prev').style.display = 'none';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('btn-submit').style.display = 'none';
+  document.getElementById('confirmation').style.display = 'block';
+
+  // Populate recap
+  const recap = document.getElementById('confirmation-recap');
+  const need = {
+    A: 'Website / digital presence',
+    B: 'Business strategy',
+    C: 'Product strategy',
+    D: 'Marketing & acquisition',
+    E: 'Sales',
+    F: 'Full end-to-end project',
+    G: 'Other / not sure yet',
+  }[state.needType] || '—';
+  recap.innerHTML = `
+    <div><span class="text-white/40 font-mono text-xs">NAME</span><div class="text-white">${escapeHtml(state.data.firstName || '')} ${escapeHtml(state.data.lastName || '')}</div></div>
+    <div><span class="text-white/40 font-mono text-xs">COMPANY</span><div class="text-white">${escapeHtml(state.data.company || '')}</div></div>
+    <div><span class="text-white/40 font-mono text-xs">NEED</span><div class="text-white">${need}</div></div>
+    <div><span class="text-white/40 font-mono text-xs">BUDGET</span><div class="text-white">${escapeHtml(state.data.budget || '—')}</div></div>
+    <div><span class="text-white/40 font-mono text-xs">TIMING</span><div class="text-white">${escapeHtml(state.data.start || '—')}</div></div>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ==================================================================
+   DEBUG PANEL (Cmd+Shift+D)
+   ================================================================== */
+function setupDebugPanel() {
+  const panel = document.getElementById('debug-panel');
+  const content = document.getElementById('debug-content');
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'D') {
+      e.preventDefault();
+      // Snapshot current state
+      const active = getActiveSteps();
+      active.forEach(n => collectStep(n));
+      content.textContent = JSON.stringify({
+        currentStep: state.currentStep,
+        needType: state.needType,
+        data: state.data,
+        files: Object.fromEntries(Object.entries(state.files).map(([k, arr]) => [k, arr.map(f => f.name)])),
+      }, null, 2);
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+  document.getElementById('btn-debug-close').addEventListener('click', () => panel.style.display = 'none');
+}
+
+/* ==================================================================
+   PER-FIELD BLUR VALIDATION
+   ================================================================== */
+function validateSingleField(el) {
+  const val = (el.value || '').trim();
+
+  // Required text / select
+  if (el.hasAttribute('data-required')) {
+    const min = parseInt(el.getAttribute('data-min') || '1');
+    const errEl = el.parentElement.querySelector('.field-error');
+    const invalid = !val || val.length < min;
+    el.classList.toggle('invalid', invalid);
+    if (errEl) errEl.classList.toggle('show', invalid);
+  }
+
+  // Email format
+  if (el.hasAttribute('data-email') && val) {
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    const errEl = el.parentElement.querySelector('.field-error');
+    el.classList.toggle('invalid', !ok);
+    if (errEl) errEl.classList.toggle('show', !ok);
+  } else if (el.hasAttribute('data-email') && !val) {
+    el.classList.remove('invalid');
+    const errEl = el.parentElement.querySelector('.field-error');
+    if (errEl) errEl.classList.remove('show');
+  }
+
+  // URL format (strict)
+  if (el.hasAttribute('data-url') && val) {
+    const ok = /^https?:\/\/.+\..+/.test(val);
+    const errEl = el.parentElement.querySelector('.field-error');
+    el.classList.toggle('invalid', !ok);
+    if (errEl) errEl.classList.toggle('show', !ok);
+  }
+
+  // Domain format (flexible)
+  if (el.hasAttribute('data-domain')) {
+    const errEl = el.parentElement.querySelector('.field-error');
+    if (val) {
+      const ok = /^(https?:\/\/)?([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/.*)?$/.test(val);
+      el.classList.toggle('invalid', !ok);
+      if (errEl) errEl.classList.toggle('show', !ok);
+    } else {
+      el.classList.remove('invalid');
+      if (errEl) errEl.classList.remove('show');
+    }
+  }
+
+  // Textarea min-length
+  if (el.tagName === 'TEXTAREA' && el.hasAttribute('data-min') && val) {
+    const min = parseInt(el.getAttribute('data-min'));
+    const ok = val.length >= min;
+    const errEl = el.parentElement.querySelector('.field-error');
+    el.classList.toggle('invalid', !ok);
+    if (errEl) errEl.classList.toggle('show', !ok);
+  }
+}
+
+function setupBlurValidation() {
+  // Capture-phase blur so it fires on all inputs without needing per-element listeners
+  document.addEventListener('blur', e => {
+    const target = e.target;
+    if (!target.matches('input:not([type="radio"]):not([type="checkbox"]), textarea, select')) return;
+    const activeStep = document.querySelector('.step-section.active');
+    if (!activeStep || !activeStep.contains(target)) return;
+    validateSingleField(target);
+  }, true);
+}
+
+/* ==================================================================
+   FADE-IN ON LOAD
+   ================================================================== */
+function setupFadeIn() {
+  const fades = document.querySelectorAll('.fade');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  fades.forEach(f => io.observe(f));
+}
+
+/* ==================================================================
+   INIT
+   ================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  setupFadeIn();
+  setupUploadZones();
+  setupEmailWarning();
+  setupBranchChangeWarning();
+  setupBlurValidation();
+  setupDebugPanel();
+
+  // Conditional toggles — listen on every relevant radio
+  conditionalToggles.forEach(rule => {
+    document.querySelectorAll(`input[name="${rule.name}"]`).forEach(r => {
+      r.addEventListener('change', refreshConditionalDisplays);
+    });
+  });
+
+  // Nav buttons
+  document.getElementById('btn-next').addEventListener('click', goNext);
+  document.getElementById('btn-prev').addEventListener('click', goPrev);
+  document.getElementById('btn-submit').addEventListener('click', handleSubmit);
+
+  // Resume banner
+  const persisted = loadPersistedState();
+  if (persisted) {
+    document.getElementById('resume-banner').style.display = 'flex';
+    document.getElementById('btn-resume').addEventListener('click', () => {
+      restoreFromPersisted(persisted);
+      document.getElementById('resume-banner').style.display = 'none';
+    });
+    document.getElementById('btn-discard').addEventListener('click', () => {
+      clearPersistedState();
+      document.getElementById('resume-banner').style.display = 'none';
+    });
+  }
+
+  // Privacy modal
+  const privacyModal = document.getElementById('privacy-modal');
+  const openPrivacy = e => {
+    e.preventDefault();
+    privacyModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+  const closePrivacy = () => {
+    privacyModal.classList.remove('show');
+    document.body.style.overflow = '';
+  };
+  document.getElementById('privacy-link').addEventListener('click', openPrivacy);
+  document.getElementById('privacy-close').addEventListener('click', closePrivacy);
+  document.getElementById('privacy-ok').addEventListener('click', closePrivacy);
+  privacyModal.addEventListener('click', e => {
+    if (e.target === privacyModal) closePrivacy();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && privacyModal.classList.contains('show')) closePrivacy();
+  });
+
+  // Auto-hide validation banner when user starts correcting
+  document.addEventListener('input', e => {
+    if (e.target.matches('input, textarea, select')) hideValidationBanner();
+  });
+  document.addEventListener('change', e => {
+    if (e.target.matches('input[type="radio"], input[type="checkbox"]')) hideValidationBanner();
+  });
+
+  showStep(1);
+});
+
+// ── FOOTER SVG — cursor reveal ───────────────────
+(function() {
+  const ftSvg     = document.getElementById('footer-svg');
+  const ftReveal  = document.getElementById('ft-reveal');
+  const ftOutline = document.getElementById('ft-outline');
+  if (!ftSvg || !ftReveal) return;
+  ftSvg.addEventListener('mouseenter', () => { if (ftOutline) ftOutline.style.opacity = '1'; });
+  ftSvg.addEventListener('mouseleave', () => {
+    if (ftOutline) ftOutline.style.opacity = '0';
+    ftReveal.setAttribute('cx', '150');
+    ftReveal.setAttribute('cy', '50');
+  });
+  ftSvg.addEventListener('mousemove', e => {
+    const rect = ftSvg.getBoundingClientRect();
+    ftReveal.setAttribute('cx', ((e.clientX - rect.left) / rect.width  * 300).toFixed(2));
+    ftReveal.setAttribute('cy', ((e.clientY - rect.top)  / rect.height * 100).toFixed(2));
+  });
+})();
+
+</script>
+
+</body>
+</html>
