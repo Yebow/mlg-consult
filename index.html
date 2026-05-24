@@ -694,38 +694,47 @@
     }
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
-    /* ── MOBILE PORTFOLIO — horizontal scroll strip ── */
+    /* ── MOBILE PORTFOLIO — horizontal scroll strips ── */
+    /* Ensure hero section never clips the scroll containers */
+    #hero-parallax {
+      overflow: visible !important;
+      height: auto !important;
+    }
+    /* Grid: stacks the two rows vertically */
     #parallax-grid {
       display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      width: 100% !important;
-      overflow-x: scroll !important;
-      overflow-y: hidden !important;
+      flex-direction: column !important;
       gap: .75rem !important;
-      padding: 1.5rem 1.25rem 2rem !important;
-      margin-top: 0 !important;
+      padding: 0 0 2rem !important;
       transform: none !important;
       opacity: 1 !important;
-      scroll-snap-type: x mandatory !important;
+      width: 100% !important;
+      overflow: visible !important;
+    }
+    /* Each row becomes its own horizontal scroll strip */
+    .p-row {
+      display: flex !important;
+      flex-direction: row !important;  /* always L→R on mobile */
+      flex-wrap: nowrap !important;
+      overflow-x: scroll !important;
+      overflow-y: visible !important;
       -webkit-overflow-scrolling: touch !important;
       touch-action: pan-x !important;
+      scroll-snap-type: x mandatory !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
+      gap: .75rem !important;
+      padding: .5rem 1.25rem !important;
+      width: 100% !important;
       box-sizing: border-box !important;
     }
-    #parallax-grid::-webkit-scrollbar { display: none !important; }
-    /* Rows become invisible wrappers — children flow into the parent flex */
-    .p-row {
-      display: contents !important;
-    }
+    .p-row::-webkit-scrollbar { display: none !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fixed width for horizontal scrolling with snap */
+    /* Cards: fixed width for snap scrolling */
     .p-card {
       width: 72vw !important;
       max-width: 280px !important;
-      min-width: 0 !important;
       height: 11rem !important;
       flex-shrink: 0 !important;
       flex-grow: 0 !important;
