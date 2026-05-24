@@ -48,7 +48,6 @@
     overflow: hidden;
     position: relative;
     perspective: 1000px;
-    transform-style: preserve-3d;
     background: #050806;
     padding-top: 10rem;
     -webkit-font-smoothing: antialiased;
@@ -80,7 +79,7 @@
     animation: pulse 2.2s ease-in-out infinite; flex-shrink: 0;
   }
   #parallax-grid { will-change: transform, opacity; }
-  .p-row { display: flex; gap: 1.25rem; margin-bottom: 1.25rem; will-change: transform; }
+  .p-row { display: flex; gap: 1.25rem; margin-bottom: 1.25rem; }
   .p-row-reverse { flex-direction: row-reverse; }
   .p-card {
     height: 22rem; width: 28rem; flex-shrink: 0;
@@ -640,26 +639,20 @@
      RESPONSIVE — Tablet (≤ 900px)
   ───────────────────────────────────────── */
   @media (max-width: 900px) {
-    /* Hero: disable parallax */
+    /* Hero: disable parallax, keep cards scrollable horizontally */
     #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; overflow: visible !important; transform-style: flat; }
-    #parallax-grid {
-      transform: none !important; opacity: 1 !important; will-change: auto;
-      display: flex !important;
-      flex-direction: column !important;
-      gap: .75rem !important;
-      padding: 1.5rem 1.5rem 2.5rem !important;
-    }
+    #parallax-grid { transform: none !important; opacity: 1 !important; will-change: auto; padding: 0 1.5rem 2.5rem !important; }
     .p-row {
-      display: flex !important;
       overflow-x: auto !important;
       -webkit-overflow-scrolling: touch !important;
       gap: .75rem !important;
-      padding-bottom: .5rem !important;
+      margin-bottom: .75rem !important;
+      padding-bottom: .75rem !important;
       scrollbar-width: none !important;
     }
     .p-row::-webkit-scrollbar { display: none !important; }
     .p-card[data-filler] { display: none !important; }
-    .p-card { width: 10.5rem !important; height: 10rem !important; flex-shrink: 0 !important; }
+    .p-card { width: 14rem !important; height: 12rem !important; flex-shrink: 0 !important; }
     .p-card img { filter: grayscale(0) brightness(0.68) !important; }
     .p-card-img-wrap::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -698,32 +691,25 @@
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
     /* ── MOBILE PORTFOLIO GRID ── */
-    /* Horizontal scroll rows — no parallax */
+    /* No parallax: flat 2-col grid so users can browse the work */
     #parallax-grid {
-      display: flex !important;
-      flex-direction: column !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
       gap: .625rem !important;
       padding: 1.5rem 1.25rem 2.5rem !important;
       margin-top: 0 !important;
       transform: none !important;
       opacity: 1 !important;
     }
-    .p-row {
-      display: flex !important;
-      overflow-x: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      gap: .625rem !important;
-      padding-bottom: .5rem !important;
-      scrollbar-width: none !important;
-    }
-    .p-row::-webkit-scrollbar { display: none !important; }
+    /* Rows become invisible wrappers — children flow into the parent grid */
+    .p-row { display: contents !important; overflow: visible !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fixed width for horizontal scroll */
+    /* Cards: fill grid cell */
     .p-card {
-      width: 10rem !important;
+      width: 100% !important;
       height: 9rem !important;
-      flex-shrink: 0 !important;
+      flex-shrink: unset !important;
       border-radius: 10px !important;
     }
     /* Images: colored on mobile (no hover available) */
@@ -1639,7 +1625,7 @@ let _heroTop = 0, _heroH = 0;
 function _cacheHeroLayout() {
   if (heroSection) { _heroTop = heroSection.offsetTop; _heroH = heroSection.offsetHeight; }
 }
-window.addEventListener('resize', _cacheHeroLayout, { passive: true });
+window.addEventListener('resize', () => { _cacheHeroLayout(); _glowRects = null; }, { passive: true });
 
 // ════════════════════════════════════════════════
 // HEADER STICKY
@@ -1734,21 +1720,28 @@ function scheduleParallax() {
 // GLOW CARD — pointer tracking (desktop only)
 // ════════════════════════════════════════════════
 let _glowCards = null;
+let _glowRects = null;  // cached; invalidated on scroll/resize
 let _glowRaf = false, _glowX = 0, _glowY = 0;
 function _applyGlow() {
   _glowRaf = false;
   if (!_glowCards || !_glowCards.length) return;
+  // Lazy-cache bounding rects — O(n) only once per scroll/resize, not per pointermove
+  if (!_glowRects) {
+    _glowRects = new Array(_glowCards.length);
+    for (let i = 0; i < _glowCards.length; i++) {
+      _glowRects[i] = _glowCards[i].getBoundingClientRect();
+    }
+  }
   for (let i = 0; i < _glowCards.length; i++) {
-    const card = _glowCards[i];
-    const r   = card.getBoundingClientRect();
+    const r   = _glowRects[i];
     const lx  = (_glowX - r.left).toFixed(2);
     const ly  = (_glowY - r.top).toFixed(2);
     const xp  = ((_glowX - r.left) / r.width).toFixed(4);
     const yp  = ((_glowY - r.top)  / r.height).toFixed(4);
-    card.style.setProperty('--x',  lx);
-    card.style.setProperty('--y',  ly);
-    card.style.setProperty('--xp', xp);
-    card.style.setProperty('--yp', yp);
+    _glowCards[i].style.setProperty('--x',  lx);
+    _glowCards[i].style.setProperty('--y',  ly);
+    _glowCards[i].style.setProperty('--xp', xp);
+    _glowCards[i].style.setProperty('--yp', yp);
   }
 }
 if (window.matchMedia('(hover: hover)').matches) {
@@ -1933,6 +1926,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 let _headerRaf = false;
 window.addEventListener('scroll', () => {
+  _glowRects = null;  // cards moved — invalidate cached positions
   updateBar();
   scheduleParallax();
   scheduleManifesto();
