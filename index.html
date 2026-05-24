@@ -691,25 +691,33 @@
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
     /* ── MOBILE PORTFOLIO GRID ── */
-    /* No parallax: flat 2-col grid so users can browse the work */
+    /* Horizontal swimlanes — no parallax */
     #parallax-grid {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
+      display: flex !important;
+      flex-direction: column !important;
       gap: .625rem !important;
       padding: 1.5rem 1.25rem 2.5rem !important;
       margin-top: 0 !important;
       transform: none !important;
       opacity: 1 !important;
     }
-    /* Rows become invisible wrappers — children flow into the parent grid */
-    .p-row { display: contents !important; overflow: visible !important; }
+    /* Each row scrolls horizontally */
+    .p-row {
+      display: flex !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      gap: .625rem !important;
+      padding-bottom: .5rem !important;
+      scrollbar-width: none !important;
+    }
+    .p-row::-webkit-scrollbar { display: none !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fill grid cell */
+    /* Cards: fixed width so ~2 are visible at once */
     .p-card {
-      width: 100% !important;
+      width: 10rem !important;
       height: 9rem !important;
-      flex-shrink: unset !important;
+      flex-shrink: 0 !important;
       border-radius: 10px !important;
     }
     /* Images: colored on mobile (no hover available) */
@@ -880,9 +888,8 @@
      RESPONSIVE — Small phones (≤ 480px)
   ───────────────────────────────────────── */
   @media (max-width: 480px) {
-    /* Keep 2-col grid on small phones */
-    #parallax-grid { grid-template-columns: 1fr 1fr !important; }
-    .p-card { width: 100% !important; height: 8.5rem !important; }
+    /* Small phones: slightly shorter cards, width inherited from 768px (10rem) */
+    .p-card { height: 8.5rem !important; }
 
     /* Squad 1 col */
     .squad-cards { grid-template-columns: 1fr; }
