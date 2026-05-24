@@ -811,9 +811,22 @@
     .pricing-grid { max-width: 100%; }
     .pc-title { font-size: 2.25rem; }
 
-    /* Squad — ratio portrait plus marqué sur mobile */
+    /* Squad — ratio portrait identique pour tous les avatars (même visuel que Kamel) */
     .squad-cards { grid-template-columns: 1fr 1fr; gap: .75rem; }
-    .squad-photo-header { height: 260px; }
+    .squad-photo-header { height: auto; aspect-ratio: 3 / 4; }
+
+    /* ── Mobile menu : header must sit ABOVE the fullscreen overlay ──
+       Tailwind z-50 = 50, #mobile-menu z-200 → le toggle est masqué.
+       Fix : on monte le header à 201 (> 200) sur mobile. */
+    header { z-index: 201 !important; }
+    /* Quand le menu est ouvert, on rend le header transparent
+       pour ne pas créer une barre opaque sur la cover plein-écran */
+    header:has(~ #mobile-menu.open) {
+      background: transparent !important;
+      border-bottom-color: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
 
     /* Manifesto: faster reveal on mobile */
     #manifesto { height: 150vh; }
@@ -949,7 +962,7 @@
 
     /* Squad 1 col — on garde 2 colonnes mais les photos restent hautes */
     .squad-cards { grid-template-columns: 1fr 1fr; }
-    .squad-photo-header { height: 220px; }
+    .squad-photo-header { height: auto; aspect-ratio: 3 / 4; }
 
     /* Testimonials 1 col */
     .tm-grid { grid-template-columns: 1fr; max-height: 480px; }
