@@ -758,9 +758,10 @@
     .squad-cards { grid-template-columns: 1fr 1fr; gap: .75rem; }
     .squad-photo-header { height: 180px; }
 
-    /* Manifesto: faster reveal on mobile */
+    /* Manifesto: bigger + faster reveal on mobile */
     #manifesto { height: 150vh; }
     #manifesto-sticky { padding: 0 1.25rem; }
+    #manifesto-text { font-size: clamp(2rem, 9vw, 2.75rem); line-height: 1.2; letter-spacing: -.025em; }
 
     /* Footer */
     .ft-content { padding: 2rem 1.5rem 0 !important; }
@@ -889,8 +890,9 @@
     /* Small phones: slightly shorter cards, width inherited from 768px */
     .p-card { height: 10rem !important; }
 
-    /* Squad 1 col */
-    .squad-cards { grid-template-columns: 1fr; }
+    /* Squad 2x2 sur petits phones aussi */
+    .squad-cards { grid-template-columns: 1fr 1fr; }
+    .squad-photo-header { height: 150px; }
 
     /* Testimonials 1 col */
     .tm-grid { grid-template-columns: 1fr; max-height: 480px; }
