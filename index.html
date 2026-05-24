@@ -1609,16 +1609,24 @@ function updateBar() {
 // ════════════════════════════════════════════════
 // REVEAL ON SCROLL
 // ════════════════════════════════════════════════
-function handleReveals() {
-  document.querySelectorAll('.reveal:not(.in)').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('in');
-  });
+function handleReveals() {} // kept for compat, replaced by IO below
+let _revealIO;
+function initRevealObserver() {
+  _revealIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); _revealIO.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => _revealIO.observe(el));
 }
 
 // ════════════════════════════════════════════════
 // HERO PARALLAX
 // ════════════════════════════════════════════════
 const heroSection = document.getElementById('hero-parallax');
+let _heroTop = 0, _heroH = 0;
+function _cacheHeroLayout() {
+  if (heroSection) { _heroTop = heroSection.offsetTop; _heroH = heroSection.offsetHeight; }
+}
+window.addEventListener('resize', _cacheHeroLayout, { passive: true });
 
 // ════════════════════════════════════════════════
 // HEADER STICKY
@@ -1630,8 +1638,8 @@ const parallaxHeader = document.getElementById('parallax-header');
 function updateHeader() {
   if (!heroSection || !parallaxHeader) return;
   if (window.innerWidth <= 900) return; // CSS handles mobile layout
-  const scrollIn  = Math.max(0, window.scrollY - heroSection.offsetTop);
-  const maxScroll = heroSection.offsetHeight - window.innerHeight;
+  const scrollIn  = Math.max(0, window.scrollY - _heroTop);
+  const maxScroll = _heroH - window.innerHeight;
   const progress  = scrollIn / maxScroll;
 
   // Sticky: pin header for the first 45% of scroll
@@ -1665,8 +1673,8 @@ function lerp(a, b, t) { return a + (b - a) * t; }
 function computeTargets() {
   if (!heroSection || !grid) return;
   const scrollY   = window.scrollY;
-  const secTop    = heroSection.offsetTop;
-  const secH      = heroSection.offsetHeight;
+  const secTop    = _heroTop;
+  const secH      = _heroH;
   const vh        = window.innerHeight;
   const maxScroll = secH - vh;
   const progress  = Math.max(0, Math.min(1, (scrollY - secTop) / maxScroll));
@@ -1712,17 +1720,26 @@ function scheduleParallax() {
 // ════════════════════════════════════════════════
 // GLOW CARD — pointer tracking (desktop only)
 // ════════════════════════════════════════════════
+let _glowCards = null;
+let _glowRaf = false, _glowX = 0, _glowY = 0;
+function _applyGlow() {
+  _glowRaf = false;
+  if (!_glowCards) return;
+  const xp = (_glowX / window.innerWidth).toFixed(4);
+  const yp = (_glowY / window.innerHeight).toFixed(4);
+  const xs = _glowX.toFixed(2), ys = _glowY.toFixed(2);
+  for (let i = 0; i < _glowCards.length; i++) {
+    _glowCards[i].style.setProperty('--x',  xs);
+    _glowCards[i].style.setProperty('--xp', xp);
+    _glowCards[i].style.setProperty('--y',  ys);
+    _glowCards[i].style.setProperty('--yp', yp);
+  }
+}
 if (window.matchMedia('(hover: hover)').matches) {
   document.addEventListener('pointermove', (e) => {
-    const xp = (e.clientX / window.innerWidth).toFixed(4);
-    const yp = (e.clientY / window.innerHeight).toFixed(4);
-    document.querySelectorAll('[data-glow]').forEach(card => {
-      card.style.setProperty('--x',  e.clientX.toFixed(2));
-      card.style.setProperty('--xp', xp);
-      card.style.setProperty('--y',  e.clientY.toFixed(2));
-      card.style.setProperty('--yp', yp);
-    });
-  });
+    _glowX = e.clientX; _glowY = e.clientY;
+    if (!_glowRaf) { _glowRaf = true; requestAnimationFrame(_applyGlow); }
+  }, { passive: true });
 }
 
 // ════════════════════════════════════════════════
@@ -1793,6 +1810,10 @@ function initManifesto() {
   updateManifesto();
 }
 
+let _manifestoRaf = false;
+function scheduleManifesto() {
+  if (!_manifestoRaf) { _manifestoRaf = true; requestAnimationFrame(() => { _manifestoRaf = false; updateManifesto(); }); }
+}
 function updateManifesto() {
   if (!manifestoSection || !manifestoWords.length) return;
   const rect     = manifestoSection.getBoundingClientRect();
@@ -1874,20 +1895,22 @@ document.addEventListener('keydown', e => {
 // INIT + SCROLL
 // ════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
+  _cacheHeroLayout();
+  _glowCards = Array.from(document.querySelectorAll('[data-glow]'));
+  initRevealObserver();
   applyParallax();
   updateHeader();
-  handleReveals();
   updateBar();
   initSquad();
   initManifesto();
 });
 
+let _headerRaf = false;
 window.addEventListener('scroll', () => {
   updateBar();
-  handleReveals();
   scheduleParallax();
-  updateHeader();
-  updateManifesto();
+  scheduleManifesto();
+  if (!_headerRaf) { _headerRaf = true; requestAnimationFrame(() => { _headerRaf = false; updateHeader(); }); }
 }, { passive: true });
 </script>
 </body>
