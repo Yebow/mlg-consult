@@ -726,6 +726,16 @@
       -ms-overflow-style: none !important;
     }
     #parallax-grid::-webkit-scrollbar { display: none !important; }
+    /*
+     * CAUSE RACINE du swipe cassé :
+     * [data-glow] { touch-action: pan-y } bloque le swipe horizontal.
+     * L'intersection (pan-y) ∩ (pan-x du conteneur) = rien → pas de scroll.
+     * Override : toutes les cartes et leurs enfants passent à pan-x.
+     */
+    #parallax-grid .p-card,
+    #parallax-grid .p-card * {
+      touch-action: pan-x !important;
+    }
     /* Rows disparaissent visuellement → leurs cartes deviennent
        des flex-items directs de #parallax-grid (une seule ligne) */
     .p-row {
