@@ -593,19 +593,15 @@
     display: none; background: none; border: none;
     padding: .5rem; cursor: pointer; color: #fff;
     flex-direction: column; justify-content: center; align-items: center; gap: 5px;
-    position: relative; z-index: 201;
   }
   #nav-toggle .bar {
     display: block; width: 22px; height: 1.5px;
     background: currentColor; border-radius: 2px;
-    transition: transform .35s ease, opacity .25s ease;
   }
-  #nav-toggle.open .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  #nav-toggle.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  #nav-toggle.open .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
+  /* z-index 300 — au-dessus du header, du progress bar, de tout */
   #mobile-menu {
-    position: fixed; inset: 0; z-index: 200;
+    position: fixed; inset: 0; z-index: 300;
     background: rgba(5,8,6,.97); backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: flex; flex-direction: column;
@@ -614,6 +610,15 @@
     transition: opacity .3s ease;
   }
   #mobile-menu.open { opacity: 1; pointer-events: auto; }
+
+  /* Bouton ✕ dédié — à l'intérieur du menu, toujours accessible */
+  #menu-close {
+    position: absolute; top: 1.25rem; right: 1.5rem;
+    background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,.55); padding: .5rem;
+    line-height: 1; transition: color .2s;
+  }
+  #menu-close:hover { color: #fff; }
   .m-nav-link {
     font-family: 'Urbanist', sans-serif; font-weight: 900;
     font-size: clamp(2.5rem, 12vw, 3.75rem);
@@ -821,19 +826,6 @@
     /* Avatars en couleur sur mobile (pas de hover disponible) */
     .squad-card-photo { filter: grayscale(0) brightness(0.85) !important; }
 
-    /* ── Mobile menu : header must sit ABOVE the fullscreen overlay ──
-       Tailwind z-50 = 50, #mobile-menu z-200 → le toggle est masqué.
-       Fix : on monte le header à 201 (> 200) sur mobile. */
-    header { z-index: 201 !important; }
-    /* Quand le menu est ouvert, on rend le header transparent
-       pour ne pas créer une barre opaque sur la cover plein-écran */
-    header:has(~ #mobile-menu.open) {
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-
     /* Manifesto: faster reveal on mobile */
     #manifesto { height: 150vh; }
     #manifesto-sticky { padding: 0 1.25rem; }
@@ -1040,6 +1032,12 @@
 
 <!-- Mobile fullscreen menu -->
 <div id="mobile-menu" role="dialog" aria-label="Navigation" aria-modal="true">
+  <!-- Bouton fermeture dédié — z-index garanti car inside le menu -->
+  <button id="menu-close" aria-label="Fermer le menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
   <a href="#services" class="m-nav-link">Services</a>
   <a href="#squad"    class="m-nav-link">Squad</a>
   <a href="#proof"    class="m-nav-link">Clients</a>
@@ -1830,29 +1828,26 @@ function initSquad() {
 // MOBILE NAV
 // ════════════════════════════════════════════════
 (function() {
-  const toggle = document.getElementById('nav-toggle');
-  const menu   = document.getElementById('mobile-menu');
+  const toggle   = document.getElementById('nav-toggle');
+  const menu     = document.getElementById('mobile-menu');
+  const closeBtn = document.getElementById('menu-close');
   if (!toggle || !menu) return;
 
   function openMenu() {
-    toggle.classList.add('open');
     menu.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
   function closeMenu() {
-    toggle.classList.remove('open');
     menu.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
-  toggle.addEventListener('click', () =>
-    menu.classList.contains('open') ? closeMenu() : openMenu()
-  );
+
+  toggle.addEventListener('click', openMenu);
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeMenu();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 })();
 
 // ════════════════════════════════════════════════
