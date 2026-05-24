@@ -765,8 +765,9 @@
     }
     /* Fillers masqués */
     .p-card[data-filler] { display: none !important; }
-    /* Angelina Luicci en première position sur mobile */
-    #parallax-grid .p-card:has(img[alt="Angelina Luicci"]) { order: -1; }
+    /* Ordre forcé sur mobile : 1. Angelina Luicci  2. €100k Feature Kill */
+    #parallax-grid .p-card:has(img[alt="Angelina Luicci"])      { order: -2; }
+    #parallax-grid .p-card:has(img[alt="€100k Feature Kill"])   { order: -1; }
     /* Cartes : largeur fixe + snap */
     .p-card {
       width: 72vw !important;
