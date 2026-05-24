@@ -877,10 +877,12 @@
   }
   .case-cta:hover { opacity: .85; }
   @media (max-width: 600px) {
-    .case-modal { padding: 1.5rem 1.125rem; border-radius: 14px; }
-    .case-stats { grid-template-columns: 1fr; }
-    .case-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
-    .case-stat:last-child { border-bottom: none; }
+    .case-modal { padding: 1.5rem 1rem; border-radius: 14px; }
+    /* Stats : garder 3 colonnes compactes (pas 1 col qui est trop haut) */
+    .case-stats { grid-template-columns: repeat(3, 1fr); }
+    .case-stat { padding: .75rem .375rem; }
+    .case-stat-num { font-size: clamp(1.1rem, 4.5vw, 1.875rem); }
+    .case-stat-label { font-size: .58rem; line-height: 1.4; }
   }
 
   /* ─────────────────────────────────────────
