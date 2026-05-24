@@ -694,50 +694,53 @@
     }
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
-    /* ── MOBILE PORTFOLIO — horizontal scroll strips ── */
-    /* Ensure hero section never clips the scroll containers */
+    /* ── MOBILE PORTFOLIO — single horizontal swimlane ── */
+    /* Parent must not clip the swimlane */
     #hero-parallax {
       overflow: visible !important;
       height: auto !important;
     }
-    /* Grid: stacks the two rows vertically */
+    /*
+     * KEY: hauteur fixe + overflow-y:hidden = combinaison CSS valide.
+     * overflow-x:scroll + overflow-y:visible est INTERDIT (le browser
+     * corrige en overflow-y:auto et le swipe iOS ne fonctionne plus).
+     * height = carte(11rem) + padding haut(1.5rem) + padding bas(1.5rem) = 14rem
+     */
     #parallax-grid {
       display: flex !important;
-      flex-direction: column !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: flex-start !important;
+      height: 14rem !important;
+      overflow-x: scroll !important;
+      overflow-y: hidden !important;
       gap: .75rem !important;
-      padding: 0 0 2rem !important;
+      padding: 1.5rem 1.25rem !important;
+      box-sizing: border-box !important;
       transform: none !important;
       opacity: 1 !important;
-      width: 100% !important;
-      overflow: visible !important;
-    }
-    /* Each row becomes its own horizontal scroll strip */
-    .p-row {
-      display: flex !important;
-      flex-direction: row !important;  /* always L→R on mobile */
-      flex-wrap: nowrap !important;
-      overflow-x: scroll !important;
-      overflow-y: visible !important;
+      scroll-snap-type: x mandatory !important;
       -webkit-overflow-scrolling: touch !important;
       touch-action: pan-x !important;
-      scroll-snap-type: x mandatory !important;
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
-      gap: .75rem !important;
-      padding: .5rem 1.25rem !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
     }
-    .p-row::-webkit-scrollbar { display: none !important; }
-    /* Hide filler/Coming Soon cards on mobile */
+    #parallax-grid::-webkit-scrollbar { display: none !important; }
+    /* Rows disparaissent visuellement → leurs cartes deviennent
+       des flex-items directs de #parallax-grid (une seule ligne) */
+    .p-row {
+      display: contents !important;
+    }
+    /* Fillers masqués */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fixed width for snap scrolling */
+    /* Cartes : largeur fixe + snap */
     .p-card {
       width: 72vw !important;
       max-width: 280px !important;
       height: 11rem !important;
       flex-shrink: 0 !important;
       flex-grow: 0 !important;
+      align-self: flex-start !important;
       border-radius: 10px !important;
       scroll-snap-align: start !important;
     }
@@ -909,7 +912,8 @@
      RESPONSIVE — Small phones (≤ 480px)
   ───────────────────────────────────────── */
   @media (max-width: 480px) {
-    /* Smaller cards on small phones — keep horizontal scroll */
+    /* Petits téléphones : cartes légèrement moins hautes */
+    #parallax-grid { height: 13rem !important; }
     .p-card { width: 80vw !important; max-width: 240px !important; height: 10rem !important; }
 
     /* Squad 1 col */
