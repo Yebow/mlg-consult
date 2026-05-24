@@ -691,29 +691,25 @@
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
     /* ── MOBILE PORTFOLIO GRID ── */
-    /* Horizontal swimlanes — no parallax */
+    /* Single horizontal swimlane — no parallax */
     #parallax-grid {
       display: flex !important;
-      flex-direction: column !important;
+      flex-direction: row !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
       gap: .625rem !important;
       padding: 1.5rem 1.25rem 2.5rem !important;
       margin-top: 0 !important;
       transform: none !important;
       opacity: 1 !important;
-    }
-    /* Each row scrolls horizontally */
-    .p-row {
-      display: flex !important;
-      overflow-x: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      gap: .625rem !important;
-      padding-bottom: .5rem !important;
       scrollbar-width: none !important;
     }
-    .p-row::-webkit-scrollbar { display: none !important; }
+    #parallax-grid::-webkit-scrollbar { display: none !important; }
+    /* Rows become invisible — all cards flow into the single parent swimlane */
+    .p-row { display: contents !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fixed width so ~2 are visible at once */
+    /* Cards: fixed width, ~2 visible at once */
     .p-card {
       width: 10rem !important;
       height: 9rem !important;
