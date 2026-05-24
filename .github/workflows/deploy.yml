@@ -7,6 +7,10 @@ on:
         description: 'Note de deploy (optionnel)'
         required: false
         default: 'Deploy manuel'
+  push:
+    branches:
+      - claude/hero-animation-performance-4z7mt
+      - main
 
 jobs:
   deploy:
