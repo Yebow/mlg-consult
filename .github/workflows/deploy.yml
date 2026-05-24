@@ -1,0 +1,35 @@
+name: Deploy to Hostinger
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Note de deploy (optionnel)'
+        required: false
+        default: 'Deploy manuel'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/README*
+            **/.github/**
+            **/design-system.html
+            **/apps-script-backend.gs
+            **/package.json
+            **/package-lock.json
