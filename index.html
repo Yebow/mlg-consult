@@ -644,14 +644,22 @@
     #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; overflow: visible; transform-style: flat; }
     #parallax-grid {
       transform: none !important; opacity: 1 !important; will-change: auto;
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
+      display: flex !important;
+      flex-direction: column !important;
       gap: .75rem !important;
       padding: 1.5rem 1.5rem 2.5rem !important;
     }
-    .p-row { display: contents !important; overflow: visible !important; }
+    .p-row {
+      display: flex !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      gap: .75rem !important;
+      padding-bottom: .5rem !important;
+      scrollbar-width: none !important;
+    }
+    .p-row::-webkit-scrollbar { display: none !important; }
     .p-card[data-filler] { display: none !important; }
-    .p-card { width: 100% !important; height: 11rem !important; flex-shrink: unset !important; }
+    .p-card { width: 14rem !important; height: 10rem !important; flex-shrink: 0 !important; }
     .p-card img { filter: grayscale(0) brightness(0.68) !important; }
     .p-card-img-wrap::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -690,28 +698,32 @@
     #parallax-header h1 { font-size: clamp(2.75rem, 11vw, 5rem); margin-bottom: 1rem; }
 
     /* ── MOBILE PORTFOLIO GRID ── */
-    /* No parallax: flat 2-col grid so users can browse the work */
+    /* Horizontal scroll rows — no parallax */
     #parallax-grid {
-      display: grid !important;
-      grid-template-columns: 1fr 1fr !important;
+      display: flex !important;
+      flex-direction: column !important;
       gap: .625rem !important;
       padding: 1.5rem 1.25rem 2.5rem !important;
       margin-top: 0 !important;
       transform: none !important;
       opacity: 1 !important;
     }
-    /* Rows become invisible wrappers — children flow into the parent grid */
     .p-row {
-      display: contents !important;
-      overflow: visible !important;
+      display: flex !important;
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      gap: .625rem !important;
+      padding-bottom: .5rem !important;
+      scrollbar-width: none !important;
     }
+    .p-row::-webkit-scrollbar { display: none !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fill grid cell */
+    /* Cards: fixed width for horizontal scroll */
     .p-card {
-      width: 100% !important;
+      width: 13rem !important;
       height: 9.5rem !important;
-      flex-shrink: unset !important;
+      flex-shrink: 0 !important;
       border-radius: 10px !important;
     }
     /* Images: colored on mobile (no hover available) */
@@ -905,9 +917,10 @@
      indépendamment de la taille d'écran
   ───────────────────────────────────────── */
   @media (hover: none) {
-    /* Glow spotlight : aucun curseur, on coupe tout */
+    /* Glow spotlight : aucun curseur, on coupe tout + GPU layers */
     [data-glow] { background-image: none !important; }
     [data-glow]::before, [data-glow]::after { display: none !important; }
+    [data-glow] > [data-glow-inner] { display: none !important; }
     /* Empêche le border-color de changer au tap */
     [data-glow]:hover { --backup-border: rgba(222,255,154,0.07) !important; }
 
@@ -1894,10 +1907,20 @@ document.addEventListener('keydown', e => {
 // ════════════════════════════════════════════════
 // INIT + SCROLL
 // ════════════════════════════════════════════════
+function initAnimationPauseObserver() {
+  const ao = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      e.target.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    });
+  }, { rootMargin: '100px' });
+  document.querySelectorAll('.mq-inner, .tm-col-inner, .logo-track').forEach(el => ao.observe(el));
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   _cacheHeroLayout();
   _glowCards = Array.from(document.querySelectorAll('[data-glow]'));
   initRevealObserver();
+  initAnimationPauseObserver();
   applyParallax();
   updateHeader();
   updateBar();
