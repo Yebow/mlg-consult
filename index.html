@@ -705,14 +705,14 @@
      * KEY: hauteur fixe + overflow-y:hidden = combinaison CSS valide.
      * overflow-x:scroll + overflow-y:visible est INTERDIT (le browser
      * corrige en overflow-y:auto et le swipe iOS ne fonctionne plus).
-     * height = carte(11rem) + padding haut(1.5rem) + padding bas(1.5rem) = 14rem
+     * height = carte(13.2rem) + padding haut(1.5rem) + padding bas(1.5rem) = 16.2rem (+20%)
      */
     #parallax-grid {
       display: flex !important;
       flex-direction: row !important;
       flex-wrap: nowrap !important;
       align-items: flex-start !important;
-      height: 14rem !important;
+      height: 16.2rem !important;
       overflow-x: scroll !important;
       overflow-y: hidden !important;
       gap: .75rem !important;
@@ -772,7 +772,7 @@
     .p-card {
       width: 72vw !important;
       max-width: 280px !important;
-      height: 11rem !important;
+      height: 13.2rem !important;
       flex-shrink: 0 !important;
       flex-grow: 0 !important;
       align-self: flex-start !important;
@@ -965,8 +965,8 @@
   ───────────────────────────────────────── */
   @media (max-width: 480px) {
     /* Petits téléphones : cartes légèrement moins hautes */
-    #parallax-grid { height: 13rem !important; }
-    .p-card { width: 80vw !important; max-width: 240px !important; height: 10rem !important; }
+    #parallax-grid { height: 15.6rem !important; }
+    .p-card { width: 80vw !important; max-width: 240px !important; height: 12rem !important; }
 
     /* Squad 1 col — on garde 2 colonnes mais les photos restent hautes */
     .squad-cards { grid-template-columns: 1fr 1fr; }
