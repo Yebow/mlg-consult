@@ -907,7 +907,7 @@
   ───────────────────────────────────────── */
   @media (hover: none) {
     /* Glow spotlight : aucun curseur, on coupe tout + GPU layers */
-    [data-glow] { background-image: none !important; }
+    [data-glow] { background-image: none !important; touch-action: pan-x pan-y !important; }
     [data-glow]::before, [data-glow]::after { display: none !important; }
     [data-glow] > [data-glow-inner] { display: none !important; }
     /* Empêche le border-color de changer au tap */
