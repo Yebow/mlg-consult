@@ -593,20 +593,21 @@
     display: none; background: none; border: none;
     padding: .5rem; cursor: pointer; color: #fff;
     flex-direction: column; justify-content: center; align-items: center; gap: 5px;
-    position: relative; z-index: 51;
+    position: relative; z-index: 201;
   }
   #nav-toggle .bar {
     display: block; width: 22px; height: 1.5px;
     background: currentColor; border-radius: 2px;
-    transition: transform .35s ease, opacity .25s ease, transform .35s ease;
+    transition: transform .35s ease, opacity .25s ease;
   }
   #nav-toggle.open .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   #nav-toggle.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
   #nav-toggle.open .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
   #mobile-menu {
-    position: fixed; inset: 0; z-index: 48;
+    position: fixed; inset: 0; z-index: 200;
     background: rgba(5,8,6,.97); backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 0;
     opacity: 0; pointer-events: none;
@@ -810,9 +811,9 @@
     .pricing-grid { max-width: 100%; }
     .pc-title { font-size: 2.25rem; }
 
-    /* Squad */
+    /* Squad — ratio portrait plus marqué sur mobile */
     .squad-cards { grid-template-columns: 1fr 1fr; gap: .75rem; }
-    .squad-photo-header { height: 180px; }
+    .squad-photo-header { height: 260px; }
 
     /* Manifesto: faster reveal on mobile */
     #manifesto { height: 150vh; }
@@ -946,8 +947,9 @@
     #parallax-grid { height: 13rem !important; }
     .p-card { width: 80vw !important; max-width: 240px !important; height: 10rem !important; }
 
-    /* Squad 1 col */
-    .squad-cards { grid-template-columns: 1fr; }
+    /* Squad 1 col — on garde 2 colonnes mais les photos restent hautes */
+    .squad-cards { grid-template-columns: 1fr 1fr; }
+    .squad-photo-header { height: 220px; }
 
     /* Testimonials 1 col */
     .tm-grid { grid-template-columns: 1fr; max-height: 480px; }
