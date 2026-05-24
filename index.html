@@ -709,13 +709,15 @@
     .p-row { display: contents !important; }
     /* Hide filler/Coming Soon cards on mobile */
     .p-card[data-filler] { display: none !important; }
-    /* Cards: fixed width, ~2 visible at once */
+    /* Cards: ~1 full card + half of next card visible */
     .p-card {
-      width: 10rem !important;
-      height: 9rem !important;
+      width: calc(100vw - 9rem) !important;
+      height: 11rem !important;
       flex-shrink: 0 !important;
       border-radius: 10px !important;
     }
+    /* Angelina Luicci first in the swimlane on mobile */
+    .p-card[data-mobile-first] { order: -1 !important; }
     /* Images: colored on mobile (no hover available) */
     .p-card img { filter: grayscale(0) brightness(0.68) !important; transition: none !important; }
     /* Bottom gradient so title is always legible */
@@ -884,8 +886,8 @@
      RESPONSIVE — Small phones (≤ 480px)
   ───────────────────────────────────────── */
   @media (max-width: 480px) {
-    /* Small phones: slightly shorter cards, width inherited from 768px (10rem) */
-    .p-card { height: 8.5rem !important; }
+    /* Small phones: slightly shorter cards, width inherited from 768px */
+    .p-card { height: 10rem !important; }
 
     /* Squad 1 col */
     .squad-cards { grid-template-columns: 1fr; }
@@ -989,7 +991,7 @@
       <!-- pos 4 — Think1 : Strategic Fog → Product -->
       <div class="p-card" data-glow style="cursor:pointer" onclick="openCase('think1')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Think1.jpg" alt="Strategic Fog" loading="lazy"><div class="p-overlay"></div><span class="p-title">Strategic Fog → Product</span><span class="p-tag">Think</span></div></div>
       <!-- pos 5 — Build1 : Angelina Luicci (luxury website) -->
-      <div class="p-card" data-glow style="cursor:pointer" onclick="window.open('https://angelina-luicci.netlify.app/','_blank')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Build1.jpg" alt="Angelina Luicci" loading="lazy"><div class="p-overlay"></div><span class="p-title">Angelina Luicci</span><span class="p-tag">Build</span></div></div>
+      <div class="p-card" data-glow data-mobile-first style="cursor:pointer" onclick="window.open('https://angelina-luicci.netlify.app/','_blank')"><div data-glow-inner></div><div class="p-card-img-wrap"><img src="images/Build1.jpg" alt="Angelina Luicci" loading="lazy"><div class="p-overlay"></div><span class="p-title">Angelina Luicci</span><span class="p-tag">Build</span></div></div>
     </div>
     <div id="row2" class="p-row">
       <!-- pos 1 — filler Unsplash, part hors écran en premier à gauche -->
