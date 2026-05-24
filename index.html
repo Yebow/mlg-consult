@@ -273,7 +273,7 @@
     background-color: var(--backdrop);
     background-size: calc(100% + 2 * var(--border-size)) calc(100% + 2 * var(--border-size));
     background-position: 50% 50%;
-    background-attachment: fixed;
+    background-attachment: scroll;
     border: var(--border-size) solid var(--backup-border);
     border-radius: calc(var(--radius) * 1px);
     position: relative; touch-action: pan-y;
@@ -285,7 +285,7 @@
     position: absolute; inset: calc(var(--border-size) * -1);
     border: var(--border-size) solid transparent;
     border-radius: calc(var(--radius) * 1px);
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-size: calc(100% + 2 * var(--border-size)) calc(100% + 2 * var(--border-size));
     background-repeat: no-repeat; background-position: 50% 50%;
     mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
@@ -641,7 +641,7 @@
   ───────────────────────────────────────── */
   @media (max-width: 900px) {
     /* Hero: disable parallax */
-    #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; overflow: visible; transform-style: flat; }
+    #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; overflow: visible !important; transform-style: flat; }
     #parallax-grid {
       transform: none !important; opacity: 1 !important; will-change: auto;
       display: flex !important;
@@ -659,7 +659,7 @@
     }
     .p-row::-webkit-scrollbar { display: none !important; }
     .p-card[data-filler] { display: none !important; }
-    .p-card { width: 14rem !important; height: 10rem !important; flex-shrink: 0 !important; }
+    .p-card { width: 10.5rem !important; height: 10rem !important; flex-shrink: 0 !important; }
     .p-card img { filter: grayscale(0) brightness(0.68) !important; }
     .p-card-img-wrap::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0;
@@ -721,8 +721,8 @@
     .p-card[data-filler] { display: none !important; }
     /* Cards: fixed width for horizontal scroll */
     .p-card {
-      width: 13rem !important;
-      height: 9.5rem !important;
+      width: 10rem !important;
+      height: 9rem !important;
       flex-shrink: 0 !important;
       border-radius: 10px !important;
     }
@@ -1701,7 +1701,7 @@ function computeTargets() {
   targetTXR  = -progress * 1000;
 }
 
-const SPRING = 0.12;
+const SPRING = 0.18;
 
 function applyParallax() {
   rafPending = false;
@@ -1723,7 +1723,7 @@ function applyParallax() {
   if (row2) row2.style.transform = `translateX(${currentTXR.toFixed(2)}px)`;
 
   const delta = Math.abs(currentRotX - targetRotX) + Math.abs(currentTY - targetTY) + Math.abs(currentTX - targetTX);
-  if (delta > 0.05) { rafPending = true; requestAnimationFrame(applyParallax); }
+  if (delta > 0.5)  { rafPending = true; requestAnimationFrame(applyParallax); }
 }
 
 function scheduleParallax() {
@@ -1737,15 +1737,18 @@ let _glowCards = null;
 let _glowRaf = false, _glowX = 0, _glowY = 0;
 function _applyGlow() {
   _glowRaf = false;
-  if (!_glowCards) return;
-  const xp = (_glowX / window.innerWidth).toFixed(4);
-  const yp = (_glowY / window.innerHeight).toFixed(4);
-  const xs = _glowX.toFixed(2), ys = _glowY.toFixed(2);
+  if (!_glowCards || !_glowCards.length) return;
   for (let i = 0; i < _glowCards.length; i++) {
-    _glowCards[i].style.setProperty('--x',  xs);
-    _glowCards[i].style.setProperty('--xp', xp);
-    _glowCards[i].style.setProperty('--y',  ys);
-    _glowCards[i].style.setProperty('--yp', yp);
+    const card = _glowCards[i];
+    const r   = card.getBoundingClientRect();
+    const lx  = (_glowX - r.left).toFixed(2);
+    const ly  = (_glowY - r.top).toFixed(2);
+    const xp  = ((_glowX - r.left) / r.width).toFixed(4);
+    const yp  = ((_glowY - r.top)  / r.height).toFixed(4);
+    card.style.setProperty('--x',  lx);
+    card.style.setProperty('--y',  ly);
+    card.style.setProperty('--xp', xp);
+    card.style.setProperty('--yp', yp);
   }
 }
 if (window.matchMedia('(hover: hover)').matches) {
