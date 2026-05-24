@@ -597,9 +597,14 @@
   #nav-toggle .bar {
     display: block; width: 22px; height: 1.5px;
     background: currentColor; border-radius: 2px;
+    transition: transform .35s ease, opacity .25s ease;
   }
+  /* Hamburger → ✕ quand le menu est ouvert */
+  #nav-toggle.open .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  #nav-toggle.open .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  #nav-toggle.open .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-  /* z-index 300 — au-dessus du header, du progress bar, de tout */
+  /* Menu overlay z-300, header z-301 → header toujours visible au-dessus */
   #mobile-menu {
     position: fixed; inset: 0; z-index: 300;
     background: rgba(5,8,6,.97); backdrop-filter: blur(20px);
@@ -610,15 +615,6 @@
     transition: opacity .3s ease;
   }
   #mobile-menu.open { opacity: 1; pointer-events: auto; }
-
-  /* Bouton ✕ dédié — à l'intérieur du menu, toujours accessible */
-  #menu-close {
-    position: absolute; top: 1.25rem; right: 1.5rem;
-    background: none; border: none; cursor: pointer;
-    color: rgba(255,255,255,.55); padding: .5rem;
-    line-height: 1; transition: color .2s;
-  }
-  #menu-close:hover { color: #fff; }
   .m-nav-link {
     font-family: 'Urbanist', sans-serif; font-weight: 900;
     font-size: clamp(2.5rem, 12vw, 3.75rem);
@@ -690,6 +686,8 @@
   @media (max-width: 768px) {
     /* Show hamburger, hide desktop CTA */
     #nav-toggle { display: flex; }
+    /* header z-301 > menu z-300 → logo + toggle toujours visibles au-dessus */
+    header { z-index: 301 !important; }
 
     /* Hero text padding — reset JS-applied inline styles */
     #parallax-header {
@@ -1032,12 +1030,6 @@
 
 <!-- Mobile fullscreen menu -->
 <div id="mobile-menu" role="dialog" aria-label="Navigation" aria-modal="true">
-  <!-- Bouton fermeture dédié — z-index garanti car inside le menu -->
-  <button id="menu-close" aria-label="Fermer le menu">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
   <a href="#services" class="m-nav-link">Services</a>
   <a href="#squad"    class="m-nav-link">Squad</a>
   <a href="#proof"    class="m-nav-link">Clients</a>
@@ -1828,24 +1820,26 @@ function initSquad() {
 // MOBILE NAV
 // ════════════════════════════════════════════════
 (function() {
-  const toggle   = document.getElementById('nav-toggle');
-  const menu     = document.getElementById('mobile-menu');
-  const closeBtn = document.getElementById('menu-close');
+  const toggle = document.getElementById('nav-toggle');
+  const menu   = document.getElementById('mobile-menu');
   if (!toggle || !menu) return;
 
   function openMenu() {
+    toggle.classList.add('open');
     menu.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
   }
   function closeMenu() {
+    toggle.classList.remove('open');
     menu.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
   }
 
-  toggle.addEventListener('click', openMenu);
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  toggle.addEventListener('click', () =>
+    menu.classList.contains('open') ? closeMenu() : openMenu()
+  );
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 })();
