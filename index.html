@@ -360,6 +360,10 @@
   .squad-card-v2.ts-dimmed { opacity: .45; }
   .squad-card-v2.ts-active .squad-card-photo { filter: grayscale(0) brightness(1); }
 
+  /* Squad photo zoom — desktop only */
+  .squad-card-v2[data-squad-id="kamel"] .squad-card-photo { transform: scale(1.3); transform-origin: center top; }
+  .squad-card-v2[data-squad-id="yassin"] .squad-card-photo { transform: scale(1.15); transform-origin: center top; }
+
   /* Name / indicator row */
   .squad-member-top {
     display: flex; align-items: center; gap: .6rem;
@@ -661,8 +665,8 @@
 
     /* Squad */
     .squad-cards { grid-template-columns: 1fr 1fr; }
-    .squad-card-v2[data-squad-id="kamel"] .squad-card-photo { transform: scale(1.15) !important; transform-origin: center top !important; }
-    .squad-card-v2[data-squad-id="yassin"] .squad-card-photo { transform: scale(1.075) !important; transform-origin: center top !important; }
+    .squad-card-v2[data-squad-id="kamel"] .squad-card-photo { transform: scale(1.0); transform-origin: center top; }
+    .squad-card-v2[data-squad-id="yassin"] .squad-card-photo { transform: scale(1.0); transform-origin: center top; }
 
     /* Testimonials */
     .tm-grid { grid-template-columns: 1fr 1fr; }
@@ -1166,7 +1170,7 @@
       <div class="pc-card squad-card-v2" data-glow data-squad-id="kamel">
         <div data-glow-inner></div>
         <div class="squad-photo-header">
-          <img class="squad-card-photo" src="images/Team%20pic/Kamel.png" alt="Kamel" style="transform:scale(1.3);transform-origin:center top;">
+          <img class="squad-card-photo" src="images/Team%20pic/Kamel.png" alt="Kamel">
         </div>
         <div class="pc-body" style="padding:.75rem .375rem .875rem;">
           <div class="squad-member-top">
@@ -1181,7 +1185,7 @@
       <div class="pc-card squad-card-v2" data-glow data-squad-id="yassin">
         <div data-glow-inner></div>
         <div class="squad-photo-header">
-          <img class="squad-card-photo" src="images/Team%20pic/Yassin.png" alt="Yassin" style="transform:scale(1.15);transform-origin:center top;">
+          <img class="squad-card-photo" src="images/Team%20pic/Yassin.png" alt="Yassin">
         </div>
         <div class="pc-body" style="padding:.75rem .375rem .875rem;">
           <div class="squad-member-top">
