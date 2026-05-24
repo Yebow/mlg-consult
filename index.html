@@ -831,6 +831,8 @@
     /* Manifesto: faster reveal on mobile */
     #manifesto { height: 150vh; }
     #manifesto-sticky { padding: 0 1.25rem; }
+    /* +40 % par rapport au clamp plancher desktop (1.75rem × 1.4 = 2.45rem) */
+    #manifesto-text { font-size: clamp(2.45rem, 6.5vw, 3.25rem) !important; }
 
     /* Footer */
     .ft-content { padding: 2rem 1.5rem 0 !important; }
