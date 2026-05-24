@@ -276,7 +276,7 @@
     background-attachment: fixed;
     border: var(--border-size) solid var(--backup-border);
     border-radius: calc(var(--radius) * 1px);
-    position: relative; touch-action: none;
+    position: relative; touch-action: pan-y;
     transition: border-color .3s ease;
   }
   [data-glow]:hover { --backup-border: rgba(222,255,154,0.14); }
@@ -636,19 +636,33 @@
      RESPONSIVE — Tablet (≤ 900px)
   ───────────────────────────────────────── */
   @media (max-width: 900px) {
-    /* Hero: disable parallax, keep cards scrollable */
-    #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; }
-    #parallax-grid { transform: none !important; opacity: 1 !important; will-change: auto; }
-    .p-row {
-      gap: .75rem; margin-bottom: .75rem;
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-      padding-bottom: .75rem; scrollbar-width: none;
+    /* Hero: disable parallax */
+    #hero-parallax { height: auto; padding-top: 5.5rem !important; perspective: none; overflow: visible; transform-style: flat; }
+    #parallax-grid {
+      transform: none !important; opacity: 1 !important; will-change: auto;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: .75rem !important;
+      padding: 1.5rem 1.5rem 2.5rem !important;
     }
-    .p-row::-webkit-scrollbar { display: none; }
-    .p-card { width: 16rem; height: 12.5rem; flex-shrink: 0; }
+    .p-row { display: contents !important; overflow: visible !important; }
+    .p-card[data-filler] { display: none !important; }
+    .p-card { width: 100% !important; height: 11rem !important; flex-shrink: unset !important; }
+    .p-card img { filter: grayscale(0) brightness(0.68) !important; }
+    .p-card-img-wrap::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(5,8,6,.88) 0%, transparent 100%);
+      pointer-events: none; z-index: 1;
+    }
+    .p-card .p-title { opacity: 1 !important; font-size: .8125rem !important; bottom: .75rem !important; left: .75rem !important; z-index: 3; }
+    .p-card .p-tag  { opacity: 1 !important; top: .75rem !important; left: .75rem !important; z-index: 3; }
+    #hero-scroll-cta { display: none !important; }
 
     /* Squad */
     .squad-cards { grid-template-columns: 1fr 1fr; }
+    .squad-card-v2[data-squad-id="kamel"] .squad-card-photo { transform: scale(1.15) !important; transform-origin: center top !important; }
+    .squad-card-v2[data-squad-id="yassin"] .squad-card-photo { transform: scale(1.075) !important; transform-origin: center top !important; }
 
     /* Testimonials */
     .tm-grid { grid-template-columns: 1fr 1fr; }
